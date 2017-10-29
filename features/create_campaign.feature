@@ -16,6 +16,7 @@ Feature: Organization Creating Campaign
       | Description       |  Emergency Food Storage   |
       | Funding Goal      |  10000                    |
       | Start Date        |  2017-10-30               |
+
     When I press "Submit Campaign Proposal"
     Then I should be on organization profile page
     And I should see 'Campaign proposal for "Food Cupboard" submitted'
@@ -30,6 +31,7 @@ Feature: Organization Creating Campaign
       | Description       |  Emergency Food Storage   |
       | Funding Goal      |  10000                    |
       | Start Date        |  2017-10-30               |
+      
     When I attach the file "foodcupboard.jpg" to "Cover Image"
     When I press "Submit Campaign Proposal"
     Then I should be on organization profile page
