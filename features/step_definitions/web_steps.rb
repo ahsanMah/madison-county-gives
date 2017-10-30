@@ -252,3 +252,26 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+#################################  NEW WEB STEP DEFINITIONS   #########################################
+
+When /^(?:|I )click on [^"]*"([^"]*)"$/ do |link|
+  click_link(link)
+end
+
+Then /^I should see the image "(.*)"$/ do |img_name|
+  expect(page).to have_css("img[src*= #{img_name}]")
+end
+
+#hard-coded css classes?  More flexible approach possible?
+
+And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+  row = all('.campaigns').find('tr') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find('.#{attribute}').text).to eq '#{value}'
+end
+
+And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+  row = all('.organizations').find('tr') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find('.#{attribute}').text).to eq '#{value}'
+end
+
