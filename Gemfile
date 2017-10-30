@@ -27,7 +27,12 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'octicons_helper'
+gem 'sprockets-rails', '~> 3.2.1'
+gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'jquery-rails'
 gem 'paperclip'
+gem 'devise'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
