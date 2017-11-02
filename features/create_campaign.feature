@@ -5,9 +5,9 @@ Feature: Organization Creating Campaign
 
   Background: the website already has some existing campaigns for a particular organization
     Given these Campaigns:
-      | name    | description  | goal   | start_date  | organization_id | is_active | is_approved | is_featured |
-      | Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       | false       |
-      | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        | true        |
+      | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
+      | Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       |
+      | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
 
   Scenario: Create a new campaign without an image
     Given I am on the create new campaign page
@@ -17,7 +17,7 @@ Feature: Organization Creating Campaign
       | Funding Goal      |  10000                    |
       | Start Date        |  2017-10-30               |
 
-    When I press "Submit Campaign Proposal"
+    When I press "Submit Proposal"
     Then I should be on organization profile page
     And I should see 'Campaign proposal for "Food Cupboard" submitted'
     And I should see that "Food Cupboard" has a goal of "$10000"
