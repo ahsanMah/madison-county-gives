@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101202147) do
+ActiveRecord::Schema.define(version: 20171102020424) do
 
   create_table "campaigns", force: :cascade do |t|
     t.integer "organization_id"
@@ -26,6 +26,50 @@ ActiveRecord::Schema.define(version: 20171101202147) do
     t.integer "image_file_size"
     t.datetime "image_updated_at"
     t.string "name"
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "name"
+    t.string "primary_contact"
+    t.string "address"
+    t.string "email"
+    t.text "description"
+    t.boolean "is_approved"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "campaign_id"
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.decimal "amount", precision: 10, scale: 2
+    t.integer "transaction_id"
+    t.datetime "time"
+    t.boolean "is_anonymous"
+    t.boolean "is_konosioni"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "short_questions", force: :cascade do |t|
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "short_responses", force: :cascade do |t|
+    t.integer "short_question_id"
+    t.integer "organization_id"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
