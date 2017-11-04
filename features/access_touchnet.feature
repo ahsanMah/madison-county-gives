@@ -13,3 +13,9 @@ Feature: link to touchnet to make donation
   Then I should see the touchnet webpage
   And I should see "bob" in "name"
   And I should see "500" in amount
+
+
+
+
+
+
