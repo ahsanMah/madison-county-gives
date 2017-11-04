@@ -265,7 +265,7 @@ end
 
 #hard-coded css classes?  More flexible approach possible?
 
-And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaigns').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
