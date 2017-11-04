@@ -8,4 +8,4 @@ Feature: option to be anonymous
   Scenario: Donor wants to remain anonymous
   Given I am on the form page on Madison County Gives
   When I check I want to be anonymous
-  Then I should not see myself on the Donations and updates
+  Then I should not see my name on the campaign

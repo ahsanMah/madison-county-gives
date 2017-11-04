@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20171102005026) do
-=======
-ActiveRecord::Schema.define(version: 20171102020424) do
->>>>>>> 16fd3ed1cb04650160884da10a4b0f252c84f1cb
 
   create_table "campaigns", force: :cascade do |t|
     t.integer "organization_id"
@@ -32,8 +28,6 @@ ActiveRecord::Schema.define(version: 20171102020424) do
     t.string "name"
   end
 
-<<<<<<< HEAD
-=======
   create_table "organizations", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
@@ -50,7 +44,6 @@ ActiveRecord::Schema.define(version: 20171102020424) do
     t.datetime "image_updated_at"
   end
 
->>>>>>> 16fd3ed1cb04650160884da10a4b0f252c84f1cb
   create_table "payments", force: :cascade do |t|
     t.integer "campaign_id"
     t.string "name"
@@ -65,8 +58,6 @@ ActiveRecord::Schema.define(version: 20171102020424) do
     t.datetime "updated_at", null: false
   end
 
-<<<<<<< HEAD
-=======
   create_table "short_questions", force: :cascade do |t|
     t.text "text"
     t.datetime "created_at", null: false
@@ -81,7 +72,6 @@ ActiveRecord::Schema.define(version: 20171102020424) do
     t.datetime "updated_at", null: false
   end
 
->>>>>>> 16fd3ed1cb04650160884da10a4b0f252c84f1cb
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
