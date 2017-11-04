@@ -1,5 +1,13 @@
 class CampaignsController < ApplicationController
 
+	def index
+		@campaigns = Campaign.all
+	end
+
+	def show
+		@campaign = Campaign.find(params[:id])
+	end		
+
 	def new
 
 		# #Only allow to create a campaign if approved 
@@ -16,9 +24,9 @@ class CampaignsController < ApplicationController
 		campaign = Campaign.new(create_update_params)
 		logger.debug("New campaign => #{campaign}")
 		if campaign.save
-			flash[:notice] = "Campaign successfully submitted for approval!"
+			flash[:notice] = "Campaign proposal for \"#{campaign.name}\" successfully submitted for approval!"
 			redirect_to root_path and return
-		aelse
+		else
 			flash[:error] = "Unable to submit!"
 			redirect_to root_path
 		end
