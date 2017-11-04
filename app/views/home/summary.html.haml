@@ -1,0 +1,19 @@
+.row
+  .col-sm-12.text-center.bootstrap-welcome
+%table.table
+  %thead contributions thus far
+  %tr
+    %th Name of organization
+    %th Amount to donate
+-if @carty
+  -@carty.each do |id,amt|
+    %tr
+      %th "#{id}"
+      %th "#{amt}"
+-else
+  %h3 You have not made any contributions yet :(
+
+=link_to "proceed to checkout", controller: "home", action: "checkout"
+%p
+=link_to "back to main page", root_path
+    

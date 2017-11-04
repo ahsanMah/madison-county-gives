@@ -3,4 +3,9 @@ class HomeController < ApplicationController
 
   def index
   end
+  def summary
+    @carty = session[:cart]
+  end
+  def checkout
+  end
 end
