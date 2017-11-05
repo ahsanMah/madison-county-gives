@@ -3,4 +3,7 @@ class HomeController < ApplicationController
 
   def index
   end
+  def cart
+    @carty = session[:cart]
+  end
 end
