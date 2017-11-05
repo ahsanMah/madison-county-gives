@@ -12,14 +12,13 @@ Feature: Organization Creating Campaign
   Scenario: Create a new campaign without an image
     Given I am on the create new campaign page
     When I fill in the following:
-      | Campaign Name     |  Food Cupboard            |
-      | Description       |  Emergency Food Storage   |
-      | Funding Goal      |  10000                    |
-      | Start Date        |  2017-10-30               |
+      | Campaign Name                           |  Food Cupboard            |
+      | Description                             |  Emergency Food Storage   |
+      | Funding Goal                            |  10000                    |
+      | Expected start date for campaign        |  2017-10-30               |
 
     When I press "Submit Proposal"
-    Then I should be on organization profile page
-    And I should see 'Campaign proposal for "Food Cupboard" submitted'
+    Then I should see 'Campaign proposal for "Food Cupboard" submitted'
     And I should see that the campaign "Food Cupboard" has a goal of "$10000"
     And I should see that the campaign "Food Cupboard" has a start date of "10/30/17"
     And I should see that the campaign "Food Cupboard" has an image "default.png"
@@ -27,15 +26,14 @@ Feature: Organization Creating Campaign
   Scenario: Create a new campaign with an image
     Given I am on the create new campaign page
     When I fill in the following:
-      | Campaign Name     |  Food Cupboard            |
-      | Description       |  Emergency Food Storage   |
-      | Funding Goal      |  10000                    |
-      | Start Date        |  2017-10-30               |
-      
+      | Campaign Name                           |  Food Cupboard            |
+      | Description                             |  Emergency Food Storage   |
+      | Funding Goal                            |  10000                    |
+      | Expected start date for campaign        |  2017-10-30               |
+
     When I attach the file "foodcupboard.jpg" to "Cover Image"
     When I press "Submit Campaign Proposal"
-    Then I should be on organization profile page
-    And I should see 'Campaign proposal for "Food Cupboard" submitted'
+    Then I should see 'Campaign proposal for "Food Cupboard" submitted'
     And I should see that "Food Cupboard" has a goal of "$10000"
     And I should see that "Food Cupboard" has a start date of "10/30/17"
     And I should see that "Food Cupboard" has an image "foodcupboard.jpg"
