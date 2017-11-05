@@ -15,6 +15,8 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+    when /^Test Organization ([0-9])'s page$/
+      organization_path($1.to_i)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -22,6 +24,8 @@ module NavigationHelpers
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
+    when  /^the create new campaign page$/
+      '/campaigns/new'
     else
       begin
         page_name =~ /^the (.*) page$/

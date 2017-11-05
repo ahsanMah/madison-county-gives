@@ -3,7 +3,7 @@
 
   =form_for @campaign, :method => :post do |f|
     .form-group
-      =f.label :name, "Name"
+      =f.label :name, "Campaign Name"
       =f.text_field :name, :required => true, :class=>"form-control"
 
     .form-group
@@ -11,7 +11,7 @@
       =f.text_field :description
 
     .form-group
-      =f.label :goal, "Goal"
+      =f.label :goal, "Funding Goal"
       =f.number_field :goal, step: 100
 
     .form-group
