@@ -64,6 +64,23 @@ end
 
 
 
+Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
+  user = User.find(id)
+  visit new_user_session_path
+  fill_in "Email", :with => user.email
+  fill_in "Password", :with => "123456"
+  click_button "Log in"
+end
+
+Given /^I am signed out$/ do
+  current_driver = Capybara.current_driver
+  begin
+    Capybara.current_driver = :rack_test
+    page.driver.submit :delete, destroy_user_session_path, {}
+  ensure
+    Capybara.current_driver = current_driver
+  end
+end
 
 
 Given /^(?:|I )am on (.+)$/ do |page_name|

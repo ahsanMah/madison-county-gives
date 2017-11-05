@@ -35,14 +35,6 @@
         null,
         null
       ],
-      "/Users/BorisShou1/Desktop/madison-county-gives/app/controllers/home_controller.rb": [
-        1,
-        null,
-        null,
-        1,
-        null,
-        null
-      ],
       "/Users/BorisShou1/Desktop/madison-county-gives/app/controllers/application_controller.rb": [
         1,
         1,
@@ -52,14 +44,14 @@
         1,
         null,
         1,
-        0,
+        1,
         null,
         null,
         1,
         1,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
         null,
         null,
         null,
@@ -70,8 +62,20 @@
         1,
         null
       ],
+      "/Users/BorisShou1/Desktop/madison-county-gives/app/helpers/organizations_helper.rb": [
+        1,
+        null
+      ],
       "/Users/BorisShou1/Desktop/madison-county-gives/app/helpers/payments_helper.rb": [
         1,
+        null
+      ],
+      "/Users/BorisShou1/Desktop/madison-county-gives/app/controllers/home_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null,
         null
       ],
       "/Users/BorisShou1/Desktop/madison-county-gives/app/channels/application_cable/channel.rb": [
@@ -122,6 +126,10 @@
         null,
         0
       ],
+      "/Users/BorisShou1/Desktop/madison-county-gives/app/controllers/organizations_controller.rb": [
+        0,
+        0
+      ],
       "/Users/BorisShou1/Desktop/madison-county-gives/app/controllers/payments_controller.rb": [
         0,
         0
@@ -152,6 +160,6 @@
         0
       ]
     },
-    "timestamp": 1509843469
+    "timestamp": 1509846950
   }
 }

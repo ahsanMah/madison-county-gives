@@ -6,9 +6,9 @@ Feature: Donor Viewing an Organization
   Background: the website already has some existing users, organizations and campaigns
     Given these Users:
       | id | email              | password  |
-      | 1  | user1@example.com  | 142857    |
-      | 2  | user2@example.com  | 285714    |
-      | 3  | user3@example.com  | 428571    |
+      | 1  | user1@example.com  | 123456    |
+      | 2  | user2@example.com  | 123456    |
+      | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
       | id  | name                | user_id | is_approved |
@@ -21,6 +21,8 @@ Feature: Donor Viewing an Organization
       | 1  | Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       |
       | 2  | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
+
+    Given I am signed out
 
   Scenario: Donor viewing an organization's page
     Given I am on Test Organization 1's page
