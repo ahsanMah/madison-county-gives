@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   resources :campaign, only: [:index, :show]
   root "home#index"
   resource :campaigns
-  get '/cart', to: 'home#cart'
+  get '/summary', to: 'home#summary'
+  get '/checkout', to: 'home#checkout'
 end
