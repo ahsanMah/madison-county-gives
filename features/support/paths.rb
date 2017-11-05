@@ -15,6 +15,8 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+    when /^Test Organization ([0-9])'s page$/
+      organization_path($1.to_i)
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

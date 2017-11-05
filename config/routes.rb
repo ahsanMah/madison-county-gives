@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :organizations, except: :destroy
-  #resources :campaigns, only: [:index, :show]
+  resources :campaigns #, only: [:index, :show, :new, :create]
   root "home#index"
-  resource :campaigns
+  get '/summary', to: 'home#summary'
+  get '/checkout', to: 'home#checkout'
 end
