@@ -84,6 +84,7 @@ end
 
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
+  byebug
   visit path_to(page_name)
 end
 
