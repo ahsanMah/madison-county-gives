@@ -41,6 +41,48 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
+
+Given /^these Users:$/ do |table|
+  table.hashes.each do |h|
+    User.create!(h)
+  end
+end
+
+
+Given /^these Organizations:$/ do |table|
+  table.hashes.each do |h|
+    Organization.create!(h)
+  end
+end
+
+
+Given /^these Campaigns:$/ do |table|
+  table.hashes.each do |h|
+    Campaign.create!(h)
+  end
+end
+
+
+
+Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
+  user = User.find(id)
+  visit new_user_session_path
+  fill_in "Email", :with => user.email
+  fill_in "Password", :with => "123456"
+  click_button "Log in"
+end
+
+Given /^I am signed out$/ do
+  current_driver = Capybara.current_driver
+  begin
+    Capybara.current_driver = :rack_test
+    page.driver.submit :delete, destroy_user_session_path, {}
+  ensure
+    Capybara.current_driver = current_driver
+  end
+end
+
+
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
 end
