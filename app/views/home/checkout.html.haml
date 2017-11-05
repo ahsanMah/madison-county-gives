@@ -1,7 +1,9 @@
 %h3 Billing Information
-=form_tag "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp", method: "post" do
+=form_tag "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp", id: "checkout_form", method: "post" do
   .field
     =hidden_field_tag :UPAY_SITE_ID, value = "4"
+    -if @carty
+      =hidden_field_tag :pay_split, value = @carty
   .field
     =label_tag :BILL_NAME, "Full Name"
     %p=text_field_tag :BILL_NAME
@@ -14,6 +16,9 @@
   .field
     =label_tag :BILL_STREET2, "Street Address 2"
     %p=text_field_tag :BILL_STREET2
+  .field
+    =label_tag :BILL_CITY "City"
+    %p=text_field_tag :BILL_CITY
   .field
     =label_tag :BILL_STATE, "State"
     %p=select_tag :BILL_STATE, options_for_select(@US_states, "NY")
