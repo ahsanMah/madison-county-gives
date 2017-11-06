@@ -1,4 +1,6 @@
-#main.container
+
+
+.row
   %h3.header Currently active campaigns
 
   %table.table
@@ -16,7 +18,7 @@
           %td.image= image_tag camp.image.url(:thumb)
           %td.name= link_to "#{camp.name}", campaign_path(camp)
           %td.description= truncate(camp.description, length: 60)
-          %td.goal= "#{number_to_currency(camp.goal, precision: 0)}" 
+          %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
           %td.start_date= camp.start_date
 
   %div= link_to('Start new campaign proposal', new_campaign_path)
