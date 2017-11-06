@@ -1,0 +1,38 @@
+#main.container
+  %h3.header New Organization Registration
+
+  =form_for @organization, :method => :post do |f|
+    .field
+      =f.label :name, "Organization Name"
+      =f.text_field :name
+
+    .field
+      =f.label :description, "Description"
+      =f.text_field :description
+
+    .field
+      =f.label :first_name, "First Name"
+      =f.text_field :first_name
+
+    .field
+      =f.label :last_name, "Last Name"
+      =f.text_field :last_name
+
+    .field
+      =f.label :address, "Address"
+      =f.text_field :address
+
+    .field
+      =f.label :email, "Email Address"
+      =f.text_field :email
+
+    .field
+      =f.label :short_responses, "Short Responses" #ADD SHORT RESPONSES MODEL AND @
+      =f.text_field :short_responses
+
+    .field
+      =f.label :image, "Image"
+      =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
+
+    .field
+      =f.submit "Submit Organization"
