@@ -89,6 +89,15 @@ Given /^I am signed out$/ do
   end
 end
 
+Then /^the campaign table rows should not contain "([^"]*)"$/ do |text|
+    tr = page.all('tr.campaign').first
+    expect(tr).not_to have_content(text)
+end
+
+Then /^the campaign table rows should contain "([^"]*)"$/ do |text|
+    tr = page.all('tr.campaign').first
+    expect(tr).to have_content(text)
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
