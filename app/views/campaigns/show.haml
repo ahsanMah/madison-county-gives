@@ -1,4 +1,6 @@
 #main.container
+    -if user_signed_in?
+        %p="Logged in user id: #{current_user.id}"
     .row
         .col-md-offset-1
         .col-md-4
@@ -14,7 +16,8 @@
     %br
 
     .row
-        .col-md-offset-1
-        .col-md-2= link_to('Edit campaign details', edit_campaign_path(@campaign))
-        .col-md-2= "Delete campaign"
+        -if user_signed_in? && current_user.id == @campaign.organization_id
+            .col-md-offset-1
+            .col-md-2= link_to('Edit campaign details', edit_campaign_path(@campaign))
+            .col-md-2= "Delete campaign"
         .col-md-2= link_to('Back to campaign list', campaigns_path)

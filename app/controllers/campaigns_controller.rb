@@ -22,6 +22,7 @@ class CampaignsController < ApplicationController
 
 	def create
 		campaign = Campaign.new(create_update_params)
+		byebug
 		logger.debug("New campaign => #{campaign}")
 		if campaign.save
 			flash[:notice] = "Campaign proposal for \"#{campaign.name}\" successfully submitted for approval!"

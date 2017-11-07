@@ -15,6 +15,10 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
+
+    when /^the campaigns? index page$/
+      '/campaigns/'
+
     when /^Test Organization ([0-9])'s page$/
       organization_path($1.to_i)
 
