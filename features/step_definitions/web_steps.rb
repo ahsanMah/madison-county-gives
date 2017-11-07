@@ -70,8 +70,9 @@ end
 
 
 
-Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
-  user = User.find(id)
+Given /^(?:|I )am signed in as (.*)$/ do |name|
+  org = Organization.where("name = ?", name).first()
+  user = org.user
   visit new_user_session_path
   fill_in "Email", :with => user.email
   fill_in "Password", :with => "123456"
