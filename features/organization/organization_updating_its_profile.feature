@@ -19,12 +19,13 @@ Feature: Organization Updating Its Profile
     Given I am signed in as Refugee Foundation
 
   Scenario: Update organization details as a user authorized by that organization
-    Given I am on the All organizations page
-    Then I should see that "Refugee Foundation" has "Edit organization details"
+    Given I am on the organizations index page
+    Then I follow "Refugee Foundation"
+    Then I should see "Edit organization details"
     When I click on "Edit organization details"
     And I fill in "Description" with "refuge for displaced peoples"
-    And I attach the file "rfgFoundation.jpg" to "Cover Image"
-    And I press "Submit updated information for approval"
-    Then I should see "Submitted updates for approval"
+    And I attach the file "foodcupboard.jpg" to "Image"
+    And I press "Submit organization changes"
+    Then I should see "Submitted changes for approval"
     Then I should see "refuge for displaced peoples"
-    And I should see the image "rfgFoundation"
+    And I should see the image "foodcupboard"

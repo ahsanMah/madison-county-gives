@@ -24,16 +24,15 @@ Feature: Organization Creating Its Profile and Requesting Approval
     Scenario: Petition MadisonGives for a new organization to display
       Given I am on the home page
       When I click on "Create an organization"
-      Then I should be on the organization register page
+      Then I should be on the create new organization page
       When I fill in the following:
-        | Organization Name     | Youth Education          |
+        | Organization Name     | Cool Schoolz             |
         | Primary Contact       | Mary Canta               |
         | Address               | 48 Easton St.            |
         | Email                 | school@hamilton.edu      |
-        | Short Responses       | Short indeed             |
         | Description           | Schooling for kids       |
       And I press "Submit Organization Registration"
-      Then I should be on the All Organizations page
+      Then I should be on the organizations index page
       And I should see "Organization pending approval.  Contact Julie for details!"
       And I should see that "Red Cross" has a description of "Disaster-relief"
       And I should see that "Refugee Foundation" has a description of "Home for all"

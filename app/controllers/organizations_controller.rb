@@ -34,7 +34,7 @@ class OrganizationsController < ApplicationController
 		organization = Organization.find(params[:id])
 		organization.update(create_update_params)
 		if organization.save
-			flash[:notice] = "Changes submitted. Someone will review them shortly!"
+			flash[:notice] = "Submitted changes for approval. Someone will review them shortly!"
 			redirect_to organizations_path
 		else
 			flash[:warning] = "Something went wrong. Please try again."
