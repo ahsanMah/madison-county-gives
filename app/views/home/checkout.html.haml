@@ -1,3 +1,38 @@
+%h3 Billing Information
+=form_tag "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp", id: "checkout_form", method: "post" do
+  .field
+    =hidden_field_tag :UPAY_SITE_ID, value = "4"
+    =hidden_field_tag :SUCCESS_LINK, value = "#{root_path}"
+    -if @carty
+      =hidden_field_tag :pay_split, value = @carty
+  .field
+    =label_tag :BILL_NAME, "Full Name"
+    %p=text_field_tag :BILL_NAME
+  .field
+    =label_tag :BILL_EMAIL_ADDRESS, "Email address"
+    %p=text_field_tag :BILL_EMAIL_ADDRESS
+  .field
+    =label_tag :BILL_STREET1, "Street Address 1"
+    %p=text_field_tag :BILL_STREET1
+  .field
+    =label_tag :BILL_STREET2, "Street Address 2"
+    %p=text_field_tag :BILL_STREET2
+  .field
+    =label_tag :BILL_CITY, "City"
+    %p=text_field_tag :BILL_CITY
+  .field
+    =label_tag :BILL_STATE, "State"
+    %p=select_tag :BILL_STATE, options_for_select(@US_states, "NY")
+  .field
+    =label_tag :BILL_POSTAL_CODE, "postal code"
+    %p=number_field_tag :BILL_POSTAL_CODE
+  .field
+    =label_tag :AMT, "Amount"
+    %p=number_field_tag :AMT
+  .field
+    =submit_tag "Proceed to payment"
+
+
 =link_to "back to summary", :back
 %br
 =link_to "back to main page", root_path

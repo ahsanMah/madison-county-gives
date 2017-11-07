@@ -1,0 +1,18 @@
+#main.container
+  %h3.header Our Supported Organizations
+
+  %table.table
+    %thead
+      %tr
+        %th
+        %th Organization
+        %th Description
+
+    %tbody
+      -@organizations.each do |org|
+        %tr.org
+          %td.image= image_tag org.image.url(:thumb)
+          %td.name= link_to "#{org.name}", organization_path(org)
+          %td.description= truncate(org.description, length: 60)
+
+  %div= link_to('Create a new organization', new_organization_path)

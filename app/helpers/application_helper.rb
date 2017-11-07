@@ -4,12 +4,16 @@ module ApplicationHelper
     { success: "alert-success", error: "alert-danger", alert: "alert-warning", notice: "alert-info" }[flash_type] || "alert-" + flash_type.to_s
   end
 
+  def alert_banner msg_type, message
+    concat(content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type.to_sym)}") do
+            concat content_tag(:button, octicon('x'), class: "close", data: { dismiss: 'alert' })
+            concat message
+          end)
+  end
+
   def flash_messages(opts = {})
     flash.each do |msg_type, message|
-      concat(content_tag(:div, message, class: "alert #{bootstrap_class_for(msg_type.to_sym)}") do
-              concat content_tag(:button, octicon('x'), class: "close", data: { dismiss: 'alert' })
-              concat message
-            end)
+      alert_banner msg_type, message
     end
     nil
   end

@@ -1,18 +1,25 @@
-Feature: Creating an Organization
+Feature: Organization Creating Its Profile and Requesting Approval
   As an organization
   So I can raise money
-  I want to sign up for my organization by filling out basic information and answering short essay questions, and ask admin for approval
+  I want to sign up for my organization by filling out basic information and
+    answering short essay questions, and ask admin for approval
 
   Background: The website has pre-existing organizations and long-response questions for the sign-up process
+    Given these Users:
+      | id | email              | password  |
+      | 1  | user1@example.com  | 123456    |
+      | 2  | user2@example.com  | 123456    |
+      | 3  | user3@example.com  | 123456    |
+
     Given these ShortQuestions:
       | text                                                      |
       | What is the your organization's principle goal?           |
       | How does this benefit people in need in Madison County?   |
 
     Given these Organizations:
-      | name               | primary_contact | address           | email         | short_responses     | description         | image | is_approved  | Campaigns |
-      | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Yes                 | Disaster-relief     |       | true         |           |
-      | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Not that long       | Home for all        |       | true         |           |
+      | id | user_id  | name               | primary_contact | address           | email         | description         | is_approved  |
+      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Disaster-relief     | true         |
+      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Home for all        | true         |
 
     Scenario: Petition MadisonGives for a new organization to display
       Given I am on the home page
@@ -29,4 +36,4 @@ Feature: Creating an Organization
       Then I should be on the All Organizations page
       And I should see "Organization pending approval.  Contact Julie for details!"
       And I should see that "Red Cross" has a description of "Disaster-relief"
-      And I should see that "Refugee Foundation" has a description of "Home for all" 
+      And I should see that "Refugee Foundation" has a description of "Home for all"

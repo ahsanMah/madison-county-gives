@@ -10,6 +10,10 @@
   %body
     %nav.navbar.navbar-expand-md.navbar-dark.sticky-top.bg-dark
       =link_to "Madison County Gives", root_url, :class => "navbar-brand"
+      - if user_signed_in?
+        =link_to 'Logout', destroy_user_session_path, :method => :delete
+      - else
+        =link_to 'Login', new_user_session_path
     %main.container
       %br
       =flash_messages

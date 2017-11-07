@@ -1,0 +1,56 @@
+Feature: Organization Viewing an Organization
+  As an organization
+  So I can find out more about an organization
+  I want to see the profile of an organization and its list of campaigns in the past, both
+    active and inactive, and if it is my organization (when I'm signed in), I should also
+    see an edit profile button beside my profile, and edit/delete buttons beside all of my
+    campaigns, and whether there are pending changes
+
+
+  Background: the website already has some existing users, organizations and campaigns
+    Given these Users:
+      | id | email              | password  |
+      | 1  | user1@example.com  | 123456    |
+      | 2  | user2@example.com  | 123456    |
+      | 3  | user3@example.com  | 123456    |
+
+    Given these Organizations:
+      | id  | name                | user_id | is_approved | description |
+      | 1   | Test Organization 1 | 1       | true        | test123     |
+      | 2   | Test Organization 2 | 2       | true        | test456     |
+      | 3   | Test Organization 3 | 3       | false       | test789     |
+
+    Given these Campaigns:
+      | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
+      | 1  | Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       |
+      | 2  | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
+      | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
+
+    Given these CampaignChanges:
+      | id | name       | description      | goal   | start_date  | organization_id | campaign_id  | action  |
+      | 1  | Pineapple  | pineapple farm   | 10000  | 2017-11-09  | 1               |              | create  |
+      | 2  | Bananas    | new banana farm  | 80000  | 2017-01-10  | 1               | 2            | update  |
+      | 3  | Apples     |                  |        |             | 1               | 1            | delete  |
+      | 4  | Oranges    | new orange farm  | 50000  | 2017-08-17  | 2               | 3            | update  |
+
+
+    Given I am signed in as Test Organization 1
+
+  Scenario: Organization viewing an organization's page
+    Given I am on Test Organization 1's page
+    Then I should see "Test Organization 1"
+    Then I should see "test123"
+    Then I should see "Edit Profile"
+    Then I should see "Apples"
+    Then I should see "Bananas"
+    Then I should see "Edit"
+    Then I should see "Delete"
+    Then I should see "Pending Change"
+
+    Given I am on Test Organization 2's page
+    Then I should see "test456"
+    Then I should see not see "Edit Profile"
+    Then I should see "Oranges"
+    Then I should not see "Edit"
+    Then I should not see "Delete"
+    Then I should not see "Pending Change"
