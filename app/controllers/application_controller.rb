@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
       if current_user.organization
         organization_path current_user.organization.id
       else
-        root_path
+        new_organization_path
       end
     end
 end
