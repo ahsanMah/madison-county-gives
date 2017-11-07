@@ -24,15 +24,26 @@ Feature: Organization updating campaigns
 
     Given I am signed in as Test Organization 1
 
-  Scenario: Update a particular campaign
-    Given I am on the organization profile page
-    When I click on my own campaign, "Apples"
+  Scenario: Update a campaign from the campaign's own page
+    Given I am on Test Organization 1's page
+    When I click on my campaign "Apples"
     Then I should see "apple farm"
     And I should see the image "default"
-    When I click on "Edit Campaign"
+    When I click on "Edit campaign details"
     And I fill in "Description" with "apple and pear farm"
-    And I attach the file "applefarm.jpg" to "Cover Image"
-    And I press "Submit updates for approval"
-    Then I should see 'Submitted updates for approval'
+    And I attach the file "applefarm.jpg" to "Image"
+    And I press "Submit Proposal"
+    Then I should see 'successfully submitted for approval!'
+    Then I should see "apple and pear farm"
+    And I should see the image "applefarm"
+
+  Scenario: Update a campaign from the organization's profile page
+    Given I am on Test Organization 1's page
+    Then I should see "Apples"
+    When I click on "edit" for "Apples"
+    And I fill in "Description" with "apple and pear farm"
+    And I attach the file "applefarm.jpg" to "Image"
+    And I press "Submit Proposal"
+    Then I should see 'successfully submitted for approval!'
     Then I should see "apple and pear farm"
     And I should see the image "applefarm"
