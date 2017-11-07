@@ -62,6 +62,12 @@ Given /^these Campaigns:$/ do |table|
   end
 end
 
+Given /^these CampaignChanges:$/ do |table|
+  table.hashes.each do |h|
+    CampaignChange.create!(h)
+  end
+end
+
 
 
 Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
