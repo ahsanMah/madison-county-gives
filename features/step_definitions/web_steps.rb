@@ -62,10 +62,17 @@ Given /^these Campaigns:$/ do |table|
   end
 end
 
+Given /^these CampaignChanges:$/ do |table|
+  table.hashes.each do |h|
+    CampaignChange.create!(h)
+  end
+end
 
 
-Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
-  user = User.find(id)
+
+Given /^(?:|I )am signed in as (.*)$/ do |name|
+  org = Organization.where("name = ?", name).first()
+  user = org.user
   visit new_user_session_path
   fill_in "Email", :with => user.email
   fill_in "Password", :with => "123456"
@@ -144,7 +151,7 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
 
-Then /^(?:|I )should see '([^']*)'$/ do |text|
+Then /^(?:|I )should see ['|"]([^']*)['|"]$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
   else
