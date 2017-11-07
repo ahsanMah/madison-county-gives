@@ -29,7 +29,7 @@ class CampaignsController < ApplicationController
 			redirect_to campaigns_path and return
 		else
 			flash[:error] = "Unable to submit!"
-			redirect_to campaigns_path
+			redirect_to new_campaign_path
 		end
 	end
 
