@@ -29,5 +29,5 @@ Feature: Donor Viewing an Organization
     Then I should see "Test Organization 1"
     Then I should see "Apples"
     Then I should see "Bananas"
-    Then I should not see "Edit"
-    Then I should not see "Delete"
+    Then the campaign table rows should not contain "Edit"
+    Then the campaign table rows should not contain "Delete"
