@@ -25,7 +25,7 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
 
     when  /^the create new campaign page$/
-      '/campaigns/new'
+      '/campaign_changes/new'
     else
       begin
         page_name =~ /^the (.*) page$/
