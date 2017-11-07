@@ -44,7 +44,7 @@ class OrganizationsController < ApplicationController
 
 private
 	def create_update_params
-		params.require(:organization).permit(:name, :primary_contact, :address, :email, :short_responses, :description, :image, :is_approved, :Campaigns)
+		params.require(:organization).permit(:name, :primary_contact, :address, :email, :short_responses, :description, :image, :is_approved, :campaigns)
   	end
 
 end
