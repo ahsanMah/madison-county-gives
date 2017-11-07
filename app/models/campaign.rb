@@ -1,4 +1,5 @@
 class Campaign < ApplicationRecord
+  has_one :campaign_change
   belongs_to :organization
   has_attached_file :image, :styles=> {:large => "1000x700>", :thumb => "500x350>"},
   :default_url => "default.png"
