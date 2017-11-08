@@ -21,6 +21,11 @@ class CampaignChangesController < ApplicationController
     if !campaign.id.nil?
       campaign.action = "UPDATE"
     end
+		
+		if campaign.action == "CREATE"
+				campaign.organization_id = current_user.organization_id
+		end
+
     if campaign.save
 			flash[:notice] = "Campaign proposal for \"#{campaign.name}\" successfully submitted for approval!"
 			redirect_to campaigns_path and return

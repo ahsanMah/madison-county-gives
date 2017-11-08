@@ -341,4 +341,3 @@ end
 Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function to add session data for cart MAY BE UNNEEDED WILL ASK SOMMERS FOR HELP
   pending
 end
-

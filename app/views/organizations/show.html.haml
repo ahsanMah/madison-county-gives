@@ -35,12 +35,25 @@
         %tbody
             -@organization.campaigns.each do |c|
                 %tr.campaign
-                    %td= c.name
+                    %td= link_to c.name, campaign_path(c)
                     %td= c.start_date
                     %td= c.goal
                     %td= c.is_active
                     - if user_signed_in? && @organization.id == current_user.organization.id
-                        %td= link_to "Edit", edit_organization_path
+                        %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id)
                         %td= link_to "Delete", organization_path(@organization), :method => :delete
                         - if !c.campaign_change.nil?
-                            %td= link_to "Pending Change", organization_path
+                            %td= link_to "Pending Change", campaign_change_path(c.campaign_change)
+
+.row
+    - if user_signed_in? && @organization.id == current_user.organization.id
+        %h4 Pending campaigns
+        .row
+        %table.table
+            %thead
+                %tr
+                    %th Name
+                    %th Start Date
+                    %th Goal
+                    %th
+                    %th
