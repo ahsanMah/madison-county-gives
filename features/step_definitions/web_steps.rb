@@ -62,10 +62,17 @@ Given /^these Campaigns:$/ do |table|
   end
 end
 
+Given /^these CampaignChanges:$/ do |table|
+  table.hashes.each do |h|
+    CampaignChange.create!(h)
+  end
+end
 
 
-Given /^(?:|I )am signed in as Test Organization ([0-9])$/ do |id|
-  user = User.find(id)
+
+Given /^(?:|I )am signed in as (.*)$/ do |name|
+  org = Organization.where("name = ?", name).first()
+  user = org.user
   visit new_user_session_path
   fill_in "Email", :with => user.email
   fill_in "Password", :with => "123456"
@@ -82,6 +89,15 @@ Given /^I am signed out$/ do
   end
 end
 
+Then /^the campaign table rows should not contain "([^"]*)"$/ do |text|
+    tr = page.all('tr.campaign').first
+    expect(tr).not_to have_content(text)
+end
+
+Then /^the campaign table rows should contain "([^"]*)"$/ do |text|
+    tr = page.all('tr.campaign').first
+    expect(tr).to have_content(text)
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
@@ -120,7 +136,7 @@ end
 #
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
-    When %{I fill in "#{name}" with "#{value}"}
+    fill_in(name, :with => value)
   end
 end
 
@@ -144,7 +160,7 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
 
-Then /^(?:|I )should see "([^"]*)"$/ do |text|
+Then /^(?:|I )should see ['|"]([^']*)['|"]$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
   else
@@ -268,7 +284,7 @@ Then /^the "([^"]*)" checkbox(?: within (.*))? should not be checked$/ do |label
     end
   end
 end
- 
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
@@ -282,8 +298,8 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
     actual_params.should == expected_params
   else
@@ -307,15 +323,21 @@ end
 
 #hard-coded css classes?  More flexible approach possible?
 
-And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
-  row = all('.campaigns').find('tr') { |el| el.text =~ Regexp.new(title) }
-  expect(row.find('.#{attribute}').text).to eq '#{value}'
+And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+  row = all('.camp').find('tr') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find(".#{attribute}").text).to eq "#{value}"
+end
+
+Then /^(?:|I )should see that the campaign "([^"]*)" has an image "([^"]*)"$/ do |title, image|
+  row = all('.camp').find('tr') { |el| el.text =~ Regexp.new(title)}
+  expect(row.find('.image').find('img')['alt']).to match(/^#{image}$/i)
 end
 
 And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.organizations').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
+<<<<<<< HEAD
 
 Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function to add session data for cart MAY BE UNNEEDED WILL ASK SOMMERS FOR HELP
   pending
@@ -323,3 +345,5 @@ end
 
 
 
+=======
+>>>>>>> a68d78b4cd2da3e185c36354f856de1aa11bd282

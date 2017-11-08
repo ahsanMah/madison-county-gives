@@ -6,11 +6,11 @@ class CampaignsController < ApplicationController
 
 	def show
 		@campaign = Campaign.find(params[:id])
-	end		
+	end
 
 	def new
 
-		# #Only allow to create a campaign if approved 
+		# #Only allow to create a campaign if approved
 		# organization = Organization.find(params[:id])
 		# if !organization.is_approved
 		# 	flash[:error] = "Organization has to get approved for campaign creation"
@@ -25,10 +25,10 @@ class CampaignsController < ApplicationController
 		logger.debug("New campaign => #{campaign}")
 		if campaign.save
 			flash[:notice] = "Campaign proposal for \"#{campaign.name}\" successfully submitted for approval!"
-			redirect_to root_path and return
+			redirect_to campaigns_path and return
 		else
 			flash[:error] = "Unable to submit!"
-			redirect_to root_path
+			redirect_to new_campaign_path
 		end
 	end
 

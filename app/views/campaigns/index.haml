@@ -1,6 +1,6 @@
 #main.container
   %h3.header Currently active campaigns
-  
+
   %table.table
     %thead
       %tr
@@ -16,7 +16,11 @@
           %td.image= image_tag camp.image.url(:thumb)
           %td.name= link_to "#{camp.name}", campaign_path(camp)
           %td.description= truncate(camp.description, length: 60)
-          %td.goal= "#{camp.goal}" 
+          %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
           %td.start_date= camp.start_date
 
-  %div= link_to('Start new campaign proposal', new_campaign_path)
+  %p= link_to "List of Organizations", organizations_path
+  %br
+  %div= link_to('Start new campaign proposal', new_campaign_change_path)
+  %br
+  %p=link_to "Cart Checkout", controller: "home", action: "summary"
