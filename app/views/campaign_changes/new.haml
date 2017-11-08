@@ -22,6 +22,10 @@
       =f.label :start_date, "Expected start date for campaign"
       =f.date_field :start_date
 
+    =f.hidden_field :organization_id, value: current_user.organization.id
+    =f.hidden_field :campaign_id, value: @campaign.campaign_id
+    =f.hidden_field :action, value: @campaign.action
+
     =f.submit "Submit Proposal", :class=>"btn btn-primary"
 
 //Write back button

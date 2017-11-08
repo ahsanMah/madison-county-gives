@@ -9,7 +9,7 @@ class CampaignChangesController < ApplicationController
 
     #Populate change with existing campaign fields
     if params[:campaign_id]
-      exiting_campaign = Campaign.find(params[:campaign_id])
+      existing_campaign = Campaign.find(params[:campaign_id])
       existing_campaign.attributes.each do |curKey, curVal|
         if campaign_change.has_attribute? curKey
           campaign_change[curKey] = curVal
@@ -26,14 +26,15 @@ class CampaignChangesController < ApplicationController
 
   def create
     campaign = CampaignChange.new(create_update_params)
-
+    preamble = "campaign #{campaign.action == "CREATE" ? "proposal":"update"} for \"#{campaign.name}\""
+    
     if campaign.save
-			flash[:notice] = "Campaign proposal for \"#{campaign.name}\" successfully submitted for approval!"
-			redirect_to organization_path current_user.organization and return
-		else
-			flash[:error] = "Unable to submit campaign proposal!"
-			redirect_to new_campaign_change_path
-		end
+      flash[:notice] = preamble.capitalize + " successfully submitted for approval!"
+      redirect_to organization_path current_user.organization and return
+    else
+      flash[:error] = "Unable to submit " + preamble
+      redirect_to new_campaign_change_path and return
+    end
   end
 
   def edit
@@ -43,7 +44,7 @@ class CampaignChangesController < ApplicationController
   def update
     campaign = CampaignChange.find(params[:id])
     campaign.update(create_update_params)
-    campaign.action = "UPDATE"
+
     if campaign.save
       flash[:notice] = "Updates for \"#{campaign.name}\" successfully submitted for approval!"
       redirect_to campaigns_path and return
@@ -60,12 +61,18 @@ class CampaignChangesController < ApplicationController
   end
 
   def approve
+    #TODO: Implement mechanism for DELETE
+
     @pending_campaign = CampaignChange.find(params[:id])
-    @approved_campaign = Campaign.new()
+
+    campaign_id = @pending_campaign.campaign_id
+    @approved_campaign = campaign_id ? Campaign.find(campaign_id) : Campaign.new()
     
-    @pending_campaign.attributes.each do |curKey, curVal|
-        if @approved_campaign.has_attribute? curKey
-          @approved_campaign[curKey] = curVal
+
+    #Populating campaign with values from changes
+    @pending_campaign.attributes.each do |key, val|
+        if key.to_s != "id" && @approved_campaign.has_attribute?(key)
+          @approved_campaign[key] = val
         end
     end
 
@@ -82,6 +89,7 @@ class CampaignChangesController < ApplicationController
 
   private
   	 def create_update_params
-  	   params.require(:campaign_change).permit(:name, :description, :start_date, :goal, :image)
+  	   params.require(:campaign_change)
+             .permit(:name, :description, :start_date, :goal, :image, :organization_id, :campaign_id, :action)
   	 end
 end
