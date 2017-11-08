@@ -22,6 +22,11 @@ Feature: Donor Viewing an Organization
       | 2  | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
+    Given these CampaignChanges:
+      | id | name    | description  | goal   | organization_id | campaign_id |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           |
+
     Given I am signed out
 
   Scenario: Donor viewing an organization's page
