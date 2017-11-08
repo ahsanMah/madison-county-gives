@@ -12,7 +12,7 @@
 %br
 %br
 
-- if @organization.id == current_user.organization.id
+- if user_signed_in? && @organization.id == current_user.organization.id
     .row
         .col-md-offset-1
         .col-md-2= link_to('Edit organization details', edit_organization_path(@organization))

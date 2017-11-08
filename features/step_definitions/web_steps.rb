@@ -338,3 +338,10 @@ And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
 
+ HEAD
+
+Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function to add session data for cart MAY BE UNNEEDED WILL ASK SOMMERS FOR HELP
+  pending
+end
+
+ 24e793f7a619c1baf61ee5516989f9d721c780d1
