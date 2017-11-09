@@ -1,22 +1,22 @@
 %h3.header Currently active campaigns
 
 %table.table
-%thead
-  %tr
-    %th
-    %th Campaign
-    %th Description
-    %th Goal
-    %th Start Date
+  %thead
+    %tr
+      %th
+      %th Campaign
+      %th Description
+      %th Goal
+      %th Start Date
 
-%tbody
-  -@campaigns.each do |camp|
-    %tr.camp
-      %td.image= image_tag camp.image.url(:thumb)
-      %td.name= link_to "#{camp.name}", campaign_path(camp)
-      %td.description= truncate(camp.description, length: 60)
-      %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
-      %td.start_date= camp.start_date
+  %tbody
+    -@campaigns.each do |camp|
+      %tr.camp
+        %td.image= image_tag camp.image.url(:thumb)
+        %td.name= link_to "#{camp.name}", campaign_path(camp)
+        %td.description= truncate(camp.description, length: 60)
+        %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
+        %td.start_date= camp.start_date
 
 %p= link_to "List of Organizations", organizations_path
 %br
