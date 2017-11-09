@@ -1,6 +1,6 @@
 %h3.header Edit campaign proposal
 
-=form_for @campaign, :method => :patch do |f|
+=form_for @campaign, :multipart => true, :method => :patch do |f|
 .form-group
   =f.label :name, "Campaign Name"
   =f.text_field :name, :required => true, :class=>"form-control"

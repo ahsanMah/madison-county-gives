@@ -1,6 +1,6 @@
 %h3.header New Organization Registration
 
-=form_for @organization, :method => :post do |f|
+=form_for @organization, :multipart => true, :method => :post do |f|
 .field
   =f.label :name, "Organization Name"
   =f.text_field :name

@@ -1,6 +1,6 @@
 %h3.header Create a new campaign proposal
 
-=form_for @campaign, :method => :post do |f|
+=form_for @campaign, :multipart => true, :method => :post do |f|
 .form-group
   =f.label :name, "Campaign Name"
   =f.text_field :name, :required => true, :class=>"form-control"

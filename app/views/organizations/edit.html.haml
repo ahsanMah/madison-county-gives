@@ -1,6 +1,6 @@
 %h3.header Edit organization details
 
-=form_for @organization, :method => :patch do |f|
+=form_for @organization, :multipart => true, :method => :patch do |f|
 .field
   =f.label :name, "Organization Name"
   =f.text_field :name
