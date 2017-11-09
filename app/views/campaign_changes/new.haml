@@ -1,27 +1,30 @@
-#main.container
-  %h3.header Create a new campaign proposal
+%h3.header Create a new campaign proposal
 
-  =form_for @campaign, :method => :post do |f|
-    .form-group
-      =f.label :name, "Campaign Name"
-      =f.text_field :name, :required => true, :class=>"form-control"
+=form_for @campaign, :method => :post do |f|
+.form-group
+  =f.label :name, "Campaign Name"
+  =f.text_field :name, :required => true, :class=>"form-control"
 
-    .form-group
-      =f.label :description, "Description"
-      =f.text_field :description
+.form-group
+  =f.label :description, "Description"
+  =f.text_field :description
 
-    .form-group
-      =f.label :goal, "Funding Goal"
-      =f.number_field :goal, step: 100
+.form-group
+  =f.label :goal, "Funding Goal"
+  =f.number_field :goal, step: 100
 
-    .form-group
-      =f.label :image, "Image"
-      =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
+.form-group
+  =f.label :image, "Image"
+  =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
 
-    .form-group
-      =f.label :start_date, "Expected start date for campaign"
-      =f.date_field :start_date
+.form-group
+  =f.label :start_date, "Expected start date for campaign"
+  =f.date_field :start_date
 
-    =f.submit "Submit Proposal", :class=>"btn btn-primary"
+=f.hidden_field :organization_id, value: current_user.organization.id
+=f.hidden_field :campaign_id, value: @campaign.campaign_id
+=f.hidden_field :action, value: @campaign.action
+
+=f.submit "Submit Proposal", :class=>"btn btn-primary"
 
 //Write back button

@@ -1,30 +1,29 @@
-#main.container
-  %h3.header Edit organization details
+%h3.header Edit organization details
 
-  =form_for @organization, :method => :patch do |f|
-    .field
-      =f.label :name, "Organization Name"
-      =f.text_field :name
+=form_for @organization, :method => :patch do |f|
+.field
+  =f.label :name, "Organization Name"
+  =f.text_field :name
 
-    .field
-      =f.label :description, "Description"
-      =f.text_field :description
+.field
+  =f.label :description, "Description"
+  =f.text_field :description
 
-    .field
-      =f.label :primary_contact, "Contact Name"
-      =f.text_field :primary_contact
+.field
+  =f.label :primary_contact, "Contact Name"
+  =f.text_field :primary_contact
 
-    .field
-      =f.label :address, "Address"
-      =f.text_field :address
+.field
+  =f.label :address, "Address"
+  =f.text_field :address
 
-    .field
-      =f.label :email, "Email Address"
-      =f.text_field :email
+.field
+  =f.label :email, "Email Address"
+  =f.text_field :email
 
-    .field
-      =f.label :image, "Image"
-      =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
+.field
+  =f.label :image, "Image"
+  =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
 
-    .field
-      =f.submit "Submit organization changes"
+.field
+  =f.submit "Submit organization changes"

@@ -21,6 +21,11 @@ Feature: Donor Viewing Specific Campaign
       | 1  | Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       |
       | 2  | Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
 
+    Given these CampaignChanges:
+      | id | name    | description  | goal   | organization_id | campaign_id |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           |
+      
   Scenario: View a particular campaign
     Given I am on the campaigns index page
     Then I should see that the campaign "Apples" has a goal of "$50,000"
