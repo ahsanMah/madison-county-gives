@@ -21,7 +21,7 @@ class OrganizationsController < ApplicationController
 			flash[:notice] = "\"#{organization.name}\" submitted. Julie will contact you shortly!"
 			redirect_to organizations_path
 		else
-			flash[:warning] = "Something went wrong. Please try again."
+			flash[:error] = "We were unable to create your organization profile. " + organization.errors.full_messages.join(". ")
 			redirect_to new_organization_path(organization)
 		end
 	end
@@ -37,7 +37,7 @@ class OrganizationsController < ApplicationController
 			flash[:notice] = "Submitted changes for approval. Someone will review them shortly!"
 			redirect_to organizations_path
 		else
-			flash[:warning] = "Something went wrong. Please try again."
+			flash[:warning] = "We were unable to update your organization profile. " + organization.errors.full_messages.join(". ")
 			redirect_to edit_organization_path(organization)
 		end
 	end

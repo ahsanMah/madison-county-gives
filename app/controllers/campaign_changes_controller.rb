@@ -20,19 +20,19 @@ class CampaignChangesController < ApplicationController
 
     campaign_change.action = params[:campaign_action] || "CREATE"
     campaign_change.organization_id = current_user.organization.id
-    
+
     @campaign = campaign_change
   end
 
   def create
     campaign = CampaignChange.new(create_update_params)
     preamble = "campaign #{campaign.action == "CREATE" ? "proposal":"update"} for \"#{campaign.name}\""
-    
+
     if campaign.save
       flash[:notice] = preamble.capitalize + " successfully submitted for approval!"
       redirect_to organization_path current_user.organization and return
     else
-      flash[:error] = "Unable to submit " + preamble
+      flash[:error] = "We were unable to submit your " + preamble + ". " + campaign.errors.full_messages.join(". ")
       redirect_to new_campaign_change_path and return
     end
   end
@@ -49,10 +49,10 @@ class CampaignChangesController < ApplicationController
       flash[:notice] = "Updates for \"#{campaign.name}\" successfully submitted for approval!"
       redirect_to campaigns_path and return
     end
-    
+
     #Unable to save
     flash[:error] = "Unable to submit \"#{campaign.name}\" for approval!"
-    
+
     if campaign.action == "CREATE"
       redirect_to new_campaign_change_path @campaign and return
     end
@@ -67,7 +67,7 @@ class CampaignChangesController < ApplicationController
 
     campaign_id = @pending_campaign.campaign_id
     @approved_campaign = campaign_id ? Campaign.find(campaign_id) : Campaign.new()
-    
+
 
     #Populating campaign with values from changes
     @pending_campaign.attributes.each do |key, val|
