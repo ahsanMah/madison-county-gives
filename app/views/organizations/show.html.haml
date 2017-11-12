@@ -40,7 +40,7 @@
                     %td= c.goal
                     %td= c.is_active
                     - if @belongs_to_current_user
-                        %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id)
+                        %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
                         %td= link_to "Delete", organization_path(@organization), :method => :delete
                         - if !c.campaign_change.nil?
                             %td= link_to "Pending Change", campaign_change_path(c.campaign_change)
