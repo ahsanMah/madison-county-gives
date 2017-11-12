@@ -26,10 +26,10 @@ class CampaignChangesController < ApplicationController
 
   def create
     campaign = CampaignChange.new(create_update_params)
-    preamble = "campaign #{campaign.action == "CREATE" ? "proposal":"update"} for \"#{campaign.name}\""
+    preamble = "Campaign #{campaign.action == "CREATE" ? "proposal":"update"} for \"#{campaign.name}\""
 
     if campaign.save
-      flash[:notice] = preamble.capitalize + " successfully submitted for approval!"
+      flash[:notice] = preamble + " successfully submitted for approval!"
       redirect_to organization_path current_user.organization and return
     else
       flash[:error] = "We were unable to submit your " + preamble + ". " + campaign.errors.full_messages.join(". ")

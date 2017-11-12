@@ -23,7 +23,7 @@ module NavigationHelpers
       organization_path($1.to_i)
 
     when  /^the create new campaign page$/
-      '/campaigns/new'
+      '/campaign_changes/new'
 
     when /^the create new organization page$/
       '/organizations/new'
