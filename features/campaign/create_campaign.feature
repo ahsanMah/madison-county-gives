@@ -26,7 +26,7 @@ Feature: Organization Creating Campaign
       | id | name    | description  | goal   | organization_id | campaign_id |
       | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
       | 2  | Bananas | banana party | 80000  | 1               | 2           |
-      
+
     Given I am signed in as Test Organization 1
 
   Scenario: Create a new campaign without an image
