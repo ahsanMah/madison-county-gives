@@ -50,7 +50,7 @@ class CampaignChangesController < ApplicationController
 
     if campaign.save
       flash[:notice] = "Updates for \"#{campaign.name}\" successfully submitted for approval!"
-      redirect_to campaigns_path and return
+			redirect_to organization_path current_user.organization and return
     end
 
     #Unable to save

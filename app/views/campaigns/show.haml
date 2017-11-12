@@ -8,6 +8,8 @@
 .row
     .col-md-offset-2
     .col-md-8.description= "#{@campaign.description}"
+    .col-md-8.goal= "Funding Goal: #{number_to_currency(@campaign.goal, precision: 0)}"
+    .col-md-8.start_date= "Start date: #{@campaign.start_date}"
 %br
 %br
 

@@ -36,8 +36,8 @@
             -@organization.campaigns.each do |c|
                 %tr.campaign
                     %td= link_to c.name, campaign_path(c)
-                    %td= c.start_date
-                    %td= c.goal
+                    %td.start_date= c.start_date
+                    %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
                     %td= c.is_active
                     - if @belongs_to_current_user
                         %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
@@ -61,7 +61,7 @@
                 -@campaign_changes.each do |change|
                     %tr.campaign-change
                         %td= link_to change.name, campaign_change_path(change)
-                        %td= change.start_date
-                        %td= change.goal
+                        %td.start_date= change.start_date
+                        %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
                         %td= link_to "Edit", edit_campaign_change_path(change)
                         %td= link_to "Delete", campaign_change_path(change), :method => :delete
