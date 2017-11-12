@@ -11,13 +11,19 @@ class OrganizationsController < ApplicationController
 
 	def new
 		@organization = Organization.new
+		short_questions = ShortQuestion.all
+		short_questions.each do |question|
+			response = question.short_responses.new
+			@organization.short_responses << response
+		end
+		short_questions.save!
 	end
 
 	def create
 		organization = Organization.new(create_update_params)
 		organization.is_approved = false
 		organization.user_id = current_user.id
-		if organization.save
+		if organization.save && organization.short_responses.save
 			flash[:notice] = "\"#{organization.name}\" submitted. Julie will contact you shortly!"
 			redirect_to organizations_path
 		else
@@ -33,7 +39,7 @@ class OrganizationsController < ApplicationController
 	def update
 		organization = Organization.find(params[:id])
 		organization.update(create_update_params)
-		if organization.save
+		if organization.save && organization.short_responses.save
 			flash[:notice] = "Submitted changes for approval. Someone will review them shortly!"
 			redirect_to organizations_path
 		else

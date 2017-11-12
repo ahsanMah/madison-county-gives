@@ -25,5 +25,10 @@
     =f.label :image, "Image"
     =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
 
+  -@organization.short_responses.each do |response|
+    .field
+      =f.label :question, "#{response.short_question.question}"
+      =f.text_area :short_responses, :value => "#{response.response}", size:"100x5"
+
   .field
     =f.submit "Submit organization changes"
