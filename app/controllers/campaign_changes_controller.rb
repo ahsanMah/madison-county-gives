@@ -26,7 +26,10 @@ class CampaignChangesController < ApplicationController
 
   def create
     campaign = CampaignChange.new(create_update_params)
-    preamble = "Campaign #{campaign.action == "CREATE" ? "proposal":"update"} for \"#{campaign.name}\""
+    if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
+      campaign.image = Campaign.find(campaign.campaign_id).image
+    end
+    preamble = "Campaign #{campaign.action == "CREATE" ? "proposal" : "update"} for \"#{campaign.name}\""
 
     if campaign.save
       flash[:notice] = preamble + " successfully submitted for approval!"
