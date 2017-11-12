@@ -317,6 +317,13 @@ When /^(?:|I )click on [^"]*"([^"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
+  row = find('tr') { |el| el.text =~ Regexp.new(title)}
+  within(row) do
+    click_on(button)
+  end
+end
+
 Then /^I should see the image "(.*)"$/ do |img_name|
   expect(page).to have_css("img[src*= #{img_name}]")
 end
