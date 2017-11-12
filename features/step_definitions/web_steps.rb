@@ -317,6 +317,13 @@ When /^(?:|I )click on [^"]*"([^"]*)"$/ do |link|
   click_link(link)
 end
 
+When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
+  row = find('tr') { |el| el.text =~ Regexp.new(title)}
+  within(row) do
+    click_on(button)
+  end
+end
+
 Then /^I should see the image "(.*)"$/ do |img_name|
   expect(page).to have_css("img[src*= #{img_name}]")
 end
@@ -324,12 +331,17 @@ end
 #hard-coded css classes?  More flexible approach possible?
 
 And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
-  row = all('.camp').find('tr') { |el| el.text =~ Regexp.new(title) }
+  row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find(".#{attribute}").text).to eq "#{value}"
+end
+
+And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+  row = all('.campaign-change').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
 
 Then /^(?:|I )should see that the campaign "([^"]*)" has an image "([^"]*)"$/ do |title, image|
-  row = all('.camp').find('tr') { |el| el.text =~ Regexp.new(title)}
+  row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title)}
   expect(row.find('.image').find('img')['alt']).to match(/^#{image}$/i)
 end
 

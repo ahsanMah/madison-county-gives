@@ -26,7 +26,7 @@ Feature: Organization Creating Campaign
       | id | name    | description  | goal   | organization_id | campaign_id |
       | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
       | 2  | Bananas | banana party | 80000  | 1               | 2           |
-      
+
     Given I am signed in as Test Organization 1
 
   Scenario: Create a new campaign without an image
@@ -39,9 +39,8 @@ Feature: Organization Creating Campaign
 
     When I press "Submit Proposal"
     Then I should see 'Campaign proposal for "Food Cupboard" successfully submitted for approval!'
-    And I should see that the campaign "Food Cupboard" has a goal of "$10,000"
-    And I should see that the campaign "Food Cupboard" has a start_date of "2017-10-30"
-    And I should see that the campaign "Food Cupboard" has an image "default"
+    And I should see that the pending campaign "Food Cupboard" has a goal of "$10,000"
+    And I should see that the pending campaign "Food Cupboard" has a start_date of "2017-10-30"
 
   Scenario: Create a new campaign with an image
     Given I am on the create new campaign page
@@ -54,6 +53,5 @@ Feature: Organization Creating Campaign
     When I attach the file "foodcupboard.jpg" to "Image"
     When I press "Submit Proposal"
     Then I should see 'Campaign proposal for "Food Cupboard" successfully submitted for approval!'
-    And I should see that the campaign "Food Cupboard" has a goal of "$10,000"
-    And I should see that the campaign "Food Cupboard" has a start_date of "2017-10-30"
-    And I should see that the campaign "Food Cupboard" has an image "foodcupboard"
+    And I should see that the pending campaign "Food Cupboard" has a goal of "$10,000"
+    And I should see that the pending campaign "Food Cupboard" has a start_date of "2017-10-30"
