@@ -7,6 +7,8 @@ class OrganizationsController < ApplicationController
 
 	def show
 		@organization = Organization.find(params[:id])
+		@belongs_to_current_user = (user_signed_in?) && (@organization.id == current_user.organization.id)
+		@campaign_changes = @organization.campaign_changes.where("action = ?", "CREATE")
 	end
 
 	def new
