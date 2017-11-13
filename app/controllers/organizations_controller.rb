@@ -18,14 +18,16 @@ class OrganizationsController < ApplicationController
 			response = question.short_responses.new
 			@organization.short_responses << response
 		end
-		short_questions.save!
 	end
 
 	def create
 		organization = Organization.new(create_update_params)
 		organization.is_approved = false
 		organization.user_id = current_user.id
-		if organization.save && organization.short_responses.save
+
+		create_short_responses(organization)
+
+		if organization.save
 			flash[:notice] = "\"#{organization.name}\" submitted. Julie will contact you shortly!"
 			redirect_to organizations_path
 		else
@@ -41,7 +43,10 @@ class OrganizationsController < ApplicationController
 	def update
 		organization = Organization.find(params[:id])
 		organization.update(create_update_params)
-		if organization.save && organization.short_responses.save
+
+		update_short_responses(organization)
+
+		if organization.save
 			flash[:notice] = "Submitted changes for approval. Someone will review them shortly!"
 			redirect_to organizations_path
 		else
@@ -52,7 +57,27 @@ class OrganizationsController < ApplicationController
 
 private
 	def create_update_params
-		params.require(:organization).permit(:name, :primary_contact, :address, :email, :short_responses, :description, :image, :is_approved, :campaigns)
+		params.require(:organization).permit(:name, :primary_contact, :address, :email, :description, :image, :is_approved, :campaigns)
   	end
 
+  	def create_short_responses(organization)
+  		params["organization"].each do |org_attr|
+			if org_attr.match? /^short_response[\d]+$/
+				question_id = key.match(/^short_response([\d]+)$/).captures
+				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => params[:id], :response => params["organization"][org_attr])
+				short_response.save
+			end
+		end
+	end
+
+	def update_short_responses(organization)
+  		params["organization"].each do |org_attr|
+			if org_attr.match? /^short_response[\d]+$/
+				question_id = org_attr.match(/^short_response([\d]+)$/).captures
+				short_response = ShortResponse.where('short_question_id = ? AND organization_id = ?', question_id, organization.id).distinct.first
+				short_response.update(:response => params["organization"][org_attr])
+				short_response.save
+			end
+		end
+	end
 end

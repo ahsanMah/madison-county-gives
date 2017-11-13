@@ -25,10 +25,12 @@
     =f.label :image, "Image"
     =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
 
+  -short_response_id = 1
   -@organization.short_responses.each do |response|
     .field
       =f.label :question, "#{response.short_question.question}"
-      =f.text_area :short_responses, :value => "#{response.response}", size:"100x5"
+      =f.text_area "short_response#{short_response_id}".to_sym, :value => "#{response.response}", size:"100x5"
+      -short_response_id +=1
 
   .field
     =f.submit "Submit organization changes"
