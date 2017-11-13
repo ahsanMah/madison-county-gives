@@ -23,13 +23,10 @@ module NavigationHelpers
       organization_path($1.to_i)
 
     when  /^the create new campaign page$/
-      '/campaigns/new'
+      '/campaign_changes/new'
 
     when /^the create new organization page$/
       '/organizations/new'
-
-    when /^the organizations? index page$/
-      '/organizations/'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -39,6 +36,10 @@ module NavigationHelpers
 
     when  /^the create new campaign page$/
       '/campaigns_changes/new'
+
+    when /^organizations\/(.*)$/
+      organization_path($1.to_i)
+
     else
       begin
         page_name =~ /^the (.*) page$/

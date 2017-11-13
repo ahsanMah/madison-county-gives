@@ -1,5 +1,5 @@
 #main.container
-  %h3.header Edit campaign proposal
+  %h3.header Edit campaign change proposal
 
   =form_for @campaign, :method => :patch do |f|
     .form-group
@@ -8,7 +8,7 @@
 
     .form-group
       =f.label :description, "Description"
-      =f.text_field :description
+      =f.text_area :description, size: "100x3"
 
     .form-group
       =f.label :goal, "Funding Goal"
