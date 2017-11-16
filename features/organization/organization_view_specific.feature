@@ -30,9 +30,12 @@ Feature: Organization viewing specific campaign
     Given I am signed in as Test Organization 1
 
   Scenario: View a particular campaign
-    Given I am on the organization profile page
-    When I click on my campaign "Apples"
+    Given I am on the home page
+    And I follow "Test Organization 1"
+    And I click on "My Organization"
+    Then I should be on Test Organization 1's page
+    When I click on the campaign "Apples"
     Then I should see "apple farm"
     And I should see the image "default"
-    And I should see "50000"
+    And I should see "$50,000"
     And I should see "2017-08-09"

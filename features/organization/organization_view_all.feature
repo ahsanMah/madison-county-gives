@@ -30,6 +30,9 @@ Feature: Organization viewing all their campaigns
     Given I am signed in as Test Organization 1
 
   Scenario: View all my campaigns
-    Given I am on the organization profile page
-    Then I should see that "Apples" has a goal of "$50000"
-    And I should see that "Bananas" has a goal of "$80000"
+    Given I am on the home page
+    When I follow "Test Organization 1"
+    And I click on "My Organization"
+    Then I should be on Test Organization 1's page
+    Then I should see that the campaign "Apples" has a goal of "$50,000"
+    And I should see that the campaign "Bananas" has a goal of "$80,000"

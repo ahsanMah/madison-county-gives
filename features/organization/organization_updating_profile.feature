@@ -20,7 +20,8 @@ Feature: Organization Updating Its Profile
 
   Scenario: Update organization details as a user authorized by that organization
     Given I am on the organizations index page
-    Then I follow "Refugee Foundation"
+    Then I click on my organization "Refugee Foundation" in the nav bar
+    And I click on "My Organization"
     Then I should see "Edit organization details"
     When I click on "Edit organization details"
     And I fill in "Description" with "refuge for displaced peoples"

@@ -11,7 +11,7 @@
 
   %tbody
     -@campaigns.each do |camp|
-      %tr.camp
+      %tr.campaign
         %td.image= image_tag camp.image.url(:thumb)
         %td.name= link_to "#{camp.name}", campaign_path(camp)
         %td.description= truncate(camp.description, length: 60)
