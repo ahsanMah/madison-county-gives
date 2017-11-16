@@ -23,29 +23,29 @@
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
   Scenario: Donor wants to remain anonymous
-	Given I am on Apples page
-	When I fill in "Donation Amount" with "30"
-	And I press "Donate"
-	Then I should see "Thank You for your contribution!"
-	Then I should see "Cart (2)"
-	When I click on Cart(2) 
-	Then I should be on Summary page
-	Then I should see "Apples"
-	Then I should see "$30"
-	When I click on "Checkout"
-	Then I should be on Checkout page
-  When I fill in "First Name" with "Bob"
-  When I fill in "Last Name" with "Builder"
-  When I fill in "Email" with "bbuilder@colgate.edu"
-  When I fill in "Phone Number" with "123-456-7891"
-  When I check "Anonymous?"
-  When I press "Submit"
-  Then I should be on "TouchNet" page
-  Then I should see "Please select a payment method and enter an amount"
-  When I go to Apples page
-  I should not see "Andrew"
-  I should see "Anonymous"
-  I should see "$40"
+	  Given I am on Apples page
+	  When I fill in "Donation Amount" with "30"
+	  And I press "Donate"
+	  Then I should see "Thank You for your contribution!"
+	  Then I should see "Cart (2)"
+	  When I click on Cart(2) 
+	  Then I should be on Summary page
+	  Then I should see "Apples"
+	  Then I should see "$30"
+	  When I click on "Checkout"
+	  Then I should be on Checkout page
+    When I fill in "First Name" with "Bob"
+    When I fill in "Last Name" with "Builder"
+    When I fill in "Email" with "bbuilder@colgate.edu"
+    When I fill in "Phone Number" with "123-456-7891"
+    When I check "Anonymous?"
+    When I press "Submit"
+    Then I should be on "TouchNet" page
+    Then I should see "Please select a payment method and enter an amount"
+    When I go to Apples page
+    Then I should not see "Andrew"
+    And I should see "Anonymous"
+    And I should see "$40"
 
 
 

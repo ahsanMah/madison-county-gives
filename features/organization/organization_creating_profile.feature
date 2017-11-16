@@ -12,9 +12,9 @@ Feature: Organization Creating Its Profile and Requesting Approval
       | 3  | user3@example.com  | 123456    |
 
     Given these ShortQuestions:
-      | text                                                      |
-      | What is the your organization's principle goal?           |
-      | How does this benefit people in need in Madison County?   |
+      | id | question                                                  |
+      | 1  | What is your organization's principle goal?               |
+      | 2  | How does this benefit people in need in Madison County?   |
 
     Given these Organizations:
       | id | user_id  | name               | primary_contact | address           | email         | description         | is_approved  |

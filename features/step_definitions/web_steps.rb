@@ -68,6 +68,12 @@ Given /^these CampaignChanges:$/ do |table|
   end
 end
 
+Given /^these ShortQuestions:$/ do |table|
+  table.hashes.each do |h|
+    ShortQuestion.create!(h)
+  end
+end
+
 
 
 Given /^(?:|I )am signed in as (.*)$/ do |name|
@@ -330,12 +336,12 @@ end
 
 #hard-coded css classes?  More flexible approach possible?
 
-And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
 
-And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaign-change').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
@@ -345,7 +351,7 @@ Then /^(?:|I )should see that the campaign "([^"]*)" has an image "([^"]*)"$/ do
   expect(row.find('.image').find('img')['alt']).to match(/^#{image}$/i)
 end
 
-And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the organization "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.organizations').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
@@ -353,3 +359,16 @@ end
 Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function to add session data for cart MAY BE UNNEEDED WILL ASK SOMMERS FOR HELP
   pending
 end
+
+When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
+  within("ul.navbar-nav") do 
+    click_link(link)
+  end
+end
+
+When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
+  within("li.nav-item.dropdown.active") do 
+    click_link(link)
+  end
+end
+

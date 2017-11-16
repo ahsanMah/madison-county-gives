@@ -19,6 +19,9 @@ module NavigationHelpers
     when /^the campaigns? index page$/
       '/campaigns/'
 
+    when /^the organizations? index page$/
+      '/organizations/'
+
     when /^Test Organization ([0-9])'s page$/
       organization_path($1.to_i)
 
@@ -27,6 +30,7 @@ module NavigationHelpers
 
     when /^the create new organization page$/
       '/organizations/new'
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
