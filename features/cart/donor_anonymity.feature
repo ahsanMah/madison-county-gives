@@ -1,4 +1,4 @@
-Feature: option to be anonymous
+ Feature: option to be anonymous
   As a donor
   So I can donate directly from the website
   I want to be able to use electronic services to make payments, and decide if I want to be anonymous
