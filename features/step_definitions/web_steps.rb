@@ -330,7 +330,13 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
   end
 end
 
+
+# Then /^(?:|I )should see the image "([^"]*)"$/ do |imagename|
+#   expect(page).to have_selector(%(img[@alt="#{imagename.capitalize}"]))
+# end
+
 Then /^I should see the image "(.*)"$/ do |img_name|
+  debugger
   expect(page).to have_css("img[src*= #{img_name}]")
 end
 
@@ -341,7 +347,7 @@ And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
 
-And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-z_A-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaign-change').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end

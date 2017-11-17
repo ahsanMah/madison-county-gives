@@ -55,3 +55,5 @@ Feature: Organization Creating Campaign
     Then I should see 'Campaign proposal for "Food Cupboard" successfully submitted for approval!'
     And I should see that the pending campaign "Food Cupboard" has a goal of "$10,000"
     And I should see that the pending campaign "Food Cupboard" has a start_date of "2017-10-30"
+    When I click on "Food Cupboard"
+    Then I should see the image "foodcupboard"
