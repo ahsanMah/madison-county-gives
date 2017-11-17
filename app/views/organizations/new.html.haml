@@ -7,10 +7,10 @@
 
   .field
     =f.label :description, "Description"
-    =f.text_field :description
+    =f.text_area :description
 
   .field
-    =f.label :primary_contact, "Contact Name"
+    =f.label :primary_contact, "Primary Contact"
     =f.text_field :primary_contact
 
   .field
@@ -33,4 +33,4 @@
       -short_response_id +=1
 
   .field
-    =f.submit "Submit organization registration"
+    =f.submit "Submit Organization Registration"

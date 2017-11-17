@@ -74,6 +74,9 @@ Given /^these ShortQuestions:$/ do |table|
   end
 end
 
+Given /^debug$/ do
+  debugger
+end
 
 
 Given /^(?:|I )am signed in as (.*)$/ do |name|
@@ -300,6 +303,16 @@ Then /^(?:|I )should be on (.+)$/ do |page_name|
   end
 end
 
+Then /^(?:|I )should not be on (.+)$/ do |page_name|
+  current_path = URI.parse(current_url).path
+  if current_path.respond_to? :should
+    current_path.should_not == path_to(page_name)
+  else
+    assert_not_equal path_to(page_name), current_path
+  end
+end
+
+
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
@@ -361,14 +374,13 @@ Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function t
 end
 
 When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
-  within("ul.navbar-nav") do 
+  within("ul.navbar-nav") do
     click_link(link)
   end
 end
 
 When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
-  within("li.nav-item.dropdown.active") do 
+  within("li.nav-item.dropdown.active") do
     click_link(link)
   end
 end
-
