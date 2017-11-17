@@ -78,7 +78,7 @@ Feature: Organization updating campaigns
     Then I should see "Bananas"
     When I click "Edit" for "Bananas"
     And I fill in "Funding Goal" with "90000"
-    And I press "Submit Proposal"
+    And I press "Submit Update"
     Then I should see 'successfully submitted for approval!'
     Then I should see "Bananas"
     And I should see that the campaign "Bananas" has a goal of "$80,000"

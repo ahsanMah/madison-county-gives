@@ -5,10 +5,10 @@ Feature: Donation Cart functionality
 
 	Background: the website already has some existing campaigns for a particular organization but there already is an item in the cart
 		Given these Campaigns:
-			| name    | description  | goal   | start_date  | organization_id | is_active | is_approved | is_featured |
-			| Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       | false       |
-			| Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        | true        |
-			| Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        | true        |
+			| name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
+			| Apples  | apple farm   | 50000  | 2017-08-09  | 1               | true      | false       |
+			| Bananas | banana farm  | 80000  | 2017-01-10  | 1               | false     | true        |
+			| Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
 	Scenario: Add campaign donation to cart and checkout
 		Given there is a donation for "Bananas" at "40"

@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20171115212832) do
   end
 
   create_table "short_questions", force: :cascade do |t|
-    t.text "text"
+    t.text "question"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 20171115212832) do
   create_table "short_responses", force: :cascade do |t|
     t.integer "short_question_id"
     t.integer "organization_id"
-    t.text "text"
+    t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

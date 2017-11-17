@@ -10,7 +10,7 @@ Feature: link to touchnet to make donation
       Then I should see 'contributions thus far'
       And I should see 'You have not made any contributions yet :('
 
-    Scenario: fill out form and get redirected to touchnet
+    Scenario: Fill out form and get redirected to Touchnet
       Given I am on the home page
       And I click on "Cart Checkout"
       When I fill in the following: 
