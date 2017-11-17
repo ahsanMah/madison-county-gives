@@ -1,22 +1,50 @@
 %h3.header Currently active campaigns
 
-%table.table
-  %thead
-    %tr
-      %th
-      %th Campaign
-      %th Description
-      %th Goal
-      %th Start Date
-
-  %tbody
+.container
+  .row
     -@campaigns.each do |camp|
-      %tr.camp
-        %td.image= image_tag camp.image.url(:thumb)
-        %td.name= link_to "#{camp.name}", campaign_path(camp)
-        %td.description= truncate(camp.description, length: 60)
-        %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
-        %td.start_date= camp.start_date
+      .col-lg-4.col-md-6.col-sm-12.card-set
+        .card.mb-4
+          =image_tag camp.image.url(:thumb), :class => "img-fluid"
+          .card-body
+            %h4= camp.name
+            %p.card-text= truncate(camp.description, length: 100)
+            =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
+          .card-footer
+            .progress.mb-2
+              .progress-bar{ :role => "progressbar", :style => "width: " + number_to_percentage(camp.percent_raised, precision: 0), "aria-valuenow" => camp.percent_raised, "aria-valuemin" => 0, "aria-valuemax" => 100 }= number_to_percentage(camp.percent_raised, precision: 0)
+            .row
+              .col-sm-4
+                %small= number_to_currency(camp.amount_raised, precision: 0)
+              .col-sm-4
+                %small= number_to_currency(camp.goal, precision: 0)
+              .col-sm-4
+                %small= camp.start_date
+            .row
+              .col-sm-4
+                %small.text-muted Funded
+              .col-sm-4
+                %small.text-muted Goal
+              .col-sm-4
+                %small.text-muted Start Date
+
+-# %table.table
+-#   %thead
+-#     %tr
+-#       %th
+-#       %th Campaign
+-#       %th Description
+-#       %th Goal
+-#       %th Start Date
+-#
+-#   %tbody
+-#     -@campaigns.each do |camp|
+-#       %tr.camp
+-#         %td.image= image_tag camp.image.url(:thumb)
+-#         %td.name= link_to "#{camp.name}", campaign_path(camp)
+-#         %td.description= truncate(camp.description, length: 60)
+-#         %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
+-#         %td.start_date= camp.start_date
 
 %p= link_to "List of Organizations", organizations_path
 %br

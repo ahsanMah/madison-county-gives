@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171108033607) do
+ActiveRecord::Schema.define(version: 20171115212832) do
 
   create_table "campaign_changes", force: :cascade do |t|
     t.integer "campaign_id"
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20171108033607) do
     t.string "email"
     t.string "phone"
     t.decimal "amount", precision: 10, scale: 2
-    t.integer "transaction_id"
+    t.string "transaction_id"
     t.datetime "time"
     t.boolean "is_anonymous"
     t.boolean "is_konosioni"
