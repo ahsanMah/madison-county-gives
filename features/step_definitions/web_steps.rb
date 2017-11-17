@@ -166,7 +166,8 @@ When /^(?:|I )choose "([^"]*)"$/ do |field|
 end
 
 When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
-  attach_file(field, File.expand_path(path))
+  actual_image_path = "features/test_images/" + path
+  attach_file(field, File.expand_path(actual_image_path))
 end
 
 Then /^(?:|I )should see ['|"]([^']*)['|"]$/ do |text|
@@ -349,7 +350,6 @@ end
 # end
 
 Then /^I should see the image "(.*)"$/ do |img_name|
-  debugger
   expect(page).to have_css("img[src*= #{img_name}]")
 end
 
