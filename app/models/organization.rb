@@ -9,4 +9,6 @@ class Organization < ApplicationRecord
   validates_attachment :image, :content_type => {:content_type =>
   ["image/jpeg", "image/png", "image/gif"]}, :size => { less_than: 3.megabytes }
 
+  validates :name, :presence => true
+
 end
