@@ -14,7 +14,16 @@ RSpec.describe CampaignChangesController, type: :controller do
 			get :new, :params => {:campaign_id => 1, :campaign_action => "DELETE"}
 			expect(response).to redirect_to organization_path subject.current_user.organization.id
 		end
-	
+		
+		it "should redirect to organization page if failed to override existing change" do
+			campaign = Campaign.new(:name=>"Please work", :campaign_change => CampaignChange.new)
+			expect(Campaign).to receive(:find).with("1") { campaign }
+
+			get :new, :params => {:campaign_id => 1, :campaign_action => "DELETE"}
+			expect(flash[:error]).to eq "There was an existing pending change that we could not override. Please try manually deleting the pending change first."
+			expect(response).to redirect_to organization_path subject.current_user.organization.id
+		end
+
 		it "should redirect to new form page when failed to create" do
 			post :create, :params => {:campaign_change => {:action => "CREATE"}}
 			expect(response).to redirect_to new_campaign_change_path
@@ -30,6 +39,7 @@ RSpec.describe CampaignChangesController, type: :controller do
 	        expect(flash[:error]).to eq "Unable to delete \"#{CampaignChange.find("1").name}\"!"
 			expect(response).to redirect_to organization_path subject.current_user.organization.id
 		end
+
 	end
 
 	it "should redirect to organization page upon a campaign change deletion" do
@@ -43,5 +53,4 @@ RSpec.describe CampaignChangesController, type: :controller do
 
 	describe "should approve changes correctly" do
 	end
-
 end

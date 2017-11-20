@@ -29,5 +29,4 @@ module ControllerMacros
         allow(change).to receive(:save) {nil}
       end
   end
-
 end
