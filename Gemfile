@@ -48,6 +48,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
+  gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
 end
 
 group :development do

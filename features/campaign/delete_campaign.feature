@@ -31,9 +31,10 @@ Feature: Organization Deleting Campaign
 
   Scenario: Delete a particular campaign
     Given I am on the organizations index page
-    And I click on "Test Organization 1"
+    And I click on my organization "Test Organization 1" in the nav bar
+    And I click on "My Organization"
     Then I should see "Apples"
     When I click on my campaign, "Apples"
     Then I should see "Funding Goal: $50,000"
     When I follow "Delete campaign"
-    Then I should see "We have requested the admin to remove "Apples" from Madison County Gives."
+    Then I should see 'We have requested the admin to remove'
