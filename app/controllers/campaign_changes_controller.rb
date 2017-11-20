@@ -34,7 +34,7 @@ class CampaignChangesController < ApplicationController
       if campaign_change.save
         flash[:notice] = "We have requested the admin to remove \"#{existing_campaign.name}\" from Madison County Gives."
       else
-        flash[:error] = "We were unable to delete the campaign \"#{existing_campaign.name}\". " + campaign.errors.full_messages.join(". ")
+        flash[:error] = "We were unable to delete the campaign \"#{existing_campaign.name}\". " + campaign_change.errors.full_messages.join(". ")
       end  
         redirect_to organization_path(campaign_change.organization_id) and return
     end
