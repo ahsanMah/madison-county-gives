@@ -10,97 +10,32 @@ Feature: Organization Updating Its Profile
       | 2  | user2@example.com  | 123456    |
       | 3  | user3@example.com  | 123456    |
 
-    Given these ShortQuestions:
-      | id | question                        |
-      | 1  | What is your goal?              |
-      | 2  | How does this benefit people?   |
-
     Given these Organizations:
       | id | user_id  | name               | primary_contact | address           | email         | description         | is_approved  |
       | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Disaster-relief     | true         |
       | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Home for all        | true         |
 
+    Given these ShortQuestions:
+      | id | question                        |
+      | 1  | What is your goal?              |
+      | 2  | How does this benefit people?   |
+
+    Given these ShortResponses:
+      | id  | response                | short_question_id | organization_id |
+      | 1   | What?                   | 1                 | 1               |
+
     Scenario: User can edit his/her profile
-      Given I am signed in as 
-      Then I should be on the create new organization page
-      Then I should see "Unknown Organization"
-      When I click on "Unknown Organization"
-      And I click on "My Organization"
-      Then I should be on the create new organization page
-
-    Scenario: User not redirected to organization registration (and will never see it) if having already done so
       Given I am signed in as Red Cross
-      Then I should not be on the create new organization page
       When I click on "Red Cross"
-      And I click on "My Organization"
-      Then I should not be on the create new organization page
-      When I go to the create new organization page
-      Then I should not be on the create new organization page
-
-    Scenario: Petition MadisonGives to create a new organization to display
-      Given I am on the login page
+      And I click on "Edit My Profile"
+      Then I should see "Disaster-relief"
+      And I should see "What is your goal?"
+      And I should see "What?"
+      And I should see "How does this benefit people?"
       When I fill in the following:
-        | Email     | user3@example.com   |
-        | Password  | 123456              |
-      And I press "Log in"
-      When I fill in the following:
-        | Organization Name               | Cool Schoolz             |
-        | Primary Contact                 | Mary Canta               |
-        | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
-        | Description                     | Schooling for kids       |
-        | What is your goal?              | I don't know.            |
-        | How does this benefit people?   | What?                    |
-      And I press "Submit Organization Registration"
+        | Organization Name               | Red X                    |
+        | How does this benefit people?   | I don't know             |
+      And I press "Submit Change"
       Then I should be on the organizations index page
-      And I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
-      And I should see "Schooling for kids"
-
-    Scenario: Name cannot be blank
-      Given I am on the login page
-      When I fill in the following:
-        | Email     | user3@example.com   |
-        | Password  | 123456              |
-      And I press "Log in"
-      When I fill in the following:
-        | Primary Contact                 | Mary Canta               |
-        | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
-        | Description                     | Schooling for kids       |
-        | What is your goal?              | I don't know.            |
-        | How does this benefit people?   | What?                    |
-      And I press "Submit Organization Registration"
-      Then I should be on the create new organization page
-      And I should see "We were unable to create your organization profile. Name can't be blank"
-
-    Scenario: Image should not exceed 3 MB
-      Given I am on the login page
-      When I fill in the following:
-        | Email     | user3@example.com   |
-        | Password  | 123456              |
-      And I press "Log in"
-      When I fill in the following:
-        | Organization Name               | Cool Schoolz             |
-        | Primary Contact                 | Mary Canta               |
-        | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
-        | Description                     | Schooling for kids       |
-        | What is your goal?              | I don't know.            |
-        | How does this benefit people?   | What?                    |
-      And I attach the file "oversized_image.jpg" to "Image"
-      And I press "Submit Organization Registration"
-      Then I should be on the create new organization page
-      And I should see "We were unable to create your organization profile. Image file size must be less than 3 MB."
-      When I fill in the following:
-        | Organization Name               | Cool Schoolz             |
-        | Primary Contact                 | Mary Canta               |
-        | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
-        | Description                     | Schooling for kids       |
-        | What is your goal?              | I don't know.            |
-        | How does this benefit people?   | What?                    |
-      And I attach the file "nonoversized_image.jpg" to "Image"
-      And I press "Submit Organization Registration"
-      Then I should be on the organizations index page
-      And I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
-      And I should see "Schooling for kids"
+      And I should see "Your changes have been submitted."
+      And I should see "Red X"

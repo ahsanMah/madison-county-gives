@@ -74,6 +74,14 @@ Given /^these ShortQuestions:$/ do |table|
   end
 end
 
+Given /^these ShortResponses:$/ do |table|
+  table.hashes.each do |h|
+    ShortResponse.create!(h)
+  end
+end
+
+
+
 Given /^debug$/ do
   debugger
 end
