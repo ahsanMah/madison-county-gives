@@ -1,32 +1,38 @@
-%h3.header Currently active campaigns
+.jumbotron.jumbotron-fluid
+  .container
+    %h1.display-4 Welcome to Madison County Gives!
+    %p.lead Madison County Gives is an online giving site powered by the Konosioni Senior Honor Society at Colgate University.  This crowdfunding site connects not-for-profit organizations that provide services to residents of Madison County with students and community members who want to help through web-based fundraising campaigns.
+    %br
+    %p.lead
+      =link_to "View Campaigns", "#active-campaigns", :class => "btn btn-success btn-lg"
 
-.container
-  .row
-    -@campaigns.each do |camp|
-      .col-lg-4.col-md-6.col-sm-12.card-set
-        .card.mb-4
-          =image_tag camp.image.url(:thumb), :class => "img-fluid"
-          .card-body
-            %h4= camp.name
-            %p.card-text= truncate(camp.description, length: 100)
-            =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
-          .card-footer
-            .progress.mb-2
-              .progress-bar{ :role => "progressbar", :style => "width: " + number_to_percentage(camp.percent_raised, precision: 0), "aria-valuenow" => camp.percent_raised, "aria-valuemin" => 0, "aria-valuemax" => 100 }= number_to_percentage(camp.percent_raised, precision: 0)
-            .row
-              .col-sm-4
-                %small= number_to_currency(camp.amount_raised, precision: 0)
-              .col-sm-4
-                %small= number_to_currency(camp.goal, precision: 0)
-              .col-sm-4
-                %small= camp.start_date
-            .row
-              .col-sm-4
-                %small.text-muted Funded
-              .col-sm-4
-                %small.text-muted Goal
-              .col-sm-4
-                %small.text-muted Start Date
+.row
+  %a{ :name => "active-campaigns" }
+  -@campaigns.each do |camp|
+    .col-lg-4.col-md-6.col-sm-12.card-set
+      .card.mb-4
+        =image_tag camp.image.url(:thumb), :class => "img-fluid card-img"
+        .card-body
+          %h4= camp.name
+          %p.card-text= truncate(camp.description, length: 100)
+          =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
+        .card-footer
+          .progress.mb-2
+            .progress-bar{ :role => "progressbar", :style => "width: " + number_to_percentage(camp.percent_raised, precision: 0), "aria-valuenow" => camp.percent_raised, "aria-valuemin" => 0, "aria-valuemax" => 100 }= number_to_percentage(camp.percent_raised, precision: 0)
+          .row
+            .col-sm-4
+              %small= number_to_currency(camp.amount_raised, precision: 0)
+            .col-sm-4
+              %small= number_to_currency(camp.goal, precision: 0)
+            .col-sm-4
+              %small= camp.start_date
+          .row
+            .col-sm-4
+              %small.text-muted Funded
+            .col-sm-4
+              %small.text-muted Goal
+            .col-sm-4
+              %small.text-muted Start Date
 
 -# %table.table
 -#   %thead
