@@ -41,6 +41,17 @@ class OrganizationsController < ApplicationController
 
 	def edit
 		@organization = Organization.find(params[:id])
+		existing_short_responses = @organization.short_responses.ids
+		short_questions = ShortQuestion.all
+		short_questions.each do |question|
+			if existing_short_responses.include? question.id
+				response = @organization.short_responses.find(question.id)
+			else
+				response = question.short_responses.new
+			end
+			@organization.short_responses << response
+		end
+
 	end
 
 	def update
@@ -61,10 +72,10 @@ class OrganizationsController < ApplicationController
 private
 	def create_update_params
 		params.require(:organization).permit(:name, :primary_contact, :address, :email, :description, :image, :is_approved, :campaigns)
-  	end
+	end
 
-  	def create_short_responses(organization)
-  		params["organization"].each do |org_attr|
+	def create_short_responses(organization)
+		params["organization"].each do |org_attr|
 			if org_attr.match? /^short_response[\d]+$/
 				question_id = org_attr.match(/^short_response([\d]+)$/).captures
 				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => params[:id], :response => params["organization"][org_attr])
@@ -74,7 +85,7 @@ private
 	end
 
 	def update_short_responses(organization)
-  		params["organization"].each do |org_attr|
+		params["organization"].each do |org_attr|
 			if org_attr.match? /^short_response[\d]+$/
 				question_id = org_attr.match(/^short_response([\d]+)$/).captures
 				short_response = ShortResponse.where('short_question_id = ? AND organization_id = ?', question_id, organization.id).distinct.first
@@ -83,4 +94,5 @@ private
 			end
 		end
 	end
+
 end
