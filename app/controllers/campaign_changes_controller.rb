@@ -1,5 +1,10 @@
 class CampaignChangesController < ApplicationController
 
+  def index
+    if params[:posting_id] != nil
+      puts "successfully posted back"
+    end
+  end
   def show
     @campaign = CampaignChange.find(params[:id])
   end
