@@ -17,4 +17,16 @@ module ControllerMacros
       sign_in user
     end
   end
+
+  def setup_campaign_change_failure_stubs
+
+    before(:each) do
+        change = CampaignChange.new(:id => 1, :name => "Why hello there")
+        
+        allow(CampaignChange).to receive(:new) { change }
+        allow(CampaignChange).to receive(:find).with("1") { change }
+        allow(change).to receive(:save) {nil}
+      end
+  end
+
 end

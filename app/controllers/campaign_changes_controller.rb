@@ -62,6 +62,7 @@ class CampaignChangesController < ApplicationController
 
   def create
     campaign = CampaignChange.new(create_update_params)
+    
     if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
       campaign.image = Campaign.find(campaign.campaign_id).image
     end
@@ -91,12 +92,7 @@ class CampaignChangesController < ApplicationController
 
     #Unable to save
     flash[:error] = "Unable to submit \"#{campaign.name}\" for approval!"
-
-    if campaign.action == "CREATE"
-      redirect_to new_campaign_change_path @campaign and return
-    end
-
-    redirect_to edit_campaign_change_path @campaign
+    redirect_to edit_campaign_change_path campaign
   end
 
   def approve
@@ -136,7 +132,7 @@ class CampaignChangesController < ApplicationController
 
   def destroy
     campaign_change = CampaignChange.find(params[:id])
-    if campaign_change.destroy(campaign_id)
+    if campaign_change.destroy
         flash[:notice] = "Campaign change for \"#{campaign.name}\ has been removed form the listing"
       else
         flash[:error] = "Unable to delete \"#{campaign.name}\"!"
