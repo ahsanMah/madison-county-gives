@@ -1,15 +1,26 @@
-%h3.header Our Supported Organizations
+%h1.header.text-center.mb-4 Our Supported Organizations
 
-%table.table
-  %thead
-    %tr
-      %th
-      %th Organization
-      %th Description
+.col-lg-8.offset-lg-2
+  -@organizations.each do |org|
+    .card.mb-4
+      =image_tag org.image.url(:large), :class => "card-img-top img-fluid"
+      .card-body
+        %h4.card-title.title-with-badge= org.name
+        - if org.id == @my_organization_id
+          %span.badge.badge-info.ml-2 My organization
+        %p.card-text= truncate(org.description, length: 100)
+        =link_to "View details", organization_path(org), :class => "btn btn-primary"
 
-  %tbody
-    -@organizations.each do |org|
-      %tr.org
-        %td.image= image_tag org.image.url(:thumb)
-        %td.name= link_to "#{org.name}", organization_path(org)
-        %td.description= truncate(org.description, length: 60)
+-# %table.table
+-#   %thead
+-#     %tr
+-#       %th
+-#       %th Organization
+-#       %th Description
+-#
+-#   %tbody
+-#     -@organizations.each do |org|
+-#       %tr.org
+-#         %td.image= image_tag org.image.url(:thumb)
+-#         %td.name= link_to "#{org.name}", organization_path(org)
+-#         %td.description= truncate(org.description, length: 60)

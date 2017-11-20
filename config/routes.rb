@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   root "campaigns#index"
   get '/summary', to: 'home#summary'
   get '/checkout', to: 'home#checkout'
+  post '/processing', to: 'home#processing'
   post '/create_payment', to: 'home#create_payment'
 end

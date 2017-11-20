@@ -1,3 +1,4 @@
+
 .row
     .col-md-offset-1
     .col-md-4
@@ -13,6 +14,11 @@
 %br
 %br
 
+.row
+    =form_tag "/processing" do
+        =number_field_tag :amount_to_cart, "Amount to donate?"
+        =hidden_field_tag :id_to_cart, @campaign.id
+        =submit_tag "add to cart"
 .row
     -if user_signed_in? && current_user.organization.id == @campaign.organization_id
         .col-md-offset-1
