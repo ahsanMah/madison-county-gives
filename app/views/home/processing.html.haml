@@ -1,5 +1,6 @@
 %h3 Updating Homepage
-=form_tag root_path, id: "processing_form", method: "post" do
-  .field
-    =hidden_field_tag :name, :BILL_NAME
-    =hidden_field_tag :
+-if params[:amt_to_cart] == nil
+    =form_tag root_path, id: "processing_form", method: "get" do
+        =hidden_field_tag :posting_key, :posting_key
+        =hidden_field_tag 
+        =submit_tag "", style="visibility: hidden;"
