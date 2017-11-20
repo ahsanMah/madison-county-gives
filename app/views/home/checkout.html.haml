@@ -28,7 +28,10 @@
     %p=number_field_tag :BILL_POSTAL_CODE
   .field
     =label_tag :AMT, "Amount"
-    %p=number_field_tag :AMT
+    %p=number_field_tag :AMT, @total
+  .field
+    =label_tag :anon, "Anonymous donation?"
+    =check_box_tag :anon
   .field
     =submit_tag "Proceed to payment"
 
