@@ -25,6 +25,7 @@ module ControllerMacros
         
         allow(CampaignChange).to receive(:new) { change }
         allow(CampaignChange).to receive(:find).with("1") { change }
+        allow(change).to receive(:destroy) {nil}
         allow(change).to receive(:save) {nil}
       end
   end

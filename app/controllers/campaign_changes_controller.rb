@@ -132,10 +132,11 @@ class CampaignChangesController < ApplicationController
 
   def destroy
     campaign_change = CampaignChange.find(params[:id])
+    campaign_name = campaign_change.name
     if campaign_change.destroy
-        flash[:notice] = "Campaign change for \"#{campaign.name}\ has been removed form the listing"
-      else
-        flash[:error] = "Unable to delete \"#{campaign.name}\"!"
+        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed form the listing"
+    else
+        flash[:error] = "Unable to delete \"#{campaign_name}\"!"
     end
     redirect_to organization_path(current_user.organization.id) and return
   end
