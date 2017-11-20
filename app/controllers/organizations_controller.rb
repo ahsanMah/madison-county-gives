@@ -2,7 +2,10 @@ class OrganizationsController < ApplicationController
 	before_action :authenticate_user!, except: [:index, :show]
 
 	def index
-		@organizations = Organization.all
+		@organizations = Organization.where("is_approved = ?", true)
+		if user_signed_in?
+			@my_organization_id = current_user.organization.id
+		end
 	end
 
 	def show
