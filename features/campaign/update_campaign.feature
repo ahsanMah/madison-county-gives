@@ -45,7 +45,6 @@ Feature: Organization updating campaigns
     When I click "Pending Change" for "Apples"
     Then I should see 'apple and pear farm'
     And I should see "Funding Goal: $60,000"
-    And I should see the image "applefarm"
 
   Scenario: Update a running campaign from the organization's profile page
     Given I am on Test Organization 1's page
@@ -58,7 +57,6 @@ Feature: Organization updating campaigns
     And I should see that the campaign "Apples" has a goal of "$50,000"
     When I click "Pending Change" for "Apples"
     Then I should see 'apple and pear farm'
-    And I should see the image "applefarm"
 
   Scenario: Update a pending campaign from the organization's profile page
     Given I am on Test Organization 1's page

@@ -38,7 +38,7 @@ Feature: Organization Creating Campaign
       | Expected start date for campaign        |  2017-10-30               |
 
     When I press "Submit Proposal"
-    Then I should see 'Campaign proposal for "Food Cupboard" successfully submitted for approval!'
+    Then I should see 'successfully submitted for approval!'
     And I should see that the pending campaign "Food Cupboard" has a goal of "$10,000"
     And I should see that the pending campaign "Food Cupboard" has a start_date of "2017-10-30"
 
@@ -52,7 +52,7 @@ Feature: Organization Creating Campaign
 
     When I attach the file "foodcupboard.jpg" to "Image"
     When I press "Submit Proposal"
-    Then I should see 'Campaign proposal for "Food Cupboard" successfully submitted for approval!'
+    Then I should see "successfully submitted for approval!"
     And I should see that the pending campaign "Food Cupboard" has a goal of "$10,000"
     And I should see that the pending campaign "Food Cupboard" has a start_date of "2017-10-30"
     When I click on "Food Cupboard"
