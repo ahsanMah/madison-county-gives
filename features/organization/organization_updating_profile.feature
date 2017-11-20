@@ -2,7 +2,6 @@ Feature: Organization Updating Its Profile
   As an organization
   So I can manage the basic information in my profile
   I want to update my profile
-  (essay response update is currently not supported)
 
   Background:
     Given these Users:
@@ -16,17 +15,27 @@ Feature: Organization Updating Its Profile
       | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Disaster-relief     | true         |
       | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Home for all        | true         |
 
-    Given I am signed in as Refugee Foundation
+    Given these ShortQuestions:
+      | id | question                        |
+      | 1  | What is your goal?              |
+      | 2  | How does this benefit people?   |
 
-  Scenario: Update organization details as a user authorized by that organization
-    Given I am on the organizations index page
-    Then I click on my organization "Refugee Foundation" in the nav bar
-    And I click on "My Organization"
-    Then I should see "Edit organization details"
-    When I click on "Edit organization details"
-    And I fill in "Description" with "refuge for displaced peoples"
-    And I attach the file "foodcupboard.jpg" to "Image"
-    And I press "Submit organization changes"
-    Then I should see "Submitted changes for approval"
-    Then I should see "refuge for displaced peoples"
-    And I should see the image "foodcupboard"
+    Given these ShortResponses:
+      | id  | response                | short_question_id | organization_id |
+      | 1   | What?                   | 1                 | 1               |
+
+    Scenario: User can edit his/her profile
+      Given I am signed in as Red Cross
+      When I click on "Red Cross"
+      And I click on "Edit My Profile"
+      Then I should see "Disaster-relief"
+      And I should see "What is your goal?"
+      And I should see "What?"
+      And I should see "How does this benefit people?"
+      When I fill in the following:
+        | Organization Name               | Red X                    |
+        | How does this benefit people?   | I don't know             |
+      And I press "Submit Change"
+      Then I should be on the organizations index page
+      And I should see "Your changes have been submitted."
+      And I should see "Red X"

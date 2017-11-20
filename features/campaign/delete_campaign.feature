@@ -1,4 +1,4 @@
-Feature: Organization Managing Campaign
+Feature: Organization Deleting Campaign
   As an organization
   So I can delete a campaign
   I want to be able to request for a deletion of a campaign
@@ -30,12 +30,11 @@ Feature: Organization Managing Campaign
     Given I am signed in as Test Organization 1
 
   Scenario: Delete a particular campaign
-    Given I am on the home page
-    And I click on "Test Organization 1"
+    Given I am on the organizations index page
+    And I click on my organization "Test Organization 1" in the nav bar
     And I click on "My Organization"
     Then I should see "Apples"
     When I click on my campaign, "Apples"
     Then I should see "Funding Goal: $50,000"
     When I follow "Delete campaign"
-    Then I should see "We have requested the admin to remove "Apples" from Madison County Gives."
-    And I should see "Apples"
+    Then I should see 'We have requested the admin to remove'
