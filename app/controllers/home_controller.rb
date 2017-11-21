@@ -4,10 +4,14 @@ class HomeController < ApplicationController
   def index
   end
   def summary
-    carty = session[:cart]
-    @names_val = {}
-    carty.each do |id, val|
-      @names_val[Campaign.find(id).name] = val
+    @empty = 1
+    if session[:cart]
+      @empty = 0
+      carty = session[:cart]
+      @names_val = {}
+      carty.each do |id, val|
+        @names_val[Campaign.find(id).name] = val
+      end
     end
   end
   def checkout
@@ -19,17 +23,14 @@ class HomeController < ApplicationController
     end
   end
   def processing
-     amt = params[:amount_to_cart]
-     id = params[:id_to_cart]
-     puts "#{amt} ++++++++++++++++ #{id}"
-     if amt != nil
-       if session[:cart][id]
-         session[:cart][id] = (session[:cart][id].to_i + amt.to_i).to_s
-       else
-         session[:cart][id] = amt
+     if session[:cart] == nil
+       session[:cart] = {}
      end
+     amt = params["amount_to_cart"]
+     id = params["id_to_cart"]
+     if amt != nil && id != nil
+       session[:cart][id] = amt
      elsif params[:pmt_amt]
-       puts "touchnet posted back"
      end
      redirect_to root_path
      return
@@ -46,7 +47,7 @@ class HomeController < ApplicationController
       anon = params[:anon]
       kono = params[:sponsored]
       split_payment = params[:pay_split]
-      split_payment.each |campaign_id, amount| do 
+      split_payment.each do |campaign_id, amount| 
         c = Campaigns.find(campaign_id)
         c.payments << Payment.create(campaign_id, name, email, phone, amount, transaction_id, time, anon, kono)
       end

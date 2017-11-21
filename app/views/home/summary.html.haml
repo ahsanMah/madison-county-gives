@@ -1,8 +1,7 @@
 .row
   .col-sm-12.text-center.bootstrap-welcome
 
-%link{:rel => :stylesheet, :type => :"text/css", :href => "/assets/stylesheets/home"}
--if @names_val
+-if @empty == 0
   -t = 0
   %table.summary 
     %thead{:class => "heading"} Donation Cart
@@ -16,11 +15,11 @@
       -t = t + amt.to_i
   %br
   %strong.header Total: #{t}
+  %br
+  =link_to "proceed to checkout", controller: "home", action: "checkout"
 -else
   %h3 You have not made any contributions yet :(
 
-%br
-=link_to "proceed to checkout", controller: "home", action: "checkout"
 %p
 =link_to "back to main page", root_path
     
