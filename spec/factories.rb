@@ -1,5 +1,5 @@
 FactoryBot.define do
-  
+
   factory :user do
     email "helpme@sos.com"
     password "password"
@@ -12,7 +12,7 @@ FactoryBot.define do
   end
 
   factory :payment_params do
-  	cart {1 => 25, 2 => 10}
+  	cart Hash(1 => 25, 2 => 10)
   	name "John Doe"
   	email "test@test.com"
   	phone "123-456-7890"

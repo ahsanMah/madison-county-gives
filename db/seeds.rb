@@ -10,6 +10,7 @@ Organization.delete_all
 Campaign.delete_all
 ShortQuestion.delete_all
 ShortResponse.delete_all
+Payment.delete_all
 
 def seed_image(file_name)
   File.open(File.join(Rails.root, "/app/assets/images/seed/#{file_name}"))
@@ -41,3 +42,8 @@ ShortResponse.create!(id: 6, organization_id: 2, short_question_id: 3, response:
 ShortResponse.create!(id: 7, organization_id: 3, short_question_id: 1, response: "We want to prepare young kids in Madison County for their futures through advanced education starting at an early age.")
 ShortResponse.create!(id: 8, organization_id: 3, short_question_id: 2, response: "Education is one of the best ways for economic mobility and it also encourages local innovation. Investing in the kids of Madison County will definitely bring good to the area through personal advancement.")
 ShortResponse.create!(id: 9, organization_id: 3, short_question_id: 3, response: "Once we have prepared the textbooks and building permits for a schooling location, we are looking to hire university PhDs to teach Kantian Philosophy, Numerical Analysis, and Keysnian Economics in our classes.")
+
+Payment.create(id: 1, campaign_id: 1, amount: 30000)
+Payment.create(id: 2, campaign_id: 1, amount: 60000)
+Payment.create(id: 3, campaign_id: 2, amount: 20)
+Payment.create(id: 4, campaign_id: 3, amount: 2000000)
