@@ -19,17 +19,15 @@ class HomeController < ApplicationController
     end
   end
   def processing
-     amt = params[:amount_to_cart]
-     id = params[:id_to_cart]
-     puts "#{amt} ++++++++++++++++ #{id}"
+     amt = params[:amount_to_cart].to_i
+     id = params[:id_to_cart].to_i
      if amt != nil
        if session[:cart][id]
          session[:cart][id] = (session[:cart][id].to_i + amt.to_i).to_s
        else
-         session[:cart][id] = amt
+         session[:cart][id] = amt.to_s
      end
      elsif params[:pmt_amt]
-       puts "touchnet posted back"
      end
      redirect_to root_path
      return
