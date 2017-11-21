@@ -13,20 +13,27 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
+    when /^the login page$/
+      new_user_session_path
+
     when /^the home\s?page$/
       '/'
 
     when /^the campaigns? index page$/
-      '/campaigns/'
+      campaigns_path
+
+    when /^the organizations? index page$/
+      organizations_path
 
     when /^Test Organization ([0-9])'s page$/
       organization_path($1.to_i)
 
     when  /^the create new campaign page$/
-      '/campaign_changes/new'
+      new_campaign_change_path
 
     when /^the create new organization page$/
-      '/organizations/new'
+      new_organization_path
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -35,7 +42,7 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
 
     when  /^the create new campaign page$/
-      '/campaigns_changes/new'
+      new_campaign_change_path
 
     when /^organizations\/(.*)$/
       organization_path($1.to_i)

@@ -1,24 +1,25 @@
-%h3.header Edit campaign proposal
+#main.container
+  %h3.header Edit campaign change proposal
 
-=form_for @campaign, :multipart => true, :method => :patch do |f|
-  .form-group
-    =f.label :name, "Campaign Name"
-    =f.text_field :name, :required => true, :class=>"form-control"
+  =form_for @campaign, :method => :patch do |f|
+    .form-group
+      =f.label :name, "Campaign Name"
+      =f.text_field :name, :required => true, :class=>"form-control"
 
-  .form-group
-    =f.label :description, "Description"
-    =f.text_field :description
+    .form-group
+      =f.label :description, "Description"
+      =f.text_area :description, size: "100x3"
 
-  .form-group
-    =f.label :goal, "Funding Goal"
-    =f.number_field :goal, step: 100
+    .form-group
+      =f.label :goal, "Funding Goal"
+      =f.number_field :goal, step: 100
 
-  .form-group
-    =f.label :image, "Image"
-    =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
+    .form-group
+      =f.label :image, "Image"
+      =f.file_field :image, accept: "image/png,image/gif,image/jpeg"
 
-  .form-group
-    =f.label :start_date, "Expected start date for campaign"
-    =f.date_field :start_date
+    .form-group
+      =f.label :start_date, "Expected start date for campaign"
+      =f.date_field :start_date
 
-  =f.submit "Submit Update", :class=>"btn btn-primary"
+    =f.submit "Submit Update", :class=>"btn btn-primary"

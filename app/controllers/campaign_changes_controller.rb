@@ -1,25 +1,61 @@
 class CampaignChangesController < ApplicationController
 
+  def index
+    if params[:posting_id] != nil
+      puts "successfully posted back"
+    end
+  end
   def show
     @campaign = CampaignChange.find(params[:id])
   end
 
   def new
+
+    #TODO: Check if user signed in
+
     campaign_change = CampaignChange.new
 
-    #Populate change with existing campaign fields
+    #Retrieve any existing models
     if params[:campaign_id]
       existing_campaign = Campaign.find(params[:campaign_id])
-      existing_campaign.attributes.each do |curKey, curVal|
-        if campaign_change.has_attribute? curKey
-          campaign_change[curKey] = curVal
-        end
-      end
-      campaign_change.campaign_id = existing_campaign.id
+      existing_change = existing_campaign.campaign_change 
+      campaign_change.campaign_id = params[:campaign_id]
     end
 
     campaign_change.action = params[:campaign_action] || "CREATE"
     campaign_change.organization_id = current_user.organization.id
+
+    #Bypass new form page if action is to delete campaign
+    if campaign_change.action == "DELETE"
+
+      #Override an existing campaign change if it exists
+      if existing_campaign && (existing_change = existing_campaign.campaign_change)
+        if !existing_change.destroy
+          flash[:error] = "There was an existing pending change that we could not override. Please try manually deleting the pending change first."
+          redirect_to organization_path(campaign_change.organization_id) and return
+        end
+      end
+
+      if campaign_change.save
+        flash[:notice] = "We have requested the admin to remove \"#{existing_campaign.name}\" from Madison County Gives."
+      else
+        flash[:error] = "We were unable to delete the campaign \"#{existing_campaign.name}\". " + campaign_change.errors.full_messages.join(". ")
+      end  
+        redirect_to organization_path(campaign_change.organization_id) and return
+    end
+
+    if existing_change
+      redirect_to edit_campaign_change_path existing_change
+    end
+
+    #Populate change with existing campaign fields
+    if existing_campaign
+      existing_campaign.attributes.each do |key, val|
+        if key.to_s != "id" && campaign_change.has_attribute?(key)
+          campaign_change[key] = val
+        end
+      end
+    end
 
     @campaign = campaign_change
   end
@@ -64,13 +100,21 @@ class CampaignChangesController < ApplicationController
   end
 
   def approve
-    #TODO: Implement mechanism for DELETE
+    #TODO: CHECK THAT ADMIN IS LOGGED IN
 
     @pending_campaign = CampaignChange.find(params[:id])
-
     campaign_id = @pending_campaign.campaign_id
     @approved_campaign = campaign_id ? Campaign.find(campaign_id) : Campaign.new()
-
+    
+    
+    if @pending_campaign.action == "DELETE"
+      if @approved_campaign.destroy(campaign_id)
+        flash[:notice] = "Campaign \"#{campaign.name}\ has been removed form the listing."
+      else
+         flash[:error] = "Unable to delete \"#{campaign.name}\"!"
+      end
+      redirect_to organization_path(current_user.organization.id) and return
+    end
 
     #Populating campaign with values from changes
     @pending_campaign.attributes.each do |key, val|
@@ -88,6 +132,16 @@ class CampaignChangesController < ApplicationController
       redirect_to campaign_change_path @pending_campaign
     end
 
+  end
+
+  def destroy
+    campaign_change = CampaignChange.find(params[:id])
+    if campaign_change.destroy(campaign_id)
+        flash[:notice] = "Campaign change for \"#{campaign.name}\ has been removed form the listing"
+      else
+        flash[:error] = "Unable to delete \"#{campaign.name}\"!"
+    end
+    redirect_to organization_path(current_user.organization.id) and return
   end
 
   private

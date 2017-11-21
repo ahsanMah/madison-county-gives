@@ -68,6 +68,23 @@ Given /^these CampaignChanges:$/ do |table|
   end
 end
 
+Given /^these ShortQuestions:$/ do |table|
+  table.hashes.each do |h|
+    ShortQuestion.create!(h)
+  end
+end
+
+Given /^these ShortResponses:$/ do |table|
+  table.hashes.each do |h|
+    ShortResponse.create!(h)
+  end
+end
+
+
+
+Given /^debug$/ do
+  debugger
+end
 
 
 Given /^(?:|I )am signed in as (.*)$/ do |name|
@@ -157,10 +174,11 @@ When /^(?:|I )choose "([^"]*)"$/ do |field|
 end
 
 When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
-  attach_file(field, File.expand_path(path))
+  actual_image_path = "features/test_images/" + path
+  attach_file(field, File.expand_path(actual_image_path))
 end
 
-Then /^(?:|I )should see ['|"]([^']*)['|"]$/ do |text|
+Then /^(?:|I )should see ["']([^"]*)["']$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
   else
@@ -294,6 +312,16 @@ Then /^(?:|I )should be on (.+)$/ do |page_name|
   end
 end
 
+Then /^(?:|I )should not be on (.+)$/ do |page_name|
+  current_path = URI.parse(current_url).path
+  if current_path.respond_to? :should
+    current_path.should_not == path_to(page_name)
+  else
+    assert_not_equal path_to(page_name), current_path
+  end
+end
+
+
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
@@ -324,18 +352,23 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
   end
 end
 
+
+# Then /^(?:|I )should see the image "([^"]*)"$/ do |imagename|
+#   expect(page).to have_selector(%(img[@alt="#{imagename.capitalize}"]))
+# end
+
 Then /^I should see the image "(.*)"$/ do |img_name|
   expect(page).to have_css("img[src*= #{img_name}]")
 end
 
 #hard-coded css classes?  More flexible approach possible?
 
-And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
 
-And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-zA-Z_]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-z_A-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.campaign-change').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find(".#{attribute}").text).to eq "#{value}"
 end
@@ -345,11 +378,23 @@ Then /^(?:|I )should see that the campaign "([^"]*)" has an image "([^"]*)"$/ do
   expect(row.find('.image').find('img')['alt']).to match(/^#{image}$/i)
 end
 
-And /^(?:|I )should see that "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the organization "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.organizations').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
 
 Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function to add session data for cart MAY BE UNNEEDED WILL ASK SOMMERS FOR HELP
   pending
+end
+
+When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
+  within("ul.navbar-nav") do
+    click_link(link)
+  end
+end
+
+When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
+  within("li.nav-item.dropdown.active") do
+    click_link(link)
+  end
 end

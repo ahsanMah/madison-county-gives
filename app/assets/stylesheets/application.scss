@@ -1,5 +1,17 @@
 @import "bootstrap";
 
 .white-icon {
-    fill: #ffffff;
+  fill: #ffffff;
+}
+
+.card-set {
+  display: flex; // ensure same height for each campaign card
+}
+
+.card-img {
+  max-height: 40%
+}
+
+.title-with-badge {
+  display: inline-block;
 }

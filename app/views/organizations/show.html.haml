@@ -1,67 +1,99 @@
-.row
-    .col-md-offset-1
-    .col-md-4
-        %h3.header.title= "#{@organization.name}"
-    .col-md-offset-1
-    .col-md-offset-4
-        %td.image= image_tag @organization.image.url(:large)
+=link_to "Back to all organizations", organizations_path, :class => "btn btn-light float-right"
 
-.row
-    .col-md-offset-2
-    .col-md-8.description= "#{@organization.description}"
-%br
-%br
+%h1= @organization.name
 
-- if user_signed_in? && @organization.id == current_user.organization.id
-    .row
-        .col-md-offset-1
-        .col-md-2= link_to('Edit organization details', edit_organization_path(@organization))
-        .col-md-2= link_to('Back to organization list', organizations_path)
-
-.row
-    %h4 Campaigns
-.row
-    %table.table
-        %thead
-            %tr
-                %th Name
-                %th Start Date
-                %th Goal
-                %th Active?
-                - if @belongs_to_current_user
-                    %th
-                    %th
-                    %th
-        %tbody
-            -@organization.campaigns.each do |c|
-                %tr.campaign
-                    %td= link_to c.name, campaign_path(c)
-                    %td.start_date= c.start_date
-                    %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
-                    %td= c.is_active
-                    - if @belongs_to_current_user
-                        %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
-                        %td= link_to "Delete", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "DELETE")
-                        - if !c.campaign_change.nil?
-                            %td= link_to "#{c.campaign_change.action == "UPDATE" ? "Pending Change" : "Pending Deletion"}", campaign_change_path(c.campaign_change)
-
-.row
-    - if @belongs_to_current_user
-        %h4 New campaign proposals pending approval
+.card
+  =image_tag @organization.image.url(:large), :class => "card-img-top img-fluid"
+  .card-body
+    -if @belongs_to_current_user
+      =link_to octicon("pencil") + "  Edit My Profile", edit_organization_path(current_user.organization), :class => "btn btn-light float-right"
+    %h4.card-title Description
+    %p.card-text= @organization.description
+  - if @belongs_to_current_user
+    .card-footer
+      %h5.card-title Additional Information
+      %p.card-title.text-muted.mr-auto The following is invisible to the public.
+      .container
         .row
-        %table.table
-            %thead
-                %tr
-                    %th Name
-                    %th Start Date
-                    %th Goal
-                    %th
-                    %th
-            %tbody
-                -@campaign_changes.each do |change|
-                    %tr.campaign-change
-                        %td= link_to change.name, campaign_change_path(change)
-                        %td.start_date= change.start_date
-                        %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
-                        %td= link_to "Edit", edit_campaign_change_path(change)
-                        %td= link_to "Delete", campaign_change_path(change), :method => :delete
+          .col-lg-2
+            %p.card-text
+              %strong Primary Contact
+          .col-lg-10
+            %p= @organization.primary_contact
+        .row
+          .col-lg-2
+            %p
+              %strong Address
+          .col-lg-10
+            %p= @organization.address
+        .row
+          .col-lg-2
+            %p
+              %strong Email
+          .col-lg-10
+            %p= @organization.email
+        %hr
+        .row
+          .col-lg-12
+            - @organization.short_responses.each do |response|
+              %p
+                %strong= response.short_question.question
+              %p= response.response
+
+-# .row
+-#   .col-md-4
+-#     %h1.header.title= "#{@organization.name}"
+-#     %td.image= image_tag
+
+-# .row
+-#   .col-md-offset-2
+-#   .col-md-8.description= "#{@organization.description}"
+-# %br
+-# %br
+
+.row
+  %h4 Campaigns
+.row
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Start Date
+        %th Goal
+        %th Active?
+        - if @belongs_to_current_user
+          %th
+          %th
+          %th
+    %tbody
+      -@organization.campaigns.each do |c|
+        %tr.campaign
+          %td= link_to c.name, campaign_path(c)
+          %td.start_date= c.start_date
+          %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
+          %td= c.is_active
+          - if @belongs_to_current_user
+            %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
+            %td= link_to "Delete", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "DELETE")
+            - if !c.campaign_change.nil?
+              %td= link_to "#{c.campaign_change.action == "UPDATE" ? "Pending Change" : "Pending Deletion"}", campaign_change_path(c.campaign_change)
+
+.row
+  - if @belongs_to_current_user
+    %h4 New campaign proposals pending approval
+    %table.table
+      %thead
+        %tr
+          %th Name
+          %th Start Date
+          %th Goal
+          %th
+          %th
+      %tbody
+        -@campaign_changes.each do |change|
+          %tr.campaign-change
+            %td= link_to change.name, campaign_change_path(change)
+            %td.start_date= change.start_date
+            %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
+            %td= link_to "Edit", edit_campaign_change_path(change)
+            %td= link_to "Delete", campaign_change_path(change), :method => :delete
