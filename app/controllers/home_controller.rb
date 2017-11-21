@@ -19,11 +19,13 @@ class HomeController < ApplicationController
     end
   end
   def processing
-     amt = params[:amount_to_cart].to_i
-     id = params[:id_to_cart].to_i
+     amt = params[:amount_to_cart]
+     id = params[:id_to_cart]
+     console.log(amt)
+     console.log(id)
      if amt != nil
-       if session[:cart][id]
-         session[:cart][id] = (session[:cart][id].to_i + amt.to_i).to_s
+       if session[:cart][id.to_i]
+         session[:cart][id.to_i] = (session[:cart][id.to_i].to_i + amt.to_i).to_s
        else
          session[:cart][id] = amt.to_s
      end
