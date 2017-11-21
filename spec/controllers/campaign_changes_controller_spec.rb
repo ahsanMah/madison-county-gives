@@ -64,23 +64,28 @@ RSpec.describe CampaignChangesController, type: :controller do
 		end
 
 		it "should redirect to organization page with error message upon failing to approve a campaign change deletion" do
-			# change = CampaignChange.new(:id => 1, :name => "Please work", :action => "DELETE")
-			# 	allow(CampaignChange).to receive(:find).with("1") { change }
-			#
-			# get :approve, :params => {:id => 1}
-			# 	expect(flash[:error]).to eq "Unable to delete \"#{change.name}\"!"
-			# expect(response).to redirect_to organization_path subject.current_user.organization.id
+			change = CampaignChange.new(:id => 1, :name => "Please work", :action => "DELETE")
+				allow(CampaignChange).to receive(:find).with("1") { change }
+
+			get :approve, :params => {:id => 1}
+				expect(flash[:error]).to eq "Unable to delete \"#{change.name}\"!"
+			expect(response).to redirect_to organization_path subject.current_user.organization.id
 		end
 
-		it "should redirect to the campaign page upon successfully approving a campaign change update" do
-			# campaign = Campaign.new(:id => 1, :name=>"Please work")
-			# 	allow(Campaign).to receive(:find).with(1) { campaign }
-			# change = CampaignChange.new(:id => 1, :name => "IT WORKED", :action => "UPDATE", :campaign_id => 1)
-			# 	allow(CampaignChange).to receive(:find).with("1") { change }
-			#
-			# get :approve, :params => {:id => 1}
-			# 	expect(flash[:notice]).to eq "Campaign has been successfully approved!"
-			# expect(response).to redirect_to campaign_path campaign.id
+		it "should redirect to the campaign page upon successfully approving a campaign proposal" do
+			change = CampaignChange.new(:id => 1, :name => "IT WORKED", :action => "CREATE", :organization_id => 1)
+				allow(CampaignChange).to receive(:find).with("1") { change }
+
+			get :approve, :params => {:id => 1}
+				expect(flash[:notice]).to eq "Campaign has been successfully approved!"
+		end
+
+		it "should redirect to the campaign change page upon failling to approve a campaign proposal" do
+			change = CampaignChange.new(:id => 1, :name => "IT WORKED", :action => "CREATE")
+				allow(CampaignChange).to receive(:find).with("1") { change }
+
+			get :approve, :params => {:id => 1}
+				expect(flash[:error]).to eq "Oops! We failed to approve this campaign, please try again."
 		end
 	end
 end

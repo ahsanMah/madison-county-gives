@@ -2,11 +2,11 @@ class CampaignChangesController < ApplicationController
   before_action :authenticate_user!
   before_action :belongs_to_user, :only => [:edit, :update, :destroy]
 
-  def index
-    if params[:posting_id] != nil
-      puts "successfully posted back"
-    end
-  end
+  # def index
+  #   if params[:posting_id] != nil
+  #     puts "successfully posted back"
+  #   end
+  # end
 
   def show
     @campaign = CampaignChange.find(params[:id])
@@ -88,11 +88,11 @@ class CampaignChangesController < ApplicationController
     if campaign.save
       flash[:notice] = "Updates for \"#{campaign.name}\" successfully submitted for approval!"
 			redirect_to organization_path current_user.organization and return
+    else
+      #Unable to save
+      flash[:error] = "We were unable to submit \"#{campaign.name}\" for approval. Please try again."
+      redirect_to edit_campaign_change_path campaign
     end
-
-    #Unable to save
-    flash[:error] = "We were unable to submit \"#{campaign.name}\" for approval. Please try again."
-    redirect_to edit_campaign_change_path campaign
   end
 
   def approve
@@ -102,9 +102,8 @@ class CampaignChangesController < ApplicationController
     campaign_id = @pending_campaign.campaign_id
     @approved_campaign = campaign_id ? Campaign.find(campaign_id) : Campaign.new()
 
-
     if @pending_campaign.action == "DELETE"
-      if @approved_campaign.destroy
+      if campaign_id && @approved_campaign.destroy
         flash[:notice] = "Campaign \"#{@approved_campaign.name}\ has been removed form the listing."
       else
          flash[:error] = "We were unable to delete \"#{@pending_campaign.name}\". Please try again."
