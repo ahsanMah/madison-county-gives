@@ -4,11 +4,14 @@ class HomeController < ApplicationController
   def index
   end
   def summary
-    carty = session[:cart]
-    @names_val = {}
-    carty.each do |id, val|
-      @names_val[Campaign.find(id).name] = val
-    end
+    @empty = 1
+    if session[:cart]
+      @empty = 0
+      carty = session[:cart]
+      @names_val = {}
+      carty.each do |id, val|
+        @names_val[Campaign.find(id).name] = val
+      end
   end
   def checkout
     @carty = session[:cart]
