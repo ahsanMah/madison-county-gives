@@ -24,10 +24,10 @@ Organization.create!(id: 1, user_id: 1, name: "Gates Foundation", primary_contac
 Organization.create!(id: 2, user_id: 2, name: "Spaghetti 4 Freddy", primary_contact: "Fred Y.", address: "11 Noodle Lane", email: "pastapls@yahoo.com", description: "Give Freddy the Italian hospitality he doesn't deserve, today", is_approved: true, image: seed_image('spaghetti.jpg'))
 Organization.create!(id: 3, user_id: 3, name: "Youth Education", primary_contact: "Jean Erick", address: "95 Charity Ave.", email: "hello@schooltheyouth.org", description: "Bright minds are bright futures", is_approved: true, image: seed_image('youth_education.jpg'))
 
-Campaign.create!(id: 1, name: "Malaria Vaccines", organization_id: 1, description: "We are funding a large wave of Malaria vaccines for children in rural Zimbabwe.", goal: 300000, image: seed_image('malaria_vaccine.jpeg'))
-Campaign.create!(id: 2, name: "Ravioli Meal for 1", organization_id: 2, description: "Olive Garden is closed all next week and I think I'm going to starve.", goal: 20, image: seed_image('ravioli.jpeg'))
-Campaign.create!(id: 3, name: "Cure for Polio", organization_id: 1, description: "This is an ambitious undertaking; immunization is not enough. We need to cure polio. Again.", goal: 1000000, image: seed_image('polio.jpg'))
-Campaign.create!(id: 4, name: "Textbooks for 1st Graders", organization_id: 3, description: "SAT Prep for Toddlers and Junior Differential Equations needed for a class of 20!", goal: 1000, image: seed_image('textbooks.jpg'))
+Campaign.create!(id: 1, name: "Malaria Vaccines", organization_id: 1, start_date: Date.new(2017, 11, 13), is_active: true, description: "We are funding a large wave of Malaria vaccines for children in rural Zimbabwe.", goal: 300000, image: seed_image('malaria_vaccine.jpeg'))
+Campaign.create!(id: 2, name: "Ravioli Meal for 1", organization_id: 2, start_date: Date.new(2017, 10, 13), is_active: true, description: "Olive Garden is closed all next week and I think I'm going to starve.", goal: 20, image: seed_image('ravioli.jpeg'))
+Campaign.create!(id: 3, name: "Cure for Polio", organization_id: 1, start_date: Date.new(2017, 10, 13), is_active: false, description: "This is an ambitious undertaking; immunization is not enough. We need to cure polio. Again.", goal: 1000000, image: seed_image('polio.jpg'))
+Campaign.create!(id: 4, name: "Textbooks for 1st Graders", organization_id: 3, start_date: Date.new(2017, 11, 13), is_active: true, description: "SAT Prep for Toddlers and Junior Differential Equations needed for a class of 20!", goal: 1000, image: seed_image('textbooks.jpg'))
 
 ShortQuestion.create!(id: 1, question: "What is the central goal of your organization?")
 ShortQuestion.create!(id: 2, question: "How does this organization benefit the people of Madison County?")

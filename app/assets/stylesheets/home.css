@@ -4,7 +4,7 @@
 
 
 body {
-   background = #666;
+   background-color: #666;
 }
 
 .header{
@@ -13,7 +13,7 @@ body {
 }
 
 .title_name, .title_amt{
-   letter-spacing -.015em;
+   letter-spacing: -0.015em;
    font-size: .75em;
    padding: 5px, 5px, 5px, 10px;
    float: left;

@@ -2,7 +2,7 @@
 
 %h1= @organization.name
 
-.card
+.card.mb-4
   =image_tag @organization.image.url(:large), :class => "card-img-top img-fluid"
   .card-body
     -if @belongs_to_current_user
@@ -11,8 +11,11 @@
     %p.card-text= @organization.description
   - if @belongs_to_current_user
     .card-footer
-      %h5.card-title Additional Information
-      %p.card-title.text-muted.mr-auto The following is invisible to the public.
+      =content_tag :h4, :class => "card-title mb-4" do
+        Additional Information
+        =content_tag :span, "This is invisible to the public", :class => "text-muted ml-2 small"
+      -# %h4.card-title.mb-4 Additional Information
+      -# %span.text-muted.ml-2 This is invisible to the public.
       .container
         .row
           .col-lg-2
@@ -51,49 +54,109 @@
 -# %br
 -# %br
 
+%h2 Campaigns
 .row
-  %h4 Campaigns
-.row
-  %table.table
-    %thead
-      %tr
-        %th Name
-        %th Start Date
-        %th Goal
-        %th Active?
+  -@organization.campaigns.each do |camp|
+    .col-lg-4.col-md-6.col-sm-12.card-set
+      .card.mb-4
+        =image_tag camp.image.url(:thumb), :class => "img-fluid card-img"
+        .card-body
+          =content_tag :h4 do
+            =camp.name
+            -if camp.is_active
+              =content_tag :span, "Active", :class => "badge badge-success align-top ml-2"
+            -else
+              =content_tag :span, "Inactive", :class => "badge badge-secondary align-top ml-2"
+          %p.card-text= truncate(camp.description, length: 100)
+          %hr
+          %p= content_tag(:strong, "Start Date: ") + camp.start_date
+          %p= content_tag(:strong, "Goal: ") + number_to_currency(camp.goal, precision: 0)
+          %hr
+          =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
         - if @belongs_to_current_user
-          %th
-          %th
-          %th
-    %tbody
-      -@organization.campaigns.each do |c|
-        %tr.campaign
-          %td= link_to c.name, campaign_path(c)
-          %td.start_date= c.start_date
-          %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
-          %td= c.is_active
-          - if @belongs_to_current_user
-            %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
-            %td= link_to "Delete", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "DELETE")
-            - if !c.campaign_change.nil?
-              %td= link_to "#{c.campaign_change.action == "UPDATE" ? "Pending Change" : "Pending Deletion"}", campaign_change_path(c.campaign_change)
+          .card-footer
+            =link_to octicon('pencil', :class => "white-icon") + "  Edit", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "UPDATE"), :class => "btn btn-info btn-sm mt-2"
+            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "DELETE"), :class => "btn btn-danger btn-sm mt-2"
+            - if !camp.campaign_change.nil?
+              %td= link_to octicon('diff') + "#{camp.campaign_change.action == "UPDATE" ? "  Pending Change" : "  Pending Deletion"}", (camp.campaign_change.action == "UPDATE" ? campaign_change_path(camp.campaign_change) : "#"), :class => "btn btn-warning btn-sm mt-2"
+%br
 
-.row
-  - if @belongs_to_current_user
-    %h4 New campaign proposals pending approval
-    %table.table
-      %thead
-        %tr
-          %th Name
-          %th Start Date
-          %th Goal
-          %th
-          %th
-      %tbody
-        -@campaign_changes.each do |change|
-          %tr.campaign-change
-            %td= link_to change.name, campaign_change_path(change)
-            %td.start_date= change.start_date
-            %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
-            %td= link_to "Edit", edit_campaign_change_path(change)
-            %td= link_to "Delete", campaign_change_path(change), :method => :delete
+- if @belongs_to_current_user && @campaign_changes.length > 0
+  %h2.text-muted Campaigns Pending Approval
+  .row
+    -@campaign_changes.each do |change|
+      .col-lg-4.col-md-6.col-sm-12.card-set
+        .card.mb-4
+          =image_tag change.image.url(:thumb), :class => "img-fluid card-img"
+          .card-body
+            =content_tag :h4 do
+              =change.name
+              =content_tag :span, "Pending", :class => "badge badge-warning align-top ml-2"
+            %p.card-text= truncate(change.description, length: 100)
+            %hr
+            %p= content_tag(:strong, "Start Date: ") + change.start_date
+            %p= content_tag(:strong, "Goal: ") + number_to_currency(change.goal, precision: 0)
+            %hr
+            =link_to "View details", campaign_change_path(change), :class => "btn btn-primary"
+          .card-footer
+            =link_to octicon('pencil', :class => "white-icon") + "  Edit", edit_campaign_change_path(change), :class => "btn btn-info btn-sm mt-2"
+            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", campaign_change_path(change), :method => :delete, :class => "btn btn-danger btn-sm mt-2", :data => { confirm: 'Are you certain you want to delete this?' }
+
+
+-#-@campaign_changes.each do |change|
+-#           %tr.campaign-change
+-#             %td= link_to change.name, campaign_change_path(change)
+-#             %td.start_date= change.start_date
+-#             %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
+-#             %td= link_to "Edit", edit_campaign_change_path(change)
+-#             %td= link_to "Delete", campaign_change_path(change), :method => :delete
+
+
+-#
+-#
+-# .row
+-#   %h4 Campaigns
+-# .row
+-#   %table.table
+-#     %thead
+-#       %tr
+-#         %th Name
+-#         %th Start Date
+-#         %th Goal
+-#         %th Active?
+-#         - if @belongs_to_current_user
+-#           %th
+-#           %th
+-#           %th
+-#     %tbody
+-#       -@organization.campaigns.each do |c|
+-#         %tr.campaign
+-#           %td= link_to c.name, campaign_path(c)
+-#           %td.start_date= c.start_date
+-#           %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
+-#           %td= c.is_active
+-#           - if @belongs_to_current_user
+-#             %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
+-#             %td= link_to "Delete", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "DELETE")
+-#             - if !c.campaign_change.nil?
+-#               %td= link_to "#{c.campaign_change.action == "UPDATE" ? "Pending Change" : "Pending Deletion"}", campaign_change_path(c.campaign_change)
+-#
+-# .row
+-#   - if @belongs_to_current_user
+-#     %h4 New campaign proposals pending approval
+-#     %table.table
+-#       %thead
+-#         %tr
+-#           %th Name
+-#           %th Start Date
+-#           %th Goal
+-#           %th
+-#           %th
+-#       %tbody
+-#         -@campaign_changes.each do |change|
+-#           %tr.campaign-change
+-#             %td= link_to change.name, campaign_change_path(change)
+-#             %td.start_date= change.start_date
+-#             %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
+-#             %td= link_to "Edit", edit_campaign_change_path(change)
+-#             %td= link_to "Delete", campaign_change_path(change), :method => :delete

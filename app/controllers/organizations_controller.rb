@@ -35,7 +35,7 @@ class OrganizationsController < ApplicationController
 
 		if organization.save
 			flash[:notice] = "Your application for #{organization.name} has been submitted. It will be approved shortly."
-			redirect_to organizations_path
+			redirect_to organization_path(organization)
 		else
 			flash[:error] = "We were unable to create your organization profile. " + organization.errors.full_messages.join(". ")
 			redirect_to new_organization_path(organization)
@@ -65,7 +65,7 @@ class OrganizationsController < ApplicationController
 
 		if organization.save
 			flash[:notice] = "Your changes have been submitted."
-			redirect_to organizations_path
+			redirect_to organization_path(organization)
 		else
 			flash[:warning] = "We were unable to update your organization profile. " + organization.errors.full_messages.join(". ")
 			redirect_to edit_organization_path(organization)
