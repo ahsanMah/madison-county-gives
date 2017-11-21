@@ -36,14 +36,14 @@ RSpec.describe CampaignChangesController, type: :controller do
 
 		it "should redirect to organization page when failed to delete camapign change" do
 			delete :destroy, :params => {:id => 1}
-	        expect(flash[:error]).to eq "Unable to delete \"#{CampaignChange.find("1").name}\"!"
+	        expect(flash[:error]).to eq "We were unable to delete \"#{CampaignChange.find("1").name}\". Please try again."
 			expect(response).to redirect_to organization_path subject.current_user.organization.id
 		end
 
 	end
 
 	it "should redirect to organization page upon a campaign change deletion" do
-		change = CampaignChange.new(:id => 1, :name => "Why hello there")
+		change = CampaignChange.new(:organization_id => 1, :id => 1, :name => "Why hello there")
         allow(CampaignChange).to receive(:find).with("1") { change }
 
 		delete :destroy, :params => {:id => 1}
@@ -68,7 +68,7 @@ RSpec.describe CampaignChangesController, type: :controller do
 				allow(CampaignChange).to receive(:find).with("1") { change }
 
 			get :approve, :params => {:id => 1}
-				expect(flash[:error]).to eq "Unable to delete \"#{change.name}\"!"
+				expect(flash[:error]).to eq "We were unable to delete \"#{change.name}\". Please try again."
 			expect(response).to redirect_to organization_path subject.current_user.organization.id
 		end
 
