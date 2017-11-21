@@ -26,11 +26,7 @@ class HomeController < ApplicationController
      amt = params["amount_to_cart"]
      id = params["id_to_cart"]
      if amt != nil
-       if session[:cart][id.to_i]
-         session[:cart][id.to_i] = (session[:cart][id.to_i].to_i + amt.to_i).to_s
-       else
-         session[:cart][id] = amt.to_s
-     end
+       (session[:cart])[id.to_i] = amt
      elsif params[:pmt_amt]
      end
      redirect_to root_path
