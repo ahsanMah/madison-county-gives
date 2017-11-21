@@ -104,10 +104,10 @@ class CampaignChangesController < ApplicationController
 
 
     if @pending_campaign.action == "DELETE"
-      if @approved_campaign.destroy(campaign_id)
-        flash[:notice] = "Campaign \"#{campaign.name}\ has been removed form the listing."
+      if @approved_campaign.destroy
+        flash[:notice] = "Campaign \"#{@approved_campaign.name}\ has been removed form the listing."
       else
-         flash[:error] = "We were unable to delete \"#{campaign.name}\". Please try again."
+         flash[:error] = "We were unable to delete \"#{@pending_campaign.name}\". Please try again."
       end
       redirect_to organization_path(current_user.organization.id) and return
     end
