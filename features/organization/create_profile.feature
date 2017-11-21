@@ -57,8 +57,7 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
       And I press "Submit Organization Registration"
-      Then I should be on the organizations index page
-      And I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
+      Then I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
       And I should see "Schooling for kids"
 
     Scenario: Name cannot be blank
@@ -106,6 +105,5 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | How does this benefit people?   | What?                    |
       And I attach the file "nonoversized_image.jpg" to "Image"
       And I press "Submit Organization Registration"
-      Then I should be on the organizations index page
-      And I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
+      Then I should see "Your application for Cool Schoolz has been submitted. It will be approved shortly."
       And I should see "Schooling for kids"

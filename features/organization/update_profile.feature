@@ -36,6 +36,19 @@ Feature: Organization Updating Its Profile
         | Organization Name               | Red X                    |
         | How does this benefit people?   | I don't know             |
       And I press "Submit Change"
-      Then I should be on the organizations index page
-      And I should see "Your changes have been submitted."
+      Then I should see "Your changes have been submitted."
       And I should see "Red X"
+
+    Scenario: Name cannot be blank
+      Given I am signed in as Red Cross
+      When I click on "Red Cross"
+      And I click on "Edit My Profile"
+      Then I should see "Disaster-relief"
+      And I should see "What is your goal?"
+      And I should see "What?"
+      And I should see "How does this benefit people?"
+      When I fill in the following:
+        | Organization Name               |                          |
+        | How does this benefit people?   | I don't know             |
+      And I press "Submit Change"
+      Then I should see "We were unable to update your organization profile. Name can't be blank"

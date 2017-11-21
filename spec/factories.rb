@@ -1,5 +1,5 @@
 FactoryBot.define do
-
+  
   factory :user do
     email "helpme@sos.com"
     password "password"

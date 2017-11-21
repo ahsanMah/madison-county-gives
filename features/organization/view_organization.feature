@@ -27,11 +27,11 @@ Feature: Organization Viewing an Organization
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-      | id | name       | description      | goal   | start_date  | campaign_id  | action  |
-      | 1  | Pineapple  | pineapple farm   | 10000  | 2017-11-09  |              | CREATE  |
-      | 2  | Bananas    | new banana farm  | 80000  | 2017-01-10  | 2            | UPDATE  |
-      | 3  | Apples     |                  |        |             | 1            | DELETE  |
-      | 4  | Oranges    | new orange farm  | 50000  | 2017-08-17  | 3            | UPDATE  |
+      | id | name       | description      | goal   | start_date  | campaign_id  | action  | organization_id  |
+      | 1  | Pineapple  | pineapple farm   | 10000  | 2017-11-09  |              | CREATE  | 1                |
+      | 2  | Bananas    | new banana farm  | 80000  | 2017-01-10  | 2            | UPDATE  | 1                |
+      | 3  | Apples     |                  |        |             | 1            | DELETE  | 1                |
+      | 4  | Oranges    | new orange farm  | 50000  | 2017-08-17  | 3            | UPDATE  | 2                |
 
 
     Given I am signed in as Test Organization 1
@@ -40,17 +40,17 @@ Feature: Organization Viewing an Organization
     Given I am on Test Organization 1's page
     Then I should see "Test Organization 1"
     Then I should see "test123"
-    Then I should see "Edit organization details"
+    Then I should see "Edit" in the organization's profile
     Then I should see "Apples"
     Then I should see "Bananas"
-    Then the campaign table rows should contain "Edit"
-    Then the campaign table rows should contain "Delete"
+    Then the campaign cards should contain "Edit"
+    Then the campaign cards should contain "Delete"
     Then I should see "Pending Change"
 
     Given I am on Test Organization 2's page
     Then I should see "test456"
-    Then I should not see "Edit organization details"
+    Then I should not see "Edit" in the organization's profile
     Then I should see "Oranges"
-    Then the campaign table rows should not contain "Edit"
-    Then the campaign table rows should not contain "Delete"
+    Then the campaign cards should not contain "Edit"
+    Then the campaign cards should not contain "Delete"
     Then I should not see "Pending Change"

@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'devise'
 require 'factory_bot'
+require_relative 'support/controller_macros'
 
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -62,4 +63,5 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include FactoryBot::Syntax::Methods
+  config.extend ControllerMacros, :type => :controller
 end

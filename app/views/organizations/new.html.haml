@@ -1,7 +1,7 @@
 %h3.header New Organization Registration
 
 =form_for @organization, :multipart => true, :method => :post do |f|
-  =render 'form'
+  =render 'form', f: f
 
   .field
     =f.submit "Submit Organization Registration"
