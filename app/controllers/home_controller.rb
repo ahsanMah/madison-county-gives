@@ -36,23 +36,28 @@ class HomeController < ApplicationController
      return
   end
 
-  def create_payment #potential to DRY via params require permit???
+  def create_payment # can we use params require permit here?
     if params[:pmt_status]
-      name = params[:name_on_acct]
-      email = params[:acct_email_address]
-      phone = params[:acct_phone_day]
-      amount = params[:pmt_amt]
-      transaction_id = params[:sys_tracking_id]
-      time = DateTime.strptime(params[:pmt_date].to_s, "%m/%d/%Y")
-      anon = params[:anon]
-      kono = params[:sponsored]
       split_payment = params[:pay_split]
       split_payment.each do |campaign_id, amount| 
         c = Campaigns.find(campaign_id)
-        c.payments << Payment.create(campaign_id, name, email, phone, amount, transaction_id, time, anon, kono)
+        if c.is_featured?
+          kono = true
+        end
+        payment_attributes = {
+          :campaign_id => campaign_id,
+          :name => params[:name_on_acct],
+          :email => params[:acct_email_address],
+          :phone => params[:acct_phone_day],
+          :amount => amount,
+          :transaction_id => params[:sys_tracking_id],
+          :time => DateTime.strptime(params[:pmt_date].to_s, "%m/%d/%Y"),
+          :is_anonymous => params[:anon],
+          :is_konosioni => kono
+        }
+        c.payments << Payment.create(payment_attributes)
       end
       flash[:notice] = "Thank you for your generous contribution!"
     end
   end
 end
-

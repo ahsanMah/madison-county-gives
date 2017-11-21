@@ -11,7 +11,7 @@ FactoryBot.define do
     name "Drown the fish"
   end
 
-  factory :payment_params do
+  factory :payment do
   	cart Hash(1 => 25, 2 => 10)
   	name "John Doe"
   	email "test@test.com"
