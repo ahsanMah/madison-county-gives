@@ -1,14 +1,18 @@
+=link_to "Back to all organizations", organizations_path, :class => "btn btn-light float-right"
+
 %h1= @organization.name
 
 .card
   =image_tag @organization.image.url(:large), :class => "card-img-top img-fluid"
   .card-body
+    -if @belongs_to_current_user
+      =link_to octicon("pencil") + "  Edit My Profile", edit_organization_path(current_user.organization), :class => "btn btn-light float-right"
     %h4.card-title Description
     %p.card-text= @organization.description
   - if @belongs_to_current_user
     .card-footer
-      %h4.card-title Additional Information
-      %p.card-title.text-muted The following is invisible to the public.
+      %h5.card-title Additional Information
+      %p.card-title.text-muted.mr-auto The following is invisible to the public.
       .container
         .row
           .col-lg-2
@@ -28,6 +32,13 @@
               %strong Email
           .col-lg-10
             %p= @organization.email
+        %hr
+        .row
+          .col-lg-12
+            - @organization.short_responses.each do |response|
+              %p
+                %strong= response.short_question.question
+              %p= response.response
 
 -# .row
 -#   .col-md-4
@@ -39,12 +50,6 @@
 -#   .col-md-8.description= "#{@organization.description}"
 -# %br
 -# %br
-
-- if user_signed_in? && @organization.id == current_user.organization.id
-  .row
-    .col-md-offset-1
-    .col-md-2= link_to('Edit organization details', edit_organization_path(@organization))
-    .col-md-2= link_to('Back to organization list', organizations_path)
 
 .row
   %h4 Campaigns

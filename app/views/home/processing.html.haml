@@ -2,7 +2,6 @@
 -if params[:amt_to_cart] == nil
     =form_tag root_path, id: "processing_form", method: "get" do
         =hidden_field_tag :posting_key, :posting_key
-        =hidden_field_tag 
         =hidden_field_tag :pmt_amt, :pmt_amt
         =hidden_field_tag :pmt_date, :pmt_date
         =hidden_field_tag :name_on_acct, :name_on_acct
