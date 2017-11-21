@@ -1,18 +1,25 @@
 .row
   .col-sm-12.text-center.bootstrap-welcome
-%table.table
-  %thead contributions thus far
-  %tr
-    %th Name of organization
-    %th Amount to donate
--if @carty
-  -@carty.each do |id,amt|
+
+%link{:rel => :stylesheet, :type => :"text/css", :href => "/assets/stylesheets/home"}
+-if @names_val
+  -t = 0
+  %table.summary 
+    %thead{:class => "heading"} Donation Cart
     %tr
-      %th "#{id}"
-      %th "#{amt}"
+    %th.header Name
+    %th.header Amount
+    -@names_val.each do |name, amt|
+      %tr
+        %td.val #{name}
+        %td.val #{amt}
+      -t = t + amt.to_i
+  %br
+  %strong.header Total: #{t}
 -else
   %h3 You have not made any contributions yet :(
 
+%br
 =link_to "proceed to checkout", controller: "home", action: "checkout"
 %p
 =link_to "back to main page", root_path
