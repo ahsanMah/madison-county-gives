@@ -21,4 +21,24 @@ class HomeController < ApplicationController
      redirect_to root_path
      return
   end
+
+  def create_payment #potential to DRY via params require permit???
+    if params[:pmt_status]
+      name = params[:name_on_acct]
+      email = params[:acct_email_address]
+      phone = params[:acct_phone_day]
+      amount = params[:pmt_amt]
+      transaction_id = params[:sys_tracking_id]
+      time = DateTime.strptime(params[:pmt_date].to_s, "%m/%d/%Y")
+      anon = params[:anon]
+      kono = params[:sponsored]
+      split_payment = params[:pay_split]
+      split_payment.each |campaign_id, amount| do 
+        c = Campaigns.find(campaign_id)
+        c.payments << Payment.create(campaign_id, name, email, phone, amount, transaction_id, time, anon, kono)
+      end
+      flash[:notice] = "Thank you for your generous contribution!"
+    end
+  end
 end
+
