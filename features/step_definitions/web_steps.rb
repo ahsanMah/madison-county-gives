@@ -106,14 +106,14 @@ Given /^I am signed out$/ do
   end
 end
 
-Then /^the campaign table rows should not contain "([^"]*)"$/ do |text|
-    tr = page.all('tr.campaign').first
-    expect(tr).not_to have_content(text)
+Then /^the campaign cards should contain "([^"]*)"$/ do |text|
+    card = page.all('.campaign').first
+    expect(card).to have_content(text)
 end
 
-Then /^the campaign table rows should contain "([^"]*)"$/ do |text|
-    tr = page.all('tr.campaign').first
-    expect(tr).to have_content(text)
+Then /^the campaign cards should not contain "([^"]*)"$/ do |text|
+    card = page.all('.campaign').first
+    expect(card).not_to have_content(text)
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
@@ -346,7 +346,7 @@ When /^(?:|I )click on [^"]*"([^"]*)"$/ do |link|
 end
 
 When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
-  row = find('tr') { |el| el.text =~ Regexp.new(title)}
+  row = find('.card') { |el| el.text =~ Regexp.new(title)}
   within(row) do
     click_on(button)
   end
@@ -363,22 +363,32 @@ end
 
 #hard-coded css classes?  More flexible approach possible?
 
-And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
-  row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title) }
-  expect(row.find(".#{attribute}").text).to eq "#{value}"
+Then /^I should see "([^"]*)" in the organization's profile$/ do |item|
+  card = find('.organization')
+  expect(card.text).to match Regexp.escape(item)
+end
+
+Then /^I should not see "([^"]*)" in the organization's profile$/ do |item|
+  card = find('.organization')
+  expect(card.text).not_to match Regexp.escape(item)
+end
+
+And /^(?:|I )should see that the campaign "([^"]*)" has a[n]? ([a-z_A-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+  row = all('.campaign').find('.card') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find(".#{attribute}").text).to match Regexp.escape(value)
 end
 
 And /^(?:|I )should see that the pending campaign "([^"]*)" has a[n]? ([a-z_A-Z]*) of "([^"]*)"$/ do |title, attribute, value|
-  row = all('.campaign-change').find('tr') { |el| el.text =~ Regexp.new(title) }
-  expect(row.find(".#{attribute}").text).to eq "#{value}"
+  row = all('.campaign-change').find('.card') { |el| el.text =~ Regexp.new(title) }
+  expect(row.find(".#{attribute}").text).to match Regexp.escape(value)
 end
 
 Then /^(?:|I )should see that the campaign "([^"]*)" has an image "([^"]*)"$/ do |title, image|
-  row = all('.campaign').find('tr') { |el| el.text =~ Regexp.new(title)}
-  expect(row.find('.image').find('img')['alt']).to match(/^#{image}$/i)
+  row = all('.campaign').find('.card') { |el| el.text =~ Regexp.new(title)}
+  expect(row.find('img')['src']).to match Regexp.escape(image)
 end
 
-And /^(?:|I )should see that the organization "([^"]*)" has a[n]? ([a-zA-Z]*) of "([^"]*)"$/ do |title, attribute, value|
+And /^(?:|I )should see that the organization "([^"]*)" has a[n]? ([a-z_A-Z]*) of "([^"]*)"$/ do |title, attribute, value|
   row = all('.organizations').find('tr') { |el| el.text =~ Regexp.new(title) }
   expect(row.find('.#{attribute}').text).to eq '#{value}'
 end
