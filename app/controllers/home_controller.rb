@@ -46,7 +46,7 @@ class HomeController < ApplicationController
       anon = params[:anon]
       kono = params[:sponsored]
       split_payment = params[:pay_split]
-      split_payment.each |campaign_id, amount| do 
+      split_payment.each do |campaign_id, amount| 
         c = Campaigns.find(campaign_id)
         c.payments << Payment.create(campaign_id, name, email, phone, amount, transaction_id, time, anon, kono)
       end
