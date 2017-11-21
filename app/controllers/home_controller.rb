@@ -12,6 +12,7 @@ class HomeController < ApplicationController
       carty.each do |id, val|
         @names_val[Campaign.find(id).name] = val
       end
+    end
   end
   def checkout
     @carty = session[:cart]
@@ -22,10 +23,8 @@ class HomeController < ApplicationController
     end
   end
   def processing
-     amt = params[:amount_to_cart]
-     id = params[:id_to_cart]
-     console.log(amt)
-     console.log(id)
+     amt = params["amount_to_cart"]
+     id = params["id_to_cart"]
      if amt != nil
        if session[:cart][id.to_i]
          session[:cart][id.to_i] = (session[:cart][id.to_i].to_i + amt.to_i).to_s
