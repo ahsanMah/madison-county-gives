@@ -45,7 +45,7 @@ class HomeController < ApplicationController
         c = ::Campaign.find(campaign_id)
         if c.is_featured
           kono = true
-        end
+        end      
         payment_attributes = {
           :campaign_id => campaign_id,
           :name => params[:name_on_acct],
