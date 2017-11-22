@@ -53,7 +53,7 @@ class HomeController < ApplicationController
           :phone => params[:acct_phone_day],
           :amount => amount,
           :transaction_id => params[:sys_tracking_id],
-          :time => DateTime.strptime(params[:pmt_date].to_s, "%m/%d/%Y"),
+          :time => DateTime.strptime(params[:pmt_date], "%m/%d/%Y"),
           :is_anonymous => params[:anon],
           :is_konosioni => kono
         }
