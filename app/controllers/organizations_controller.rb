@@ -1,5 +1,7 @@
 class OrganizationsController < ApplicationController
 	before_action :authenticate_user!, except: [:index, :show]
+	before_action :user_has_organization, only: [:new, :create]
+	before_action :belongs_to_user, only: [:edit, :update]
 
 	def index
 		@organizations = Organization.where("is_approved = ?", true)
@@ -27,6 +29,9 @@ class OrganizationsController < ApplicationController
 	end
 
 	def create
+		if !(current_user.organization.nil?)
+			redirect_to organization_path(current_user.organization) and return
+		end
 		organization = Organization.new(create_update_params)
 		organization.is_approved = false
 		organization.user_id = current_user.id
@@ -95,6 +100,18 @@ private
 				short_response.update(:response => params["organization"][org_attr])
 				short_response.save
 			end
+		end
+	end
+
+	def user_has_organization
+		unless current_user.organization.nil?
+			redirect_to organization_path(current_user.organization) and return
+		end
+	end
+
+	def belongs_to_user
+		unless Organization.find(params[:id]).user.id == current_user.id
+			raise ActionController::RoutingError.new('Not Found')
 		end
 	end
 
