@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :organizations, except: :destroy
   resources :campaigns , only: [:index, :show]
   resources :campaign_changes
+  resources :payments
   get 'campaign_changes/approve/:id', to: "campaign_changes#approve", as: :approve_campaign_change
   get 'campaign_changes/delete/:id', to: "campaign_changes#delete", as: :delete_campaign_change
 

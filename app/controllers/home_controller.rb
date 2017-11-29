@@ -14,6 +14,7 @@ class HomeController < ApplicationController
       end
     end
   end
+
   def checkout
     @carty = session[:cart]
     @US_states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
@@ -22,6 +23,7 @@ class HomeController < ApplicationController
       @total = @total + amt.to_i
     end
   end
+
   def processing
      if session[:cart] == nil
        session[:cart] = {}
@@ -37,13 +39,13 @@ class HomeController < ApplicationController
   end
 
   def create_payment # can we use params require permit here?
-    if params[:pmt_status]
-      split_payment = params[:pay_split]
-      split_payment.each do |campaign_id, amount| 
-        c = Campaigns.find(campaign_id)
-        if c.is_featured?
+    if params[:pmt_status] == 'success'
+      params[:pay_split].each do |campaign_id, amount|
+        kono = false 
+        c = ::Campaign.find(campaign_id)
+        if c.is_featured
           kono = true
-        end
+        end      
         payment_attributes = {
           :campaign_id => campaign_id,
           :name => params[:name_on_acct],
@@ -51,7 +53,7 @@ class HomeController < ApplicationController
           :phone => params[:acct_phone_day],
           :amount => amount,
           :transaction_id => params[:sys_tracking_id],
-          :time => DateTime.strptime(params[:pmt_date].to_s, "%m/%d/%Y"),
+          :time => DateTime.strptime(params[:pmt_date], "%m/%d/%Y"),
           :is_anonymous => params[:anon],
           :is_konosioni => kono
         }
