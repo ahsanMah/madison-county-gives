@@ -4,10 +4,9 @@
     %p.lead Madison County Gives is an online giving site powered by the Konosioni Senior Honor Society at Colgate University.  This crowdfunding site connects not-for-profit organizations that provide services to residents of Madison County with students and community members who want to help through web-based fundraising campaigns.
     %br
     %p.lead
-      =link_to "View Campaigns", "#active-campaigns", :class => "btn btn-success btn-lg"
+      =link_to "View Our Organizations", organizations_path, :class => "btn btn-success btn-lg"
 
 .row
-  %a{ :name => "active-campaigns"}
   -@campaigns.each do |camp|
     .col-lg-4.col-md-6.col-sm-12.card-set
       .card.mb-4.campaign
@@ -33,9 +32,3 @@
               %small.text-muted Goal
             .col-sm-4
               %small.text-muted Start Date
-
-%p= link_to "List of Organizations", organizations_path
-%br
-%div= link_to('Start new campaign proposal', new_campaign_change_path)
-%br
-%p=link_to "Cart Checkout", controller: "home", action: "summary"

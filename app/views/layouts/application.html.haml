@@ -33,6 +33,9 @@
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
             - else
+              - if current_user.organization.is_approved?
+                %li.nav-item.active.mr-3
+                  =link_to "Create a campaign", new_campaign_change_path(:campaign_action => "CREATE"), :class => "btn btn-outline-success"
               %li.nav-item.dropdown.active
                 =link_to octicon("person", :class => "white-icon") + "  #{current_user.organization.name}", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
@@ -40,12 +43,12 @@
                   =link_to octicon("pencil") + "  Edit My Profile", edit_organization_path(current_user.organization), :class => "dropdown-item"
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
-
           - else
             %li.nav-item.active
               =link_to octicon("sign-in", :class => "white-icon") + '  Organization Login', new_user_session_path, :class => "nav-link"
           %li.nav-item.active
             =link_to embedded_svg("cart.svg", :class => "white-icon", :width => 16, :height => 16) + '  Cart', "/summary", :class => "nav-link"
+
     %main.container
       %br
       =flash_messages

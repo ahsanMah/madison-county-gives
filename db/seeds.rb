@@ -8,6 +8,7 @@
 User.delete_all
 Organization.delete_all
 Campaign.delete_all
+CampaignChange.delete_all
 ShortQuestion.delete_all
 ShortResponse.delete_all
 Payment.delete_all

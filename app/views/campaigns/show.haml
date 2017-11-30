@@ -40,13 +40,14 @@
           %p.text-muted= "pledged of " + number_to_currency(@campaign.goal, precision: 0) + " goal"
           %h3= @campaign.num_backers
           %p.text-muted backers
-          %hr
-          =form_tag "/processing" do
-            .input-group.my-4
-              .input-group-addon $
-              =number_field_tag :amount_to_cart, nil, :placeholder => "Enter Your Pledge Amount", :class => "form-control"
-            =hidden_field_tag :id_to_cart, @campaign.id
-            =submit_tag "Back this project", :class => "btn btn-success btn-lg btn-block"
+          - if @campaign.is_active
+            %hr
+            =form_tag "/processing" do
+              .input-group.my-4
+                .input-group-addon $
+                =number_field_tag :amount_to_cart, nil, :placeholder => "Enter Your Pledge Amount", :class => "form-control"
+              =hidden_field_tag :id_to_cart, @campaign.id
+              =submit_tag "Back this project", :class => "btn btn-success btn-lg btn-block"
       .card.mb-4
         .card-header
           About the Organization
