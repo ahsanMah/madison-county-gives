@@ -1,27 +1,53 @@
+.row
+  .col-lg-8.col-sm-12
+    .card.mb-4
+      =image_tag @campaign.image.url(:large), :class => "card-img-top img-fluid"
+      .card-body
+        -if @belongs_to_current_user
+          .float-right
+            =link_to octicon('pencil') + "  Edit", new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "UPDATE"), :class => "btn btn-light btn-sm mt-2"
+            =link_to octicon('trashcan') + "  Delete", new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "DELETE"), :class => "btn btn-light btn-sm mt-2"
+        %h3= @campaign.name
+        %hr
+        %p.card-text= @campaign.description
+        %hr
+        %p= octicon('calendar') + "  Start date: " + @campaign.start_date
+    .card.mb-4
+      .card-header
+        Campaign Updates
+      .card-body
+    .card.mb-4
+      .card-header
+        Backers
+      .card-body
+  .col-lg-4.col-sm-12.mb-4
+    .fixed-position
+      .card.mb-4
+        .card-header
+          Donations
+        .card-body
+          .progress.mb-4
+            .progress-bar{ :role => "progressbar", :style => "width: " + number_to_percentage(@campaign.percent_raised, precision: 0), "aria-valuenow" => @campaign.percent_raised, "aria-valuemin" => 0, "aria-valuemax" => 100 }= number_to_percentage(@campaign.percent_raised, precision: 0)
+          %h3.text-success= number_to_currency(@campaign.amount_raised, precision: 0)
+          %p.text-muted= "pledged of " + number_to_currency(@campaign.goal, precision: 0) + " goal"
+          %h3= @campaign.num_backers
+          %p.text-muted backers
+          %hr
+          =form_tag "/processing" do
+            .input-group.my-4
+              .input-group-addon $
+              =number_field_tag :amount_to_cart, nil, :placeholder => "Enter Your Pledge Amount", :class => "form-control"
+            =hidden_field_tag :id_to_cart, @campaign.id
+            =submit_tag "Back this project", :class => "btn btn-success btn-lg btn-block"
+      .card.mb-4
+        .card-header
+          About the Organization
+        .card-body
+          =content_tag :p do
+            =content_tag :a, :href => organization_path(@campaign.organization) do
+              %strong= @campaign.organization.name + ": "
+            =content_tag :span, truncate(@campaign.organization.description, length: 80)
 
 .row
-    .col-md-offset-1
-    .col-md-4
-        %h3.header.title= "#{@campaign.name}"
-    .col-md-offset-1
-    .col-md-offset-4
-        %td.image= image_tag @campaign.image.url(:large)
-.row
-    .col-md-offset-2
-    .col-md-8.description= "#{@campaign.description}"
-    .col-md-8.goal= "Funding Goal: #{number_to_currency(@campaign.goal, precision: 0)}"
-    .col-md-8.start_date= "Start date: #{@campaign.start_date}"
-%br
-%br
-
-.row
-    =form_tag "/processing" do
-        =number_field_tag :amount_to_cart, "Amount to donate?"
-        =hidden_field_tag :id_to_cart, @campaign.id
-        =submit_tag "add to cart"
-.row
-    -if user_signed_in? && current_user.organization.id == @campaign.organization_id
-        .col-md-offset-1
-        .col-md-2= link_to('Edit campaign details',  new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "UPDATE"))
-        .col-md-2= link_to('Delete campaign',  new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "DELETE"))
-    .col-md-2= link_to('Back to campaign list', campaigns_path)
+  =link_to 'Back to all campaigns', campaigns_path, :class => "btn btn-light mb-4"
+  %br

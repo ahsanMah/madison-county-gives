@@ -10,6 +10,10 @@ class CampaignsController < ApplicationController
 
 	def show
 		@campaign = Campaign.find(params[:id])
+		@campaign.amount_raised = @campaign.payments.sum(:amount)
+		@campaign.num_backers = @campaign.payments.count
+		@campaign.percent_raised = @campaign.amount_raised * 1.0 / @campaign.goal * 100
+		@belongs_to_current_user = (current_user.id == @campaign.organization.user.id)
 	end
 
 	# private

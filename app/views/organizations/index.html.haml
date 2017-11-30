@@ -6,8 +6,8 @@
       =image_tag org.image.url(:large), :class => "card-img-top img-fluid"
       .card-body
         =content_tag :h4, :class => "card-title" do
-          =org.name
+          =link_to org.name, organization_path(org), :class => "h4"
           - if org.id == @my_organization_id
             =content_tag :span, "My Organization", :class => "badge badge-info align-top ml-2"
         %p.card-text= truncate(org.description, length: 200)
-        =link_to "View details", organization_path(org), :class => "btn btn-primary"
+        -# =link_to "View details", organization_path(org), :class => "btn btn-primary"
