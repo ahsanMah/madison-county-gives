@@ -43,7 +43,7 @@ ShortResponse.create!(id: 7, organization_id: 3, short_question_id: 1, response:
 ShortResponse.create!(id: 8, organization_id: 3, short_question_id: 2, response: "Education is one of the best ways for economic mobility and it also encourages local innovation. Investing in the kids of Madison County will definitely bring good to the area through personal advancement.")
 ShortResponse.create!(id: 9, organization_id: 3, short_question_id: 3, response: "Once we have prepared the textbooks and building permits for a schooling location, we are looking to hire university PhDs to teach Kantian Philosophy, Numerical Analysis, and Keysnian Economics in our classes.")
 
-Payment.create(id: 1, campaign_id: 1, amount: 30000)
-Payment.create(id: 2, campaign_id: 1, amount: 60000)
-Payment.create(id: 3, campaign_id: 2, amount: 20)
-Payment.create(id: 4, campaign_id: 3, amount: 2000000)
+Payment.create(id: 1, campaign_id: 1, amount: 30000, name: "Bill Gates", is_anonymous: false)
+Payment.create(id: 2, campaign_id: 1, amount: 60000, name: "John Smith", is_anonymous: true)
+Payment.create(id: 3, campaign_id: 2, amount: 20, name: "John Smith", is_anonymous: true)
+Payment.create(id: 4, campaign_id: 3, amount: 2000000, name: "???", is_anonymous: true)
