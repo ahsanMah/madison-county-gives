@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117024841) do
+ActiveRecord::Schema.define(version: 20171201182752) do
 
   create_table "campaign_changes", force: :cascade do |t|
     t.integer "campaign_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20171117024841) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
