@@ -41,7 +41,7 @@
         %hr
         .row
           .col-lg-12
-            - @organization.short_responses.each do |response|
+            - @short_responses.each do |response|
               %p
                 %strong= response.short_question.question
               %p= response.response

@@ -27,9 +27,9 @@
   =f.label :image, "Image", :class => "col-sm-2 col-form-label"
   .col-sm-10
     =f.file_field :image, accept: "image/png,image/gif,image/jpeg", :class => "form-control-file"
-    .text-muted We recommend uploading a picture with aspect ratio close to 4:3 and of high resolution. 
+    .text-muted We recommend uploading a picture with aspect ratio close to 4:3 and of high resolution.
 
--@organization.short_responses.each do |response|
+-@short_responses.each do |response|
   .form-group
     -id = "short_response#{response.short_question.id}"
     =f.label id.to_sym, "#{response.short_question.question}"

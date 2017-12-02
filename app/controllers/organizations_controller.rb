@@ -12,6 +12,7 @@ class OrganizationsController < ApplicationController
 
 	def show
 		@organization = Organization.find(params[:id])
+		@short_responses = get_all_short_responses
 		@belongs_to_current_user = (user_signed_in?) && (@organization.id == current_user.organization.id)
 		@campaign_changes = @organization.campaign_changes.where("action = ?", "CREATE")
 	end
@@ -21,11 +22,7 @@ class OrganizationsController < ApplicationController
 			redirect_to organization_path(current_user.organization) and return
 		end
 		@organization = Organization.new
-		short_questions = ShortQuestion.all
-		short_questions.each do |question|
-			response = question.short_responses.new
-			@organization.short_responses << response
-		end
+		@short_responses = ShortQuestion.all.map { |q| q.short_responses.new }
 	end
 
 	def create
@@ -50,16 +47,7 @@ class OrganizationsController < ApplicationController
 	def edit
 		@organization = Organization.find(params[:id])
 		existing_short_responses = @organization.short_responses.ids
-		short_questions = ShortQuestion.all
-		short_questions.each do |question|
-			if existing_short_responses.include? question.id
-				response = @organization.short_responses.find(question.id)
-			else
-				response = question.short_responses.new
-			end
-			@organization.short_responses << response
-		end
-
+		@short_responses = get_all_short_responses
 	end
 
 	def update
@@ -82,10 +70,18 @@ private
 		params.require(:organization).permit(:name, :primary_contact, :address, :email, :description, :image, :is_approved, :campaigns)
 	end
 
+	# in case a short question is removed later by admin, its answer shouldn't be displayed; this method helps deal with this case
+	def get_all_short_responses
+		ShortQuestion.all.map do |q|
+			existing_short_response = ShortResponse.where("organization_id = ? AND short_question_id = ?", params[:id], q.id).distinct.first
+			existing_short_response.nil? ? q.short_responses.new : existing_short_response
+		end
+	end
+
 	def create_short_responses(organization)
 		params["organization"].each do |org_attr|
 			if org_attr.match? /^short_response[\d]+$/
-				question_id = org_attr.match(/^short_response([\d]+)$/).captures
+				question_id = org_attr.match(/^short_response([\d]+)$/).captures[0]
 				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => params[:id], :response => params["organization"][org_attr])
 				short_response.save
 			end
@@ -95,9 +91,13 @@ private
 	def update_short_responses(organization)
 		params["organization"].each do |org_attr|
 			if org_attr.match? /^short_response[\d]+$/
-				question_id = org_attr.match(/^short_response([\d]+)$/).captures
+				question_id = org_attr.match(/^short_response([\d]+)$/).captures[0]
 				short_response = ShortResponse.where('short_question_id = ? AND organization_id = ?', question_id, organization.id).distinct.first
-				short_response.update(:response => params["organization"][org_attr])
+				if short_response.nil?
+					short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => organization.id, :response => params["organization"][org_attr])
+				else
+					short_response.update(:response => params["organization"][org_attr])
+				end
 				short_response.save
 			end
 		end
