@@ -2,13 +2,14 @@
 %html{ lang: 'en' }
   %head
     %meta{ charset: 'utf-8' }
+    %meta{ name: "viewport", content: "width=device-width, initial-scale=1" }
     %title Madison County Gives
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
 
   %body
-    %nav.navbar.navbar-expand-sm.navbar-dark.sticky-top.bg-dark
+    %nav.navbar.navbar-expand-md.navbar-dark.sticky-top.bg-dark
       =link_to "Madison County Gives", root_url, :class => "navbar-brand"
       %button{ :class => "navbar-toggler", :type => "button", "data-toggle" => "collapse", "data-target" => "#navbarNavDropdown", "aria-controls" => "navbarNavDropdown", "aria-expanded" => "false", "aria-label" => "Toggle navigation" }
         %span.navbar-toggler-icon
@@ -54,7 +55,7 @@
       =flash_messages
       =yield
 
-    %footer.bg-dark.py-5
+    %footer.bg-dark.py-5.my-5
       .container.text-white
         .row
           .col-md-4

@@ -21,14 +21,10 @@
           .row
             .col-sm-4
               %small.funded= number_to_currency(camp.amount_raised, precision: 0)
+              %small.text-muted <br>Funded
             .col-sm-4
               %small.goal= number_to_currency(camp.goal, precision: 0)
+              %small.text-muted <br>Goal
             .col-sm-4
               %small.start_date= camp.start_date
-          .row
-            .col-sm-4
-              %small.text-muted Funded
-            .col-sm-4
-              %small.text-muted Goal
-            .col-sm-4
-              %small.text-muted Start Date
+              %small.text-muted <br>Start Date
