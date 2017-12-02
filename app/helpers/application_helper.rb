@@ -36,4 +36,13 @@ module ApplicationHelper
   end
 
 
+  def num_campaigns
+    Campaign.count
+  end
+
+  def amount_funded
+    number_to_currency(Payment.sum(:amount), precision: 0)
+  end
+
+
 end

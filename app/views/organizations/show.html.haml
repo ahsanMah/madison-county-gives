@@ -2,7 +2,7 @@
 
 %h1= @organization.name
 
-- if !@organization.is_approved?
+- if @belongs_to_current_user && (!@organization.is_approved?)
   .alert.alert-warning
     %button.close{ :data => { :dismiss => "alert" } }= octicon('x')
     Note: Your organization is waiting to be approved by the site administrator. Please check back later or contact Madison County Gives. Once it is approved, you will be able to start creating campaigns.
@@ -47,7 +47,7 @@
               %p= response.response
 .row
   %h2.mr-auto Campaigns
-  -if @organization.is_approved?
+  -if @belongs_to_current_user && @organization.is_approved?
     =link_to octicon("plus", :class => "white-icon") + "  Create a campaign", new_campaign_change_path(:campaign_action => "CREATE"), :class => "btn btn-success btn-lg"
 
 .row.my-2
