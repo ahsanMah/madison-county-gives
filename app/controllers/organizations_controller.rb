@@ -5,20 +5,33 @@ class OrganizationsController < ApplicationController
 
 	def index
 		@organizations = Organization.where("is_approved = ?", true)
-		if user_signed_in?
+		if user_signed_in? && (!current_user.organization.nil?)
 			@my_organization_id = current_user.organization.id
 		end
 	end
 
 	def show
 		@organization = Organization.find(params[:id])
-		@belongs_to_current_user = (user_signed_in?) && (@organization.id == current_user.organization.id)
+		@belongs_to_current_user = (user_signed_in?) && (!current_user.organization.nil?) && (@organization.id == current_user.organization.id)
 		# unapproved organization is only visible to its user
 		if !(@organization.is_approved?) && !(@belongs_to_current_user)
 			 redirect_to organizations_path and return
 		end
 		@short_responses = get_all_short_responses
 		@campaign_changes = @organization.campaign_changes.where("action = ?", "CREATE")
+
+		@organization.campaigns.each do |campaign|
+			change = campaign.campaign_change
+			campaign.edit_warning = nil
+			campaign.delete_warning = "Are you certain you want to submit a delete request?"
+			if(!change.nil?)
+				if(change.action == "UPDATE")
+					campaign.delete_warning = "Are you certain you want to override your edits with a delete request?"
+				else
+					campaign.edit_warning = "NOTICE! Clicking the 'Submit' button on the following page will override your delete request. Do you wish to continue?"
+				end
+			end
+		end
 	end
 
 	def new
