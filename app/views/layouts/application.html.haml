@@ -26,7 +26,15 @@
               =link_to octicon('globe') + "  Our Organizations", organizations_path, :class => "dropdown-item"
         %ul.navbar-nav
           - if user_signed_in?
-            - if current_user.organization.nil?
+            - if current_user.is_admin?
+              %li.nav-item.dropdown.active
+                =link_to octicon("person", :class => "white-icon") + "  Admin", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
+                %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
+                  =link_to octicon("dashboard") + "  Dashboard", admin_path, :class => "dropdown-item"
+                  =link_to octicon("database") + "  Database", rails_admin_path, :class => "dropdown-item"
+                  .dropdown-divider
+                  =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
+            - elsif current_user.organization.nil?
               %li.nav-item.dropdown.active
                 =link_to octicon("person", :class => "white-icon") + "  Unknown Organization", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }

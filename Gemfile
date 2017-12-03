@@ -34,6 +34,8 @@ gem 'jquery-rails'
 gem 'paperclip'
 gem 'devise'
 gem 'aws-sdk', '~> 2.3'
+gem 'rails_admin', '~> 1.2'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
