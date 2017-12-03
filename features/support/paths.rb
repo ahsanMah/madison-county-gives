@@ -34,6 +34,11 @@ module NavigationHelpers
     when /^the create new organization page$/
       new_organization_path
 
+    when /^the admin dashboard page$/
+      admin_path
+
+    when /^the admin database page$/
+      rails_admin_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

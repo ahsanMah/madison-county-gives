@@ -88,12 +88,20 @@ end
 
 
 Given /^(?:|I )am signed in as (.*)$/ do |name|
-  org = Organization.where("name = ?", name).first()
-  user = org.user
-  visit new_user_session_path
-  fill_in "Email", :with => user.email
-  fill_in "Password", :with => "123456"
-  click_button "Log in"
+  org = Organization.where("name = ?", name).first
+  if org.nil?
+    user = User.where("email = ?", name).first
+    visit new_user_session_path
+    fill_in "Email", :with => user.email
+    fill_in "Password", :with => "123456"
+    click_button "Log in"
+  else
+    user = org.user
+    visit new_user_session_path
+    fill_in "Email", :with => user.email
+    fill_in "Password", :with => "123456"
+    click_button "Log in"
+  end
 end
 
 Given /^I am signed out$/ do

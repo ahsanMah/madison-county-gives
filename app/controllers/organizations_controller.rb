@@ -22,17 +22,11 @@ class OrganizationsController < ApplicationController
 	end
 
 	def new
-		if !(current_user.organization.nil?)
-			redirect_to organization_path(current_user.organization) and return
-		end
 		@organization = Organization.new
 		@short_responses = ShortQuestion.all.map { |q| q.short_responses.new }
 	end
 
 	def create
-		if !(current_user.organization.nil?)
-			redirect_to organization_path(current_user.organization) and return
-		end
 		organization = Organization.new(create_update_params)
 		organization.is_approved = false
 		organization.user_id = current_user.id
