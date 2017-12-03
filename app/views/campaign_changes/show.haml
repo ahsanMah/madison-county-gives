@@ -1,22 +1,22 @@
 .row
-    .col-md-offset-1
-    .col-md-4
-        %h3.header.title= "Unapproved Campaign: #{@campaign.name}"
-    .col-md-offset-1
-    .col-md-offset-4
-        %td.image= image_tag @campaign.image.url(:large)
+  .col-lg-8.col-sm-12
+    .card.mb-4
+      =image_tag @campaign.image.url(:large), :class => "card-img-top img-fluid"
+      .card-body
+        -if @belongs_to_current_user
+          .float-right
+            =link_to octicon('pencil') + "  Edit", edit_campaign_change_path(@campaign), :class => "btn btn-light btn-sm mt-2"
+            =link_to octicon('trashcan') + "  Delete", campaign_change_path(@campaign), :method => :delete, :class => "btn btn-light btn-sm mt-2"
+        %h3
+          =@campaign.name
+          -if @campaign.action == "DELETE"
+            .badge.badge-pill.badge-warning.align-top.ml-2
+              Pending Deletion
+        %hr
+        %p.card-text= @campaign.description
+        %hr
+        %p= octicon('calendar') + "  Start date: " + @campaign.start_date
 
 .row
-    .col-md-offset-2
-    .col-md-8.description= "#{@campaign.description}"
-    .col-md-8.goal= "Funding Goal: #{number_to_currency(@campaign.goal, precision: 0)}"
-    .col-md-8.start_date= "Start date: #{@campaign.start_date}"
-%br
-%br
-
-.row
-    .col-md-offset-1
-    .col-md-2= link_to('Edit unapproved campaign details', edit_campaign_change_path(@campaign))
-    .col-md-2= link_to('Delete unapproved campaign', campaign_change_path(@campaign), :method => :delete)
-    .col-md-2= link_to('Approve campaign', approve_campaign_change_path(@campaign))
-    .col-md-2= link_to('Back to campaign list', campaigns_path)
+  .col-md-2= link_to('Approve campaign', approve_campaign_change_path(@campaign))
+  .col-md-2= link_to('Back to campaign list', campaigns_path)
