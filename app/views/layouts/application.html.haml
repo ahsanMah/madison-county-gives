@@ -16,14 +16,14 @@
       .collapse.navbar-collapse#navbarNavDropdown
         %ul.navbar-nav.mr-auto
           %li.nav-item.active
-            =link_to "Home", root_url, :class => "nav-link"
-          %li.nav-item.dropdown
-            =link_to "About", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownMenuLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
+            =link_to octicon('home', :class => "white-icon") + "  Home", root_url, :class => "nav-link"
+          %li.nav-item.dropdown.active
+            =link_to octicon('book', :class => "white-icon") + "  About", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownMenuLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
             %div{ class: "dropdown-menu", "aria-labelledby": "navbarDropdownMenuLink" }
-              =link_to "About Us", "#", :class => "dropdown-item"
-              =link_to "FAQs", "#", :class => "dropdown-item"
-              =link_to "Contact Us", "#", :class => "dropdown-item"
-              =link_to "Our Organizations", organizations_path, :class => "dropdown-item"
+              =link_to octicon('info') + "  About Us", "/about_us", :class => "dropdown-item"
+              =link_to octicon('question') + "  FAQs", "/faqs", :class => "dropdown-item"
+              =link_to octicon('comment-discussion') + "  Contact Us", "/contact_us", :class => "dropdown-item"
+              =link_to octicon('globe') + "  Our Organizations", organizations_path, :class => "dropdown-item"
         %ul.navbar-nav
           - if user_signed_in?
             - if current_user.organization.nil?
@@ -55,18 +55,18 @@
       =flash_messages
       =yield
 
-    %footer.bg-dark.py-5.my-5
+    %footer.bg-dark.py-5.mt-5
       .container.text-white
         .row
           .col-md-4
             %h5 Madison County Gives
             %p Powered by Konosioni at Colgate University
-            %p 13 Oak Drive<br>Hamilton, NY 13346<br>Phone: (315) 228-7000
+            %p 109 Lathrop Hall<br>13 Oak Drive<br>Hamilton, NY 13346<br>Phone: (315) 228-5473
           .col-md-4
             %p=link_to "Home", root_url, :class => "h6"
-            %p=link_to "About Us", "#", :class => "h6"
-            %p=link_to "FAQs", "#", :class => "h6"
-            %p=link_to "Contact Us", "#", :class => "h6"
+            %p=link_to "About Us", "/about_us", :class => "h6"
+            %p=link_to "FAQs", "/faqs", :class => "h6"
+            %p=link_to "Contact Us", "/contact_us", :class => "h6"
             %p=link_to "Our Organizations", organizations_path, :class => "h6"
           .col-md-4
             %h5 Get the Stats
