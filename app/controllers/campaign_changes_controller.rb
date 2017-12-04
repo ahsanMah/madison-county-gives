@@ -3,14 +3,10 @@ class CampaignChangesController < ApplicationController
   before_action :belongs_to_user, :only => [:edit, :update, :destroy]
   before_action :organization_approved, :only => [:new, :create, :edit, :update, :destroy]
 
-  # def index
-  #   if params[:posting_id] != nil
-  #     puts "successfully posted back"
-  #   end
-  # end
-
   def show
-    @campaign = CampaignChange.find(params[:id])
+    @campaign_change = CampaignChange.find(params[:id])
+    @campaign = Campaign.find(@campaign_change.campaign_id)
+    @belongs_to_current_user = (user_signed_in?) && (@campaign.organization.id == current_user.organization.id)
   end
 
   def new
@@ -25,6 +21,18 @@ class CampaignChangesController < ApplicationController
 
     campaign_change.action = params[:campaign_action] || "CREATE"
     campaign_change.organization_id = current_user.organization.id
+
+    #Populate change with existing campaign fields
+    if existing_campaign
+      existing_campaign.attributes.each do |key, val|
+        if key.to_s != "id" && campaign_change.has_attribute?(key)
+          campaign_change[key] = val
+        end
+      end
+      if campaign_change.action != "CREATE" && !(campaign_change.image.exists?) # the image field doesn't auto-populate
+        campaign_change.image = existing_campaign.image
+      end
+    end
 
     #Bypass new form page if action is to delete campaign
     if campaign_change.action == "DELETE"
@@ -49,14 +57,6 @@ class CampaignChangesController < ApplicationController
       redirect_to edit_campaign_change_path existing_change
     end
 
-    #Populate change with existing campaign fields
-    if existing_campaign
-      existing_campaign.attributes.each do |key, val|
-        if key.to_s != "id" && campaign_change.has_attribute?(key)
-          campaign_change[key] = val
-        end
-      end
-    end
 
     @campaign = campaign_change
   end
@@ -64,9 +64,9 @@ class CampaignChangesController < ApplicationController
   def create
     campaign = CampaignChange.new(create_update_params)
 
-    if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
-      campaign.image = Campaign.find(campaign.campaign_id).image
-    end
+    # if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
+    #   campaign.image = Campaign.find(campaign.campaign_id).image
+    # end
     preamble = "Campaign #{campaign.action == "CREATE" ? "proposal" : "update"} for \"#{campaign.name}\""
 
     if campaign.save

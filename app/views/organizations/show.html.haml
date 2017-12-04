@@ -76,7 +76,7 @@
             =link_to octicon('pencil', :class => "white-icon") + "  Edit", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "UPDATE"), :class => "btn btn-dark btn-sm mt-2", :data => { confirm: camp.edit_warning}
             =link_to octicon('trashcan', :class => "white-icon") + "  Delete", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "DELETE"), :class => "btn btn-dark btn-sm mt-2", :data => { confirm: camp.delete_warning}
             - if !camp.campaign_change.nil?
-              %td= link_to octicon('diff') + "#{camp.campaign_change.action == "UPDATE" ? "  Pending Change" : "  Pending Deletion"}", (camp.campaign_change.action == "UPDATE" ? campaign_change_path(camp.campaign_change) : "#"), :class => "btn btn-warning btn-sm mt-2"
+              %td= link_to octicon('diff') + "#{camp.campaign_change.action == "UPDATE" ? "  Pending Change" : "  Pending Deletion"}",campaign_change_path(camp.campaign_change), :class => "btn btn-warning btn-sm mt-2"
 %br
 
 - if @belongs_to_current_user && @campaign_changes.length > 0
