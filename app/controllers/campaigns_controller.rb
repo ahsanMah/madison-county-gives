@@ -2,6 +2,10 @@ class CampaignsController < ApplicationController
 
 	def index
 		@campaigns = Campaign.where("is_active = ?", true)
+		# shuffle to expose each campaign equally to users
+		@campaigns = @campaigns.to_a.shuffle
+		# ensure that all featured campaigns appear first
+		@campaigns = @campaigns.sort { |a, b| (b.is_featured ? 1 : 0) <=> (a.is_featured ? 1 : 0) }
 		@campaigns.each do |camp|
 			camp.amount_raised = camp.payments.sum(:amount)
 			camp.percent_raised = camp.amount_raised * 1.0 / camp.goal * 100

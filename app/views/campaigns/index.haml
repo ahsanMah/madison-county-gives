@@ -10,6 +10,9 @@
   -@campaigns.each do |camp|
     .col-lg-4.col-md-6.col-sm-12.card-set
       .card.mb-4.campaign
+        - if camp.is_featured
+          .ribbon
+            %span FEATURED
         =image_tag camp.image.url(:thumb), :class => "img-fluid card-img"
         .card-body
           =link_to camp.name, campaign_path(camp), :class => "h4"
