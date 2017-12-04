@@ -3,6 +3,7 @@ class Campaign < ApplicationRecord
   has_many :payments
   belongs_to :organization
   has_many :payments
+  has_many :status_updates
   has_attached_file :image, :styles=> {:large => "1000x700>", :thumb => "450x300="},
   :default_url => "default.png"
   validates_attachment :image, :content_type => {:content_type =>
