@@ -54,9 +54,12 @@
   -@organization.campaigns.each do |camp|
     .col-lg-4.col-md-6.col-sm-12.card-set
       .card.mb-4.campaign
+        - if camp.is_featured
+          .ribbon
+            %span FEATURED
         =image_tag camp.image.url(:thumb), :class => "img-fluid card-img"
         .card-body
-          =content_tag :h4 do
+          %h4
             =link_to camp.name, campaign_path(camp), :class => "h4"
             -if camp.is_active
               =content_tag :span, "Active", :class => "badge badge-success align-top ml-2"
@@ -85,7 +88,7 @@
         .card.mb-4.campaign-change
           =image_tag change.image.url(:thumb), :class => "img-fluid card-img"
           .card-body
-            =content_tag :h4 do
+            %h4
               =link_to change.name, campaign_change_path(change), :class => "h4"
               =content_tag :span, "Pending", :class => "badge badge-warning align-top ml-2"
             %p.card-text.description= truncate(change.description, length: 100)
