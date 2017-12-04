@@ -5,14 +5,14 @@ class OrganizationsController < ApplicationController
 
 	def index
 		@organizations = Organization.where("is_approved = ?", true)
-		if user_signed_in?
+		if user_signed_in? && (!current_user.organization.nil?)
 			@my_organization_id = current_user.organization.id
 		end
 	end
 
 	def show
 		@organization = Organization.find(params[:id])
-		@belongs_to_current_user = (user_signed_in?) && (@organization.id == current_user.organization.id)
+		@belongs_to_current_user = (user_signed_in?) && (!current_user.organization.nil?) && (@organization.id == current_user.organization.id)
 		# unapproved organization is only visible to its user
 		if !(@organization.is_approved?) && !(@belongs_to_current_user)
 			 redirect_to organizations_path and return
