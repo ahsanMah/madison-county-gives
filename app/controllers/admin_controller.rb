@@ -31,10 +31,13 @@ class AdminController < ApplicationController
     action = campaign_change.action
     campaign_id = campaign_change.campaign_id
     if action == "DELETE"
-      if !campaign_id && Campaign.destroy(campaign_id)
-        flash[:notice] = "Campaign \"#{campaign_change.name}\ has been removed form the listing."
+      if Campaign.destroy(campaign_id)
+        flash[:notice] = "Campaign \"#{campaign_change.name}\" has been removed form the listing."
+        if !campaign_change.destroy
+          flash[:error] = "The corresponding delete request failed to get removed. Please manually delete the 'campaign_change', #{campaign_change.name}"
+        end
       else
-        flash[:error] = "We were unable to delete \"#{campaign_change.name}\. " + Campaign.find(campaign_id).errors.full_messages.join(". ")
+        flash[:error] = "We were unable to delete \"#{campaign_change.name}.\" " + Campaign.find(campaign_id).errors.full_messages.join(". ")
       end
     else
       campaign = ((action == "CREATE")? Campaign.new : Campaign.find(campaign_id))
