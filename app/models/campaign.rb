@@ -9,5 +9,5 @@ class Campaign < ApplicationRecord
   validates_attachment :image, :content_type => {:content_type =>
   ["image/jpeg", "image/png", "image/gif"]}, :size => { less_than: 3.megabytes }
 
-  attr_accessor :amount_raised, :num_backers, :percent_raised
+  attr_accessor :amount_raised, :num_backers, :percent_raised, :edit_warning, :delete_warning
 end

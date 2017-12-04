@@ -4,4 +4,4 @@
   =form_for @campaign, :method => :patch do |f|
     =render 'form', f: f
     =f.submit "Submit", :class => "btn btn-primary"
-    =link_to "Cancel", campaign_change_path(@campaign), :class => "btn btn-secondary"
+    =link_to "Cancel", organization_path(current_user.organization.id), :class => "btn btn-secondary"
