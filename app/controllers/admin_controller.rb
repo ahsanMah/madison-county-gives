@@ -6,6 +6,7 @@ class AdminController < ApplicationController
   def dashboard
     # entry format: [number, content, type/color]
     @cards = []
+    @campaigns = Campaign.all
 
     num_new_payments = Payment.where("created_at < ?", 7.days.ago).count
     @cards << [num_new_payments, "new donations made in the past 7 days", "success"]
