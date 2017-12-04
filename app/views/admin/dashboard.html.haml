@@ -9,6 +9,28 @@
           %p.card-text= card[1]
 
 
+/ FORM FOR STATUS UPDATE **DOESNT WORK YET**
+
+/ =form_for @status_update, :method => :post do |f|
+/   .form-group.row
+/     =f.label :status_time, "Time", :class => "col-sm-2 col-form-label"
+/     .col-sm-10
+/       =f.datetime_field :status_time, :class => "form_control"
+
+/   .form-group.row
+/     =f.label :status_text, "Text", :class => "col-sm-2 col-form-label"
+/     .col-sm-10
+/       =f.text_area :status_text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
+
+/   .form-group.row
+/     =f.label :status_campaign, "Campaign", :class => "col=sm-2 col-form-label"
+/     .col-sm-10
+/       =f.select :status_campaign, :class => "form-control"
+/       -@campaigns.each do |campaign|
+/         %option= campaign.title
+
+/  =f.submit "Submit", :class => "btn btn-primary"
+
 
 %h3 Things to implement:
 %ul

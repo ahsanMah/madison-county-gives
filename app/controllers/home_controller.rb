@@ -34,18 +34,18 @@ class HomeController < ApplicationController
        session[:cart][id] = amt
      elsif params[:pmt_amt]
      end
-     redirect_to root_path
-     return
+     flash[:info] = "Your donation has been successfully added to the cart located on the top-right corner."
+     redirect_to campaign_path(params[:id_to_cart]) and return
   end
 
   def create_payment # can we use params require permit here?
     if params[:pmt_status] == 'success'
       params[:pay_split].each do |campaign_id, amount|
-        kono = false 
+        kono = false
         c = ::Campaign.find(campaign_id)
         if c.is_featured
           kono = true
-        end      
+        end
         payment_attributes = {
           :campaign_id => campaign_id,
           :name => params[:name_on_acct],
