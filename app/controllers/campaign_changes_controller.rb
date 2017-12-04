@@ -4,7 +4,8 @@ class CampaignChangesController < ApplicationController
   before_action :organization_approved, :only => [:new, :create, :edit, :update, :destroy]
 
   def show
-    @campaign = CampaignChange.find(params[:id])
+    @campaign_change = CampaignChange.find(params[:id])
+    @campaign = Campaign.find(@campaign_change.campaign_id)
     @belongs_to_current_user = (user_signed_in?) && (@campaign.organization.id == current_user.organization.id)
   end
 
