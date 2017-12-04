@@ -12,6 +12,12 @@
         %p.card-text= @campaign.description
         %hr
         %p= octicon('calendar') + "  Start date: " + @campaign.start_date
+        %hr
+        .row
+          .col-lg-4
+            Share this campaign
+          .col-lg-8
+            =social_share_button_tag(@campaign.name + " - Madison County Gives")
     .card.mb-4
       .card-header
         Campaign Updates
