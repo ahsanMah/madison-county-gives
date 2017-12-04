@@ -25,8 +25,8 @@
         .card-header.text-center
           %h4
             %strong Unapproved Changes
+        =image_tag @campaign_change.image.url(:large), :class => "card-img-top img-fluid"
         .card-body
-          =image_tag @campaign_change.image.url(:large), :class => "card-img-top img-fluid"
           -if @belongs_to_current_user
             .float-right
               =link_to octicon('pencil') + "  Edit", edit_campaign_change_path(@campaign_change), :class => "btn btn-light btn-sm mt-2"
