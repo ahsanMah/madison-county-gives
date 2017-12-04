@@ -7,11 +7,17 @@
           .float-right
             =link_to octicon('pencil') + "  Edit", new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "UPDATE"), :class => "btn btn-light btn-sm mt-2"
             =link_to octicon('trashcan') + "  Delete", new_campaign_change_path(:campaign_id => @campaign.id, :campaign_action => "DELETE"), :class => "btn btn-light btn-sm mt-2"
-        %h3= @campaign.name
+        %h3
+          =@campaign.name
+          -if @campaign.is_active
+            =content_tag :span, "Active", :class => "badge badge-success align-top ml-2"
+          -else
+            =content_tag :span, "Inactive", :class => "badge badge-secondary align-top ml-2"
+          -if @campaign.is_featured
+            =content_tag :span, "Featured", :class => "badge badge-info align-top ml-2"
+        %p.mt-4= octicon('calendar') + "  Start date: " + @campaign.start_date
         %hr
         %p.card-text= @campaign.description
-        %hr
-        %p= octicon('calendar') + "  Start date: " + @campaign.start_date
         %hr
         .row
           .col-lg-4

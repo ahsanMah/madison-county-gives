@@ -91,7 +91,7 @@ class CampaignChangesController < ApplicationController
 			redirect_to organization_path current_user.organization and return
     else
       #Unable to save
-      flash[:error] = "We were unable to submit \"#{campaign.name}\" for approval. Please try again."
+      flash[:error] = "We were unable to submit \"#{campaign.name}\" for approval. " + campaign.errors.full_messages.join(". ")
       redirect_to edit_campaign_change_path campaign
     end
   end
@@ -107,7 +107,7 @@ class CampaignChangesController < ApplicationController
       if campaign_id && @approved_campaign.destroy
         flash[:notice] = "Campaign \"#{@pending_campaign.name}\ has been removed form the listing."
       else
-         flash[:error] = "We were unable to delete \"#{@pending_campaign.name}\". Please try again."
+         flash[:error] = "We were unable to delete \"#{@pending_campaign.name}\. " + @approved_campaign.errors.full_messages.join(". ")
       end
       redirect_to organization_path(current_user.organization.id) and return
     end
@@ -124,7 +124,7 @@ class CampaignChangesController < ApplicationController
       @pending_campaign.destroy
       redirect_to campaign_path @approved_campaign and return
     else
-      flash[:error] = "Oops! We failed to approve this campaign, please try again."
+      flash[:error] = "Oops! We failed to approve this campaign. " + @approved_campaign.errors.full_messages.join(". ")
       redirect_to campaign_change_path @pending_campaign
     end
 
@@ -136,7 +136,7 @@ class CampaignChangesController < ApplicationController
     if campaign_change.destroy
         flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed form the listing"
     else
-        flash[:error] = "We were unable to delete \"#{campaign_name}\". Please try again."
+        flash[:error] = "We were unable to delete \"#{campaign_name}\. " + @campaign_change.errors.full_messages.join(". ")
     end
     redirect_to organization_path(current_user.organization.id) and return
   end
