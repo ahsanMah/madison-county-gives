@@ -36,9 +36,9 @@ Campaign.create!(id: 3, name: "Cure for Polio", organization_id: 1, start_date: 
 Campaign.create!(id: 4, name: "Textbooks for 1st Graders", organization_id: 3, start_date: Date.new(2017, 11, 13), is_active: true, description: "SAT Prep for Toddlers and Junior Differential Equations needed for a class of 20!", goal: 1000, image: seed_image('textbooks.jpg'))
 
 CampaignChange.create!(id: 1, campaign_id: nil, organization_id: 1, action: "CREATE", name: "Test Campaign", description: "This will be a test campaign change.", start_date: Date.new(2017, 12, 10), goal: 1000, image: seed_image('lab.jpg'))
-CampaignChange.create!(id: 2, campaign_id: 1, organization_id: 1, action: "UPDATE", description: "We are funding a large wave of Malaria vaccines for children in rural Zimbabwe. The fund-raising campaign will last for one year.")
-CampaignChange.create!(id: 3, campaign_id: 3, organization_id: 1, action: "DELETE")
-CampaignChange.create!(id: 4, campaign_id: 2, organization_id: 2, action: "UPDATE", description: "Olive Garden is closed all next month and I think I'm going to starve.")
+CampaignChange.create!(id: 2, campaign_id: 1, organization_id: 1, action: "UPDATE", name: "Malaria Vaccines", start_date: Date.new(2017, 11, 13), description: "We are funding a large wave of Malaria vaccines for children in rural Zimbabwe. The fund-raising campaign will last for one year.", goal: 300000, image: seed_image('malaria_vaccine.jpeg'))
+CampaignChange.create!(id: 3, campaign_id: 3, organization_id: 1, action: "DELETE", name: "Cure for Polio", start_date: Date.new(2017, 10, 13), description: "This is an ambitious undertaking; immunization is not enough. We need to cure polio. Again.", goal: 1000000, image: seed_image('polio.jpg'))
+CampaignChange.create!(id: 4, campaign_id: 2, organization_id: 2, action: "UPDATE", name: "Ravioli Meal for 1", start_date: Date.new(2017, 10, 13), description: "Olive Garden is closed all next month and I think I'm going to starve.", goal: 140, image: seed_image('ravioli.jpeg'))
 CampaignChange.create!(id: 5, campaign_id: nil, organization_id: 3, action: "CREATE", name: "My Test Campaign", description: "This will be a test campaign change.", start_date: Date.new(2017, 12, 10), goal: 2000, image: seed_image('lab.jpg'))
 
 ShortQuestion.create!(id: 1, question: "What is the central goal of your organization?")
