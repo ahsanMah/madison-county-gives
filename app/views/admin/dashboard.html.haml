@@ -22,3 +22,17 @@
 
 
 =link_to "Database", rails_admin_path
+
+%h3 Pending Campaigns and Campaign Changes
+%table{:class => "table"}
+  %thead
+    %tr
+      %th{:scope=>"col"} Name
+      %th{:scope=>"col"} Request
+      %th{:scope=>"col"} Approve
+  %tbody
+  - @campaign_changes.each do |campaign_change|
+    %tr
+      %td=link_to campaign_change.name, campaign_change_path(campaign_change.id), :target => "_blank"
+      %td= campaign_change.action
+      %td=link_to "Approve", admin_campaign_approval_path(:campaign_change_id => campaign_change.id), :class => "btn btn-primary"
