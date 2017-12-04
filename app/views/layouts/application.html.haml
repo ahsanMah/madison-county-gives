@@ -56,7 +56,12 @@
             %li.nav-item.active
               =link_to octicon("sign-in", :class => "white-icon") + '  Organization Login', new_user_session_path, :class => "nav-link"
           %li.nav-item.active
-            =link_to embedded_svg("cart.svg", :class => "white-icon", :width => 16, :height => 16) + '  Cart', "/summary", :class => "nav-link"
+            -# =link_to embedded_svg("cart.svg", :class => "white-icon", :width => 16, :height => 16) + '  Cart', "/summary", :class => "nav-link"
+
+            =content_tag :a, :href => "/summary", :class => "nav-link" do
+              =embedded_svg("cart.svg", :class => "white-icon", :width => 16, :height => 16) + '  Cart'
+              - if (session.has_key? :cart) && session[:cart].length > 0
+                %span.badge.badge-light.align-middle= session[:cart].length
 
     %main.container
       %br
