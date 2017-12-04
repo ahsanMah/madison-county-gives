@@ -1,4 +1,7 @@
 FactoryBot.define do
+  factory :status_update do
+    text "MyText"
+  end
   
   factory :user do
     email "helpme@sos.com"
