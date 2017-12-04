@@ -25,17 +25,19 @@ class HomeController < ApplicationController
   end
 
   def processing
-     if session[:cart] == nil
-       session[:cart] = {}
-     end
-     amt = params["amount_to_cart"]
-     id = params["id_to_cart"]
-     if amt != nil && id != nil
-       session[:cart][id] = amt
-     elsif params[:pmt_amt]
-     end
-     redirect_to root_path
-     return
+   if session[:cart] == nil
+     session[:cart] = {}
+   end
+   amt = params["amount_to_cart"]
+   id = params["id_to_cart"]
+   if amt != nil && id != nil
+    if amt > 0
+     session[:cart][id] = amt
+    end
+   elsif params[:pmt_amt]
+   end
+   redirect_to root_path
+   return
   end
 
   def create_payment # can we use params require permit here?

@@ -7,12 +7,12 @@ Feature: link to touchnet to make donation
     Scenario: Click on shopping cart and go to summary page
       Given I am on the home page
       And I click on "Cart Checkout"
-      Then I should see 'contributions thus far'
-      And I should see 'You have not made any contributions yet :('
+      Then I should see 'You have not made any contributions yet :('
 
     Scenario: Fill out form and get redirected to Touchnet
       Given I am on the home page
       And I click on "Cart Checkout"
+      And I click on "proceed to checkout"
       When I fill in the following: 
         | Full Name                |  Bob Yu         |
         | Email Address            |  bob@gmail.com  |

@@ -23,12 +23,13 @@
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
   Scenario: Donor wants to remain anonymous
-	  Given I am on Apples page
+    Given I am on the home page
+	  And I follow "Apples"
 	  When I fill in "Donation Amount" with "30"
 	  And I press "Donate"
 	  Then I should see "Thank You for your contribution!"
-	  Then I should see "Cart (2)"
-	  When I click on Cart(2) 
+
+
 	  Then I should be on Summary page
 	  Then I should see "Apples"
 	  Then I should see "$30"
