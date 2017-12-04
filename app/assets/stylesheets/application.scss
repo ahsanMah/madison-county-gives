@@ -1,3 +1,7 @@
+/*
+ *= require social-share-button
+*/
+
 @import "bootstrap";
 
 .white-icon {
@@ -10,4 +14,20 @@
 
 .card-img {
   max-height: 230px;
+}
+
+.fixed-position {
+  position: sticky;
+  top: 80px;
+}
+
+
+$size: 24px;
+.social-share-button {
+  .ssb-icon {
+    background-size: $size $size;
+    height: $size;
+    width: $size;
+    margin: 0 5% 0 0;
+  }
 }

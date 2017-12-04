@@ -1,6 +1,7 @@
 class CampaignChangesController < ApplicationController
   before_action :authenticate_user!
   before_action :belongs_to_user, :only => [:edit, :update, :destroy]
+  before_action :organization_approved, :only => [:new, :create, :edit, :update, :destroy]
 
   # def index
   #   if params[:posting_id] != nil
@@ -148,6 +149,12 @@ class CampaignChangesController < ApplicationController
 
      def belongs_to_user
        unless CampaignChange.find(params[:id]).organization.user.id == current_user.id
+         raise ActionController::RoutingError.new('Not Found')
+       end
+     end
+
+     def organization_approved
+       unless current_user.organization.is_approved?
          raise ActionController::RoutingError.new('Not Found')
        end
      end

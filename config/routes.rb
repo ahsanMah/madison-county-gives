@@ -12,4 +12,11 @@ Rails.application.routes.draw do
   get '/checkout', to: 'home#checkout'
   post '/processing', to: 'home#processing'
   post '/create_payment', to: 'home#create_payment'
+
+  get '/about_us', to: 'about#about_us'
+  get '/faqs', to: 'about#faqs'
+  get '/contact_us', to:'about#contact_us'
+
+  mount RailsAdmin::Engine => '/data', as: 'rails_admin'
+  get '/admin', to: 'admin#dashboard'
 end

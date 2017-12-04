@@ -4,10 +4,9 @@
     %p.lead Madison County Gives is an online giving site powered by the Konosioni Senior Honor Society at Colgate University.  This crowdfunding site connects not-for-profit organizations that provide services to residents of Madison County with students and community members who want to help through web-based fundraising campaigns.
     %br
     %p.lead
-      =link_to "View Campaigns", "#active-campaigns", :class => "btn btn-success btn-lg"
+      =link_to "View Our Organizations", organizations_path, :class => "btn btn-success btn-lg"
 
 .row
-  %a{ :name => "active-campaigns"}
   -@campaigns.each do |camp|
     .col-lg-4.col-md-6.col-sm-12.card-set
       .card.mb-4.campaign
@@ -15,45 +14,17 @@
         .card-body
           =link_to camp.name, campaign_path(camp), :class => "h4"
           %p.card-text.description= truncate(camp.description, length: 200)
-          =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
+          -# =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
         .card-footer
           .progress.mb-2
             .progress-bar{ :role => "progressbar", :style => "width: " + number_to_percentage(camp.percent_raised, precision: 0), "aria-valuenow" => camp.percent_raised, "aria-valuemin" => 0, "aria-valuemax" => 100 }= number_to_percentage(camp.percent_raised, precision: 0)
           .row
             .col-sm-4
               %small.funded= number_to_currency(camp.amount_raised, precision: 0)
+              %small.text-muted <br>Funded
             .col-sm-4
               %small.goal= number_to_currency(camp.goal, precision: 0)
+              %small.text-muted <br>Goal
             .col-sm-4
               %small.start_date= camp.start_date
-          .row
-            .col-sm-4
-              %small.text-muted Funded
-            .col-sm-4
-              %small.text-muted Goal
-            .col-sm-4
-              %small.text-muted Start Date
-
--# %table.table
--#   %thead
--#     %tr
--#       %th
--#       %th Campaign
--#       %th Description
--#       %th Goal
--#       %th Start Date
--#
--#   %tbody
--#     -@campaigns.each do |camp|
--#       %tr.camp
--#         %td.image= image_tag camp.image.url(:thumb)
--#         %td.name= link_to "#{camp.name}", campaign_path(camp)
--#         %td.description= truncate(camp.description, length: 60)
--#         %td.goal= "#{number_to_currency(camp.goal, precision: 0)}"
--#         %td.start_date= camp.start_date
-
-%p= link_to "List of Organizations", organizations_path
-%br
-%div= link_to('Start new campaign proposal', new_campaign_change_path)
-%br
-%p=link_to "Cart Checkout", controller: "home", action: "summary"
+              %small.text-muted <br>Start Date

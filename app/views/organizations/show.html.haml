@@ -2,6 +2,11 @@
 
 %h1= @organization.name
 
+- if @belongs_to_current_user && (!@organization.is_approved?)
+  .alert.alert-warning
+    %button.close{ :data => { :dismiss => "alert" } }= octicon('x')
+    Note: Your organization is waiting to be approved by the site administrator. Please check back later or contact Madison County Gives. Once it is approved, you will be able to start creating campaigns.
+
 .card.mb-4.organization
   =image_tag @organization.image.url(:large), :class => "card-img-top img-fluid"
   .card-body
@@ -14,8 +19,6 @@
       =content_tag :h4, :class => "card-title mb-4" do
         Additional Information
         =content_tag :span, "This is invisible to the public", :class => "text-muted ml-2 small"
-      -# %h4.card-title.mb-4 Additional Information
-      -# %span.text-muted.ml-2 This is invisible to the public.
       .container
         .row
           .col-lg-2
@@ -38,24 +41,16 @@
         %hr
         .row
           .col-lg-12
-            - @organization.short_responses.each do |response|
+            - @short_responses.each do |response|
               %p
                 %strong= response.short_question.question
               %p= response.response
-
--# .row
--#   .col-md-4
--#     %h1.header.title= "#{@organization.name}"
--#     %td.image= image_tag
-
--# .row
--#   .col-md-offset-2
--#   .col-md-8.description= "#{@organization.description}"
--# %br
--# %br
-
-%h2 Campaigns
 .row
+  %h2.mr-auto Campaigns
+  -if @belongs_to_current_user && @organization.is_approved?
+    =link_to octicon("plus", :class => "white-icon") + "  Create a campaign", new_campaign_change_path(:campaign_action => "CREATE"), :class => "btn btn-success btn-lg"
+
+.row.my-2
   -@organization.campaigns.each do |camp|
     .col-lg-4.col-md-6.col-sm-12.card-set
       .card.mb-4.campaign
@@ -71,19 +66,20 @@
           %hr
           %p.start_date= content_tag(:strong, "Start Date: ") + camp.start_date
           %p.goal= content_tag(:strong, "Goal: ") + number_to_currency(camp.goal, precision: 0)
-          %hr
-          =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
+          -# %hr
+          -# =link_to "View details", campaign_path(camp), :class => "btn btn-primary"
         - if @belongs_to_current_user
           .card-footer
-            =link_to octicon('pencil', :class => "white-icon") + "  Edit", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "UPDATE"), :class => "btn btn-info btn-sm mt-2"
-            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "DELETE"), :class => "btn btn-danger btn-sm mt-2"
+            =link_to octicon('pencil', :class => "white-icon") + "  Edit", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "UPDATE"), :class => "btn btn-dark btn-sm mt-2"
+            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", new_campaign_change_path(:campaign_id => camp.id, :campaign_action => "DELETE"), :class => "btn btn-dark btn-sm mt-2"
             - if !camp.campaign_change.nil?
               %td= link_to octicon('diff') + "#{camp.campaign_change.action == "UPDATE" ? "  Pending Change" : "  Pending Deletion"}", (camp.campaign_change.action == "UPDATE" ? campaign_change_path(camp.campaign_change) : "#"), :class => "btn btn-warning btn-sm mt-2"
 %br
 
 - if @belongs_to_current_user && @campaign_changes.length > 0
-  %h2.text-muted Campaigns Pending Approval
   .row
+    %h2.text-muted Campaigns Pending Approval
+  .row.my-2
     -@campaign_changes.each do |change|
       .col-lg-4.col-md-6.col-sm-12.card-set
         .card.mb-4.campaign-change
@@ -96,67 +92,8 @@
             %hr
             %p.start_date= content_tag(:strong, "Start Date: ") + change.start_date
             %p.goal= content_tag(:strong, "Goal: ") + number_to_currency(change.goal, precision: 0)
-            %hr
-            =link_to "View details", campaign_change_path(change), :class => "btn btn-primary"
+            -# %hr
+            -# =link_to "View details", campaign_change_path(change), :class => "btn btn-primary"
           .card-footer
-            =link_to octicon('pencil', :class => "white-icon") + "  Edit", edit_campaign_change_path(change), :class => "btn btn-info btn-sm mt-2"
-            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", campaign_change_path(change), :method => :delete, :class => "btn btn-danger btn-sm mt-2", :data => { confirm: 'Are you certain you want to delete this?' }
-
-
--#-@campaign_changes.each do |change|
--#           %tr.campaign-change
--#             %td= link_to change.name, campaign_change_path(change)
--#             %td.start_date= change.start_date
--#             %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
--#             %td= link_to "Edit", edit_campaign_change_path(change)
--#             %td= link_to "Delete", campaign_change_path(change), :method => :delete
-
-
--#
--#
--# .row
--#   %h4 Campaigns
--# .row
--#   %table.table
--#     %thead
--#       %tr
--#         %th Name
--#         %th Start Date
--#         %th Goal
--#         %th Active?
--#         - if @belongs_to_current_user
--#           %th
--#           %th
--#           %th
--#     %tbody
--#       -@organization.campaigns.each do |c|
--#         %tr.campaign
--#           %td= link_to c.name, campaign_path(c)
--#           %td.start_date= c.start_date
--#           %td.goal= "#{number_to_currency(c.goal, precision: 0)}"
--#           %td= c.is_active
--#           - if @belongs_to_current_user
--#             %td= link_to "Edit", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "UPDATE")
--#             %td= link_to "Delete", new_campaign_change_path(:campaign_id => c.id, :campaign_action => "DELETE")
--#             - if !c.campaign_change.nil?
--#               %td= link_to "#{c.campaign_change.action == "UPDATE" ? "Pending Change" : "Pending Deletion"}", campaign_change_path(c.campaign_change)
--#
--# .row
--#   - if @belongs_to_current_user
--#     %h4 New campaign proposals pending approval
--#     %table.table
--#       %thead
--#         %tr
--#           %th Name
--#           %th Start Date
--#           %th Goal
--#           %th
--#           %th
--#       %tbody
--#         -@campaign_changes.each do |change|
--#           %tr.campaign-change
--#             %td= link_to change.name, campaign_change_path(change)
--#             %td.start_date= change.start_date
--#             %td.goal= "#{number_to_currency(change.goal, precision: 0)}"
--#             %td= link_to "Edit", edit_campaign_change_path(change)
--#             %td= link_to "Delete", campaign_change_path(change), :method => :delete
+            =link_to octicon('pencil', :class => "white-icon") + "  Edit", edit_campaign_change_path(change), :class => "btn btn-dark btn-sm mt-2"
+            =link_to octicon('trashcan', :class => "white-icon") + "  Delete", campaign_change_path(change), :method => :delete, :class => "btn btn-dark btn-sm mt-2", :data => { confirm: 'Are you certain you want to delete this?' }

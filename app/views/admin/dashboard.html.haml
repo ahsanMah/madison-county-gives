@@ -1,0 +1,24 @@
+%h1.display-4 Admin Dashboard
+
+.row
+  - @cards.each do |card|
+    .col-lg-3.col-md-6.col-sm-12.card-set{ :style => "width: initial;"}
+      %div{ :class => "card text-white mb-3 bg-#{card[2]}" }
+        .card-body
+          %h2.card-title= card[0]
+          %p.card-text= card[1]
+
+
+
+%h3 Things to implement:
+%ul
+  %li Organization Approval
+  %li Campaign Approval
+  %li Status Updates
+  %li Organization/Campaign Overview - including is_featured/is_active toggles
+  %li Payment Overview
+  %li Adding Konosioni Donation
+  %li Short Questions
+
+
+=link_to "Database", rails_admin_path
