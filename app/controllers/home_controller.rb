@@ -40,14 +40,9 @@ class HomeController < ApplicationController
   end
 
   def processing # can we use params require permit here?
-    Payment.create(:campaign_id => "1", :name => "Test", :amount => "10", :is_anonymous => false)
     if params[:pmt_status] == 'success'
       params[:pay_split].each do |campaign_id, amount|
-        kono = false
         c = ::Campaign.find(campaign_id)
-        if c.is_featured
-          kono = true
-        end
         payment_attributes = {
           :campaign_id => campaign_id,
           :name => params[:name_on_acct],
@@ -57,7 +52,7 @@ class HomeController < ApplicationController
           :transaction_id => params[:sys_tracking_id],
           :time => DateTime.strptime(params[:pmt_date], "%m/%d/%Y"),
           :is_anonymous => params[:anon],
-          :is_konosioni => kono
+          :is_konosioni => false
         }
         c.payments << Payment.create(payment_attributes)
       end
