@@ -55,7 +55,7 @@
           %p.text-muted backers
           - if @campaign.is_active
             %hr
-            =form_tag "/processing" do
+            =form_tag add_to_cart_path do
               .input-group.my-4
                 .input-group-addon $
                 =number_field_tag :amount_to_cart, nil, :placeholder => "Enter Your Pledge Amount", :class => "form-control", :id => "donationAmount"

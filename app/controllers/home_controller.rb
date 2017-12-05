@@ -24,7 +24,7 @@ class HomeController < ApplicationController
     end
   end
 
-  def processing
+  def add_to_cart
      if session[:cart] == nil
        session[:cart] = {}
      end
@@ -34,11 +34,11 @@ class HomeController < ApplicationController
        session[:cart][id] = amt
      elsif params[:pmt_amt]
      end
-     flash[:info] = "Your donation has been successfully added to the cart located on the top-right corner."
+     flash[:info] = "Your donation has been successfully added to the cart located in the upper right hand corner."
      redirect_to campaign_path(params[:id_to_cart]) and return
   end
 
-  def create_payment # can we use params require permit here?
+  def processing # can we use params require permit here?
     if params[:pmt_status] == 'success'
       params[:pay_split].each do |campaign_id, amount|
         kono = false
