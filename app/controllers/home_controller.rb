@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   #include HomeHelper
+  skip_before_filter :verify_authenticity_token, :only => [:processing]
 
   def index
   end

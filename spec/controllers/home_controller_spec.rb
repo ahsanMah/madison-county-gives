@@ -12,7 +12,7 @@ RSpec.describe HomeController, type: :controller do # we could probably dry this
 			c1 = FactoryBot.create(:campaign, :id => 1, :organization_id => 1, :is_featured => false)
 			c2 = FactoryBot.create(:campaign, :id => 2, :organization_id => 1, :is_featured => true)
 			expect{
-			post :create_payment, :params => {:pmt_status => "success", :pay_split => {1 => 25.00, 2 => 10.00}, :name_on_acct => "John Doe", :acct_email_address => "test@test.com", :acct_phone_day => "123-456-7890", :sys_tracking_id => 123456, :pmt_date => "01/01/2017", :anon => false}
+			post :processing, :params => {:pmt_status => "success", :pay_split => {1 => 25.00, 2 => 10.00}, :name_on_acct => "John Doe", :acct_email_address => "test@test.com", :acct_phone_day => "123-456-7890", :sys_tracking_id => 123456, :pmt_date => "01/01/2017", :anon => false}
 			}.to change(Payment, :count).by(2)
 
 			# expect(flash[:notice]).to eq "Alert-Thank you for your generous contribution!"
