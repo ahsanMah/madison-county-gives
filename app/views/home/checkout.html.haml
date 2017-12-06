@@ -3,6 +3,7 @@
   .field
     =hidden_field_tag :UPAY_SITE_ID, value = "4"
     =hidden_field_tag :SUCCESS_LINK, value = "#{root_path}"
+    =hidden_field_tag :AMT, value = @total
     -if @carty
       =hidden_field_tag :pay_split, value = @carty
   .field
@@ -27,8 +28,8 @@
     =label_tag :BILL_POSTAL_CODE, "postal code"
     %p=number_field_tag :BILL_POSTAL_CODE
   .field
-    =label_tag :AMT, "Amount"
-    %p=number_field_tag :AMT, @total
+    %p Amount
+    %p= @total
   .field
     =label_tag :anon, "Anonymous donation?"
     =check_box_tag :anon

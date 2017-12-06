@@ -41,7 +41,8 @@ class HomeController < ApplicationController
 
   def processing # can we use params require permit here?
     if params[:pmt_status] == 'success'
-      params[:pay_split].each do |campaign_id, amount|
+      pay_split = eval(params[:pay_split]) # the pay_split hash was stored as a string
+      pay_split.each do |campaign_id, amount|
         c = ::Campaign.find(campaign_id)
         payment_attributes = {
           :campaign_id => campaign_id,
