@@ -6,7 +6,7 @@ class CampaignChangesController < ApplicationController
   def show
     @campaign_change = CampaignChange.find(params[:id])
     @campaign = Campaign.find(@campaign_change.campaign_id)
-    @belongs_to_current_user = (user_signed_in?) && (@campaign.organization.id == current_user.organization.id)
+    @belongs_to_current_user = (user_signed_in?) && (!current_user.organization.nil?) && (@campaign.organization.id == current_user.organization.id)
   end
 
   def new

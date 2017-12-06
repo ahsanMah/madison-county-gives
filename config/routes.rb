@@ -19,4 +19,5 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/data', as: 'rails_admin'
   get '/admin', to: 'admin#dashboard'
+	get '/admin/campaign_approval', to: 'admin#campaign_approval'
 end
