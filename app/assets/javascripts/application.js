@@ -17,3 +17,9 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require social-share-button
+
+// This is to deal with incorrect positioning of anchor link due to the sticky navbar
+
+var shiftWindow = function() { scrollBy(0, -65) };
+if (location.hash) shiftWindow();
+window.addEventListener("hashchange", shiftWindow);
