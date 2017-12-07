@@ -50,11 +50,16 @@
   %thead
     %tr
       %th{:scope=>"col"} Name
+      %th{:scope=>"col"} Start Date
       %th{:scope=>"col"} Request
-      %th{:scope=>"col"} Approve
+      %th{:scope=>"col"}
+      %th{:scope=>"col"}
   %tbody
   - @campaign_changes.each do |campaign_change|
     %tr
       %td=link_to campaign_change.name, campaign_change_path(campaign_change.id), :target => "_blank"
+      %td= (!campaign_change.start_date.nil?)? campaign_change.start_date: "Not Specified"
       %td= campaign_change.action
       %td=link_to "Approve", admin_campaign_approval_path(:campaign_change_id => campaign_change.id), :class => "btn btn-primary"
+      %td=link_to "Approve & Activate", admin_campaign_approval_path(:campaign_change_id => campaign_change.id,
+      :activate => true), :class => "btn btn-primary"

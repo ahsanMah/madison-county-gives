@@ -45,7 +45,14 @@ class AdminController < ApplicationController
         if key.to_s != "id" && campaign.has_attribute?(key)
           campaign[key] = val
         end
+        campaign.image = campaign_change.image
       end
+      campaign[:is_active] = (action == "UPDATE")? campaign[:is_active]: false
+      campaign[:is_featured] = (action == "UPDATE")? campaign[:is_featured]: false
+      if params[:activate]
+        campaign[:is_active] = true
+      end
+
       if campaign.save
         flash[:notice] = "Campaign has been successfully approved!"
         if !campaign_change.destroy
