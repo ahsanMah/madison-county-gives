@@ -5,7 +5,7 @@ class CampaignChangesController < ApplicationController
 
   def show
     @campaign_change = CampaignChange.find(params[:id])
-    @campaign = Campaign.find(@campaign_change.campaign_id)
+    @campaign = Campaign.find(@campaign_change.campaign_id) unless @campaign_change.action == "CREATE"
     @belongs_to_current_user = (user_signed_in?) && (!current_user.organization.nil?) && (@campaign.organization.id == current_user.organization.id)
   end
 

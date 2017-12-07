@@ -1,0 +1,16 @@
+.row
+  .col-lg-10.col-sm-12
+    .card.mb-4
+      =image_tag campaign.image.url(:large), :class => "card-img-top img-fluid"
+      .card-body
+        -if @belongs_to_current_user
+          .float-right
+            =link_to octicon('pencil') + "  Edit", new_campaign_change_path(:campaign_id => campaign.id, :campaign_action => "UPDATE"), :class => "btn btn-light btn-sm mt-2"
+            =link_to octicon('trashcan') + "  Delete", new_campaign_change_path(:campaign_id => campaign.id, :campaign_action => "DELETE"), :class => "btn btn-light btn-sm mt-2"
+        %h3
+          =campaign.name
+          =content_tag :span, "Unapproved", :class => "badge badge-warning align-top ml-2"
+        %p.mt-4= octicon('calendar') + "  Start date: " + campaign.start_date
+        %hr
+        %p.card-text= campaign.description
+        %hr
