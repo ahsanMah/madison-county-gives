@@ -85,6 +85,7 @@ class CampaignChangesController < ApplicationController
   def update
     campaign = CampaignChange.find(params[:id])
     campaign.update(create_update_params)
+    campaign[:action] = "UPDATE"
 
     if campaign.save
       flash[:notice] = "Updates for \"#{campaign.name}\" successfully submitted for approval!"
