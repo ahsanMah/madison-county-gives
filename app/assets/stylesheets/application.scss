@@ -78,3 +78,19 @@ $size: 24px;
   border-bottom: 3px solid transparent;
   border-top: 3px solid #9BC90D;
 }
+
+// --- carousel/slideshow on the main page
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.transparent{
+  background:rgba(255,255,255,0.5);
+}
