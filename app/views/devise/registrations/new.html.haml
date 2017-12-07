@@ -1,0 +1,22 @@
+%h2.text-center Organization Sign up
+
+.row
+  .col-lg-4.offset-lg-4.col-md-6.offset-md-3.col-sm-12.offset-sm-0
+    =form_for resource, as: resource_name, url: registration_path(resource_name) do |f|
+      =devise_error_messages!
+      .form-group
+        =f.label :email
+        =f.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter Email"
+      .form-group
+        =f.label :password
+        - if @minimum_password_length
+          %em= "(" + @minimum_password_length.to_s + " characters minimum)"
+        =f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Enter Password"
+      .form-group
+        =f.label :password_confirmation
+        =f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Confirm Password"
+
+      =f.submit "Sign up", class: "btn btn-primary btn-block"
+
+    %br
+    =render "devise/shared/links"

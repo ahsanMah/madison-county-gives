@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+  # user cannot destroy account
+  devise_for :users, skip: :registrations
+  devise_scope :user do
+    resource :registration,
+      only: [:new, :create, :edit, :update],
+      path: 'users',
+      path_names: { new: 'sign_up' },
+      controller: 'devise/registrations',
+      as: :user_registration do
+        get :cancel
+      end
+  end
+
   resources :organizations, except: :destroy
   resources :campaigns , only: [:index, :show]
   resources :campaign_changes

@@ -1,0 +1,26 @@
+%h2.text-center Edit Account Details
+
+.row
+  .col-lg-6.offset-lg-3.col-sm-12.offset-sm-0
+    =form_for resource, as: resource_name, url: registration_path(resource_name), html: { method: :put } do |f|
+      =devise_error_messages!
+      .form-group
+        =f.label :email
+        =f.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter New Email"
+      -if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        ="Currently waiting confirmation for: " + resource.unconfirmed_email.to_s
+      .form-group
+        =f.label :password
+        - if @minimum_password_length
+          %em= "(" + @minimum_password_length.to_s + " characters minimum)"
+        =f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Enter Password"
+        .text-muted (leave blank if you don't want to change it)
+      .form-group
+        =f.label :password_confirmation
+        =f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Confirm Password"
+      .form-group
+        =f.label :current_password
+        =f.password_field :current_password, autocomplete: "off", class: "form-control", placeholder: "Enter Old Password"
+        .text-muted (we need your current password to confirm your changes)
+      =f.submit "Update", class: "btn btn-primary"
+      =link_to "Cancel", organization_path(current_user.organization.id), class: "btn btn-light"
