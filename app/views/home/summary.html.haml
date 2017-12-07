@@ -3,23 +3,27 @@
 
 -if @empty == 0
   -t = 0
-  %table.summary 
-    %thead{:class => "heading"} Donation Cart
+  %thead{:class => "heading"} Donation Cart
+  %table.summary.table.table-striped
     %tr
-    %th.header Name
-    %th.header Amount
-    -@names_val.each do |name, amt|
-      %tr
-        %td.val #{name}
-        %td.val #{amt}
-      -t = t + amt.to_i
+      %th.header Name
+      %th.header Amount
+      %th.header 
+      -@names_val.each do |name, amt|
+        %tr
+          %td.val= link_to "#{name}", 
+          %td.val #{number_to_currency(amt.to_i)}
+          %td.val= link_to octicon('trashcan'), controller: "home", action: "remove_donation"
+        -t = t + amt.to_i
   %br
-  %strong.header Total: #{t}
+  %strong.header.total Total: #{number_to_currency(t)}
   %br
-  =link_to "proceed to checkout", controller: "home", action: "checkout"
+  =link_to "Proceed to Checkout", controller: "home", action: "checkout", :class => "btn btn-light mb-4"
 -else
-  %h3 You have not made any contributions yet :(
+  %h3 Your donations will be shown here.
 
 %p
-=link_to "back to main page", root_path
+=link_to 'Back to Main Page', root_path, :class => "btn btn-light mb-4"
+
+
     
