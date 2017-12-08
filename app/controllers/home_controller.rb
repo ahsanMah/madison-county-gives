@@ -29,7 +29,7 @@ class HomeController < ApplicationController
       @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @site_id = 4
     else
-      @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
+      @touchnet_url = touchnet_sub_path
       @site_id = 4
     end
   end
@@ -63,6 +63,7 @@ class HomeController < ApplicationController
           :transaction_id => params[:sys_tracking_id],
           :time => DateTime.strptime(params[:pmt_date], "%m/%d/%Y"),
           :is_anonymous => params[:anon],
+          :is_konosioni => false
         }
         c.payments << Payment.create(payment_attributes)
       end
@@ -72,7 +73,7 @@ class HomeController < ApplicationController
   end
 
   def touchnet_sub # substitute for touchnet during dev
-    id_amt = decode(session[:cart])
+    id_amt = decode(params[:cart])
     id_amt.each do |campaign_id, amount|
       c = ::Campaign.find(campaign_id)
       payment_attributes = {
@@ -83,11 +84,13 @@ class HomeController < ApplicationController
         :transaction_id => 123456,
         :time => DateTime.now,
         :is_anonymous => params[:anon],
+        :is_konosioni => false
       }
       c.payments << Payment.create(payment_attributes)
     end
     session[:cart] = nil
     flash[:notice] = "Thank you for your generous contribution!"
+    redirect_to root_path and return 
   end
 
   def remove_donation_cart
