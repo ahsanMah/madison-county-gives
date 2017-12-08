@@ -9,6 +9,28 @@
           %p.card-text= card[1]
 
 
+/ FORM FOR STATUS UPDATE **DOESNT WORK YET**
+
+/ =form_for @status_update, :method => :post do |f|
+/   .form-group.row
+/     =f.label :status_time, "Time", :class => "col-sm-2 col-form-label"
+/     .col-sm-10
+/       =f.datetime_field :status_time, :class => "form_control"
+
+/   .form-group.row
+/     =f.label :status_text, "Text", :class => "col-sm-2 col-form-label"
+/     .col-sm-10
+/       =f.text_area :status_text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
+
+/   .form-group.row
+/     =f.label :status_campaign, "Campaign", :class => "col=sm-2 col-form-label"
+/     .col-sm-10
+/       =f.select :status_campaign, :class => "form-control"
+/       -@campaigns.each do |campaign|
+/         %option= campaign.title
+
+/  =f.submit "Submit", :class => "btn btn-primary"
+
 
 %h3 Things to implement:
 %ul
@@ -22,3 +44,17 @@
 
 
 =link_to "Database", rails_admin_path
+
+%h3 Pending Campaigns and Campaign Changes
+%table{:class => "table"}
+  %thead
+    %tr
+      %th{:scope=>"col"} Name
+      %th{:scope=>"col"} Request
+      %th{:scope=>"col"} Approve
+  %tbody
+  - @campaign_changes.each do |campaign_change|
+    %tr
+      %td=link_to campaign_change.name, campaign_change_path(campaign_change.id), :target => "_blank"
+      %td= campaign_change.action
+      %td=link_to "Approve", admin_campaign_approval_path(:campaign_change_id => campaign_change.id), :class => "btn btn-primary"

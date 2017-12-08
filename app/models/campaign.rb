@@ -3,10 +3,11 @@ class Campaign < ApplicationRecord
   has_many :payments
   belongs_to :organization
   has_many :payments
+  has_many :status_updates
   has_attached_file :image, :styles=> {:large => "1000x700>", :thumb => "450x300="},
   :default_url => "default.png"
   validates_attachment :image, :content_type => {:content_type =>
   ["image/jpeg", "image/png", "image/gif"]}, :size => { less_than: 3.megabytes }
 
-  attr_accessor :amount_raised, :num_backers, :percent_raised
+  attr_accessor :amount_raised, :num_backers, :percent_raised, :edit_warning, :delete_warning
 end

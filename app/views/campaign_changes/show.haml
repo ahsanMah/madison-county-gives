@@ -1,22 +1,42 @@
 .row
-    .col-md-offset-1
-    .col-md-4
-        %h3.header.title= "Unapproved Campaign: #{@campaign.name}"
-    .col-md-offset-1
-    .col-md-offset-4
-        %td.image= image_tag @campaign.image.url(:large)
+  .col-lg-6.col-sm-12
+    .card.mb-4
+      .card-header.text-center
+        %h4
+          %strong Original Campaign
+      =image_tag @campaign.image.url(:large), :class => "card-img-top img-fluid"
+      .card-body
+        %h3= @campaign.name
+        %hr
+        %p.card-text= @campaign.description
+        %hr
+        %p= octicon('calendar') + "  Start date: " + @campaign.start_date
+
+  .col-lg-6.col-sm-12
+    -if @campaign_change.action == "DELETE"
+      .fixed-position
+        .card.mb-4
+          .card-header.text-center
+            %h4
+              %strong Unapproved Changes
+          %h5.text-center We have requested the admin to delete this campaign
+    -else 
+      .card.mb-4
+        .card-header.text-center
+          %h4
+            %strong Unapproved Changes
+        =image_tag @campaign_change.image.url(:large), :class => "card-img-top img-fluid"
+        .card-body
+          -if @belongs_to_current_user
+            .float-right
+              =link_to octicon('pencil') + "  Edit", edit_campaign_change_path(@campaign_change), :class => "btn btn-light btn-sm mt-2"
+              =link_to octicon('trashcan') + "  Delete", campaign_change_path(@campaign_change), :method => :delete, :class => "btn btn-light btn-sm mt-2"
+          %h3= @campaign_change.name
+          %hr
+          %p.card-text= @campaign_change.description
+          %hr
+          %p= octicon('calendar') + "  Start date: " + @campaign_change.start_date
 
 .row
-    .col-md-offset-2
-    .col-md-8.description= "#{@campaign.description}"
-    .col-md-8.goal= "Funding Goal: #{number_to_currency(@campaign.goal, precision: 0)}"
-    .col-md-8.start_date= "Start date: #{@campaign.start_date}"
-%br
-%br
-
-.row
-    .col-md-offset-1
-    .col-md-2= link_to('Edit unapproved campaign details', edit_campaign_change_path(@campaign))
-    .col-md-2= link_to('Delete unapproved campaign', campaign_change_path(@campaign), :method => :delete)
-    .col-md-2= link_to('Approve campaign', approve_campaign_change_path(@campaign))
-    .col-md-2= link_to('Back to campaign list', campaigns_path)
+  .col-md-2= link_to('Approve campaign', approve_campaign_change_path(@campaign))
+  .col-md-2= link_to('Back to campaign list', campaigns_path)

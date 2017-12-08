@@ -1,29 +1,24 @@
-.row
-  .col-sm-12.text-center.bootstrap-welcome
-
+%h3 Donation Cart
 -if @empty == 0
   -t = 0
-  %thead{:class => "heading"} Donation Cart
   %table.summary.table.table-striped
     %tr
       %th.header Name
       %th.header Amount
       %th.header 
-      -@names_val.each do |name, amt|
+      -@names_val.each do |id, name_amt|
         %tr
-          %td.val= link_to "#{name}", 
-          %td.val #{number_to_currency(amt.to_i)}
-          %td.val= link_to octicon('trashcan'), controller: "home", action: "remove_donation"
-        -t = t + amt.to_i
+          %td.val= link_to "#{name_amt[0]}", campaigns_path(id.to_i)
+          %td.val #{number_to_currency(name_amt[1].to_i)}
+          %td.val= link_to octicon('trashcan'),remove_donation_cart_path(:donation_id => id)
+        -t = t + name_amt[1].to_i
+  %strong.float-right Total: #{number_to_currency(t)}
   %br
-  %strong.header.total Total: #{number_to_currency(t)}
-  %br
-  =link_to "Proceed to Checkout", controller: "home", action: "checkout", :class => "btn btn-light mb-4"
+  =link_to "Proceed to Checkout", checkout_path, :class => "btn btn-primary mb-4 float-right" 
+  =link_to 'Back to Main Page', root_path, :class => "btn btn-light mb-4"
 -else
   %h3 Your donations will be shown here.
-
-%p
-=link_to 'Back to Main Page', root_path, :class => "btn btn-light mb-4"
+  =link_to 'Back to Main Page', root_path, :class => "btn btn-light mb-4"
 
 
     
