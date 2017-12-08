@@ -67,7 +67,6 @@ class HomeController < ApplicationController
         }
         c.payments << Payment.create(payment_attributes)
       end
-      session[:cart] = nil
       flash[:notice] = "Thank you for your generous contribution!"
     end
   end
@@ -88,7 +87,6 @@ class HomeController < ApplicationController
       }
       c.payments << Payment.create(payment_attributes)
     end
-    session[:cart] = nil
     flash[:notice] = "Thank you for your generous contribution!"
     redirect_to root_path and return 
   end
@@ -97,5 +95,10 @@ class HomeController < ApplicationController
     donation_remove = params[:donation_id]
     session[:cart].delete(donation_remove)
     redirect_to summary_path and return
+  end
+
+  def clear_cart 
+    session[:cart] = nil
+    redirect_to root_path and return
   end
 end

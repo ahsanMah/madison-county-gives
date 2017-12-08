@@ -1,36 +1,52 @@
 %h3 Billing Information
 =form_tag @touchnet_url, id: "checkout_form", method: "post" do
+  .form-group.row
+    =hidden_field :UPAY_SITE_ID, value = @site_id
+    =hidden_field :AMT, value = @total
+    =hidden_field :cart, value = @encoded_cart
+  .form-group.row
+    =label :BILL_NAME, "Full name", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =text_field :BILL_NAME, nil, :class => "form-control"
+
+  .form-group.row
+    =label :BILL_EMAIL_ADDRESS, "Email Address", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =text_field :BILL_EMAIL_ADDRESS, nil, :class => "form-control"
+
+  .form-group.row
+    =label :BILL_STREET1, "Street Address 1", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =text_field :BILL_STREET1, nil, :class => "form-control"
+
+  .form-group.row
+    =label :BILL_STREET2, "Street Address 2", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =text_field :BILL_STREET2, nil, :class => "form-control"
+
+  .form-group.row
+    =label :BILL_CITY, "City", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =text_field :BILL_CITY, nil, :class => "form-control"
+
+  .form-group.row
+    =label :BILL_STATE, "State", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =select_tag :BILL_STATE, options_for_select(["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"], "NY"), :class => "form-control"
+
+  .form-group.row
+    =label :BILL_POSTAL_CODE, "Postal Code", :class => "col-sm-2 col-form-label"
+    .col-sm-10
+      =number_field :BILL_POSTAL_CODE, nil, :class => "form-control"
+
   .field
-    =hidden_field_tag :UPAY_SITE_ID, value = @site_id
-    =hidden_field_tag :SUCCESS_LINK, value = "#{root_url}"
-    =hidden_field_tag :AMT, value = @total
-    =hidden_field_tag :cart, value = @encoded_cart
+    %p Amount: $#{@total}
   .field
-    =label_tag :BILL_NAME, "Full Name"
-    %p=text_field_tag :BILL_NAME
-  .field
-    =label_tag :BILL_EMAIL_ADDRESS, "Email address"
-    %p=text_field_tag :BILL_EMAIL_ADDRESS
-  .field
-    =label_tag :BILL_STREET1, "Street Address 1"
-    %p=text_field_tag :BILL_STREET1
-  .field
-    =label_tag :BILL_STREET2, "Street Address 2"
-    %p=text_field_tag :BILL_STREET2
-  .field
-    =label_tag :BILL_CITY, "City"
-    %p=text_field_tag :BILL_CITY
-  .field
-    =label_tag :BILL_STATE, "State"
-    %p=select_tag :BILL_STATE, options_for_select(@US_states, "NY")
-  .field
-    =label_tag :BILL_POSTAL_CODE, "Postal Code"
-    %p=number_field_tag :BILL_POSTAL_CODE
-  .field
-    %p Amount: #{@total}
-  .field
-    =label_tag :anon, "Anonymous donation?"
+    =label :anon, "Anonymous donation?"
     =check_box_tag :anon
+    .text-muted Selecting anonymous means that your name will not appear on our main donate feed. We still need the information above to proceed with payment
+
+  %p
   .field
     =submit_tag "Proceed to payment"
 
