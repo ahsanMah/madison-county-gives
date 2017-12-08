@@ -27,8 +27,13 @@
     - if @campaign.status_updates.count > 0
       .card.mb-4
         .card-header
-          Campaign Updates
+          Status Updates
         .card-body
+          -@campaign.status_updates.each do |status_update|
+            %strong= status_update.date
+            %p= status_update.text
+            - if status_update != @campaign.status_updates.last
+              %hr
     - if @campaign.payments.count > 0
       .card.mb-4
         .card-header

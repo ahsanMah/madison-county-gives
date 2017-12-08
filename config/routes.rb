@@ -38,4 +38,5 @@ Rails.application.routes.draw do
   get '/admin', to: 'admin#dashboard'
 	get '/admin/campaign_approval', to: 'admin#campaign_approval'
   get '/admin/organization_approval', to: 'admin#organization_approval'
+  post '/admin/create_status', to: 'admin#create_status'
 end
