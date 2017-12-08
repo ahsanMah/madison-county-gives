@@ -39,18 +39,28 @@
     .col-sm-10
       =number_field_tag :BILL_POSTAL_CODE, nil, :class => "form-control"
 
-  .field
-    %p Amount: $#{@total}
+  %p
+  .row
+    .col-sm-2
+      %div Amount:
+    .col-sm-10
+      %div #{@total}
+  %p
   .field
     =label :anon, "Anonymous donation?"
     =check_box_tag :anon
     .text-muted Selecting anonymous means that your name will not appear on our main donate feed. You may also choose to leave any of the fields above blank.
-
   %p
-  .field
-    =submit_tag "Proceed to payment"
-
-
-  =link_to "back to summary", :back
-  %br
-  =link_to "back to main page", root_path
+  .row
+    .col-sm-4
+      =submit_tag "Proceed to payment", :class => "btn btn-primary mb-4"
+    .col-sm-8
+  %p
+  .row
+    .col-sm-4
+      =link_to "Back to summary", :back, :class => "btn btn-light mb-4"
+    .col-sm-8
+  .row
+    .col-sm-4
+      =link_to "Back to main page", root_path, :class => "btn btn-light mb-4"
+    .col-sm-8
