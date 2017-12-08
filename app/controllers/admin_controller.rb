@@ -6,6 +6,9 @@ class AdminController < ApplicationController
   def dashboard
     @unapproved_organizations = Organization.where("is_approved = ?", false)
     @campaign_changes = CampaignChange.all
+    @active_campaigns = Campaign.where("is_active = ?", true)
+    @status_update = StatusUpdate.new
+    @approved_organizations = Organization.where("is_approved = ?", true).includes(:campaigns)
   end
 
   def organization_approval
@@ -61,10 +64,19 @@ class AdminController < ApplicationController
     redirect_to admin_path and return
   end
 
+  def create_status
+    status = StatusUpdate.new
+    status.campaign_id = params[:status_update]["campaign_id"]
+    status.date = params[:status_update]["date"]
+    status.text = params[:status_update]["text"]
 
-
-
-
+    if status.save
+      flash[:notice] = "Status posted!"
+    else
+      flash[:error] = "Oops! Something went wrong. Status update not posted."
+    end
+    redirect_to admin_path and return
+  end
 
   private
     def check_is_admin

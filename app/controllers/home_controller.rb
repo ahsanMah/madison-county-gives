@@ -63,10 +63,10 @@ class HomeController < ApplicationController
           :transaction_id => params[:sys_tracking_id],
           :time => DateTime.strptime(params[:pmt_date], "%m/%d/%Y"),
           :is_anonymous => params[:anon],
+          :is_konosioni => false
         }
         c.payments << Payment.create(payment_attributes)
       end
-      session[:cart] = nil
       flash[:notice] = "Thank you for your generous contribution!"
     end
   end
@@ -83,10 +83,10 @@ class HomeController < ApplicationController
         :transaction_id => 123456,
         :time => DateTime.now,
         :is_anonymous => params[:anon],
+        :is_konosioni => false
       }
       c.payments << Payment.create(payment_attributes)
     end
-    session[:cart] = nil
     flash[:notice] = "Thank you for your generous contribution!"
     redirect_to root_path and return
   end
@@ -95,5 +95,10 @@ class HomeController < ApplicationController
     donation_remove = params[:donation_id]
     session[:cart].delete(donation_remove)
     redirect_to summary_path and return
+  end
+
+  def clear_cart
+    session[:cart] = nil
+    redirect_to root_path and return
   end
 end

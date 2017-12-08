@@ -25,7 +25,7 @@
   .col-md-9
     %h1.display-4.mb-4 Admin Dashboard
     %div
-      %h4#org-approval= octicon("organization") + "  Organization Approval"
+      %h4.my-4#org-approval= octicon("organization") + "  Organization Approval"
       %hr
       - if @unapproved_organizations.count > 0
         %table{:class => "table"}
@@ -43,7 +43,7 @@
       - else
         %p There is no organization pending approval at this time.
 
-      %h4#camp-approval= octicon("file") + "  Campaign Approval"
+      %h4.my-4#camp-approval= octicon("file") + "  Campaign Approval"
       %hr
       - if @campaign_changes.count > 0
         %table{:class => "table"}
@@ -69,39 +69,58 @@
       - else
         %p There is no campaign pending approval at this time.
 
-      %h4#status-updates= octicon("megaphone") + "  Status Updates"
+      %h4.my-4#status-updates= octicon("megaphone") + "  Status Updates"
       %hr
       %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
       / FORM FOR STATUS UPDATE **DOESNT WORK YET**
 
-      / =form_for @status_update, :method => :post do |f|
-      /   .form-group.row
-      /     =f.label :status_time, "Time", :class => "col-sm-2 col-form-label"
-      /     .col-sm-10
-      /       =f.datetime_field :status_time, :class => "form_control"
+      =form_for @status_update, :url => admin_create_status_path,:method => :post do |f|
 
-      /   .form-group.row
-      /     =f.label :status_text, "Text", :class => "col-sm-2 col-form-label"
-      /     .col-sm-10
-      /       =f.text_area :status_text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
+        .form-group.row
+          =f.label :campaign_id, "Campaign", :class => "col-sm-2 col-form-label"
+          .col-sm-10
+            -options = []
+            -@active_campaigns.each do |campaign|
+              -options = options.append([campaign.name, campaign.id])
+            =f.select :campaign_id, options_for_select(options), {}, :class => "form-control"
 
-      /   .form-group.row
-      /     =f.label :status_campaign, "Campaign", :class => "col=sm-2 col-form-label"
-      /     .col-sm-10
-      /       =f.select :status_campaign, :class => "form-control"
-      /       -@campaigns.each do |campaign|
-      /         %option= campaign.title
+        .form-group.row
+          =f.label :date, "Date", :class => "col-sm-2 col-form-label"
+          .col-sm-10
+            =f.date_field :date, :class => "form-control"
 
-      /  =f.submit "Submit", :class => "btn btn-primary"
+        .form-group.row
+          =f.label :text, "Text", :class => "col-sm-2 col-form-label"
+          .col-sm-10
+            =f.text_area :text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
 
-      %h4#org-overview= octicon("settings") + "  Organization Overview"
+
+
+
+        =f.submit "Submit", :class => "btn btn-primary"
+
+      %h4.my-4#org-overview= octicon("settings") + "  Organization Overview"
+      %hr
+      - if @approved_organizations.count > 0
+        %table{:class => "table"}
+          %thead
+            %tr
+              %th{:scope=>"col"} Name
+              %th{:scope=>"col"} Active Campaigns
+              %th{:scope=>"col"} Total Donations
+              %th{:scope=>"col"} Total Campaigns
+          %tbody
+            - @approved_organizations.each do |org|
+              %tr
+                %td= link_to org.name, organization_path(org.id), :target => "_blank"
+                %td= org.campaigns.where("is_active= ?", true).length
+                %td= number_to_currency(org.getTotalDonations)
+                %td= org.campaigns.length
+
+      %h4.my-4#payment-overview= octicon("credit-card") + "  Payment Overview"
       %hr
       %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
 
-      %h4#payment-overview= octicon("credit-card") + "  Payment Overview"
-      %hr
-      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
-
-      %h4#konosioni= octicon("gift") + "  Konosioni Donation"
+      %h4.my-4#konosioni= octicon("gift") + "  Konosioni Donation"
       %hr
       %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
