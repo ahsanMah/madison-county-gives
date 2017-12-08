@@ -7,6 +7,7 @@
       .form-group
         =f.label :email
         =f.email_field :email, autofocus: true, class: "form-control", placeholder: "Enter Email"
+        .text-muted.small Your email will be used to recover your password, receive notifications about organization/campaign approvals, etc.
       .form-group
         =f.label :password
         - if @minimum_password_length

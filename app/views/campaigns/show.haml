@@ -29,18 +29,20 @@
         .card-header
           Campaign Updates
         .card-body
-    .card.mb-4
-      .card-header
-        Backers
-      .card-body
-        - @campaign.payments.each do |p|
-          - if p.is_anonymous
-            %strong Anonymous
-          - else
-            %strong= p.name
-          %p= number_to_currency(p.amount, precision: 0)
-          - if p != @campaign.payments.last
-            %hr
+    - if @campaign.payments.count > 0
+      .card.mb-4
+        .card-header
+          Backers
+        .card-body
+          - @campaign.payments.each do |p|
+            - if p.is_anonymous
+              %strong Anonymous
+            - else
+              %strong= p.name
+            %p= number_to_currency(p.amount, precision: 0)
+            - if p != @campaign.payments.last
+              %hr
+    =link_to 'Back to all campaigns', campaigns_path, :class => "btn btn-light mb-4"
   .col-lg-4.col-sm-12.mb-4
     .fixed-position
       .card.mb-4
@@ -69,7 +71,3 @@
             =content_tag :a, :href => organization_path(@campaign.organization) do
               %strong= @campaign.organization.name + ": "
             =content_tag :span, truncate(@campaign.organization.description, length: 80)
-
-.row
-  =link_to 'Back to all campaigns', campaigns_path, :class => "btn btn-light mb-4"
-  %br
