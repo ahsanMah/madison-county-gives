@@ -6,6 +6,7 @@ class AdminController < ApplicationController
   def dashboard
     @unapproved_organizations = Organization.where("is_approved = ?", false)
     @campaign_changes = CampaignChange.all
+    @approved_organizations = Organization.where("is_approved = ?", true).includes(:campaigns)
   end
 
   def organization_approval
