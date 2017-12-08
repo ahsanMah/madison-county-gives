@@ -2,7 +2,7 @@
 =form_tag @touchnet_url, id: "checkout_form", method: "post" do
   .field
     =hidden_field_tag :UPAY_SITE_ID, value = @site_id
-    =hidden_field_tag :SUCCESS_LINK, value = "#{root_path}"
+    =hidden_field_tag :SUCCESS_LINK, value = "#{root_url}"
     =hidden_field_tag :AMT, value = @total
     =hidden_field_tag :cart, value = @encoded_cart
   .field
