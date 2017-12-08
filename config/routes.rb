@@ -17,14 +17,18 @@ Rails.application.routes.draw do
   resources :campaigns , only: [:index, :show]
   resources :campaign_changes
   resources :payments
+
+  root "campaigns#index"
+
   get 'campaign_changes/approve/:id', to: "campaign_changes#approve", as: :approve_campaign_change
   get 'campaign_changes/delete/:id', to: "campaign_changes#delete", as: :delete_campaign_change
 
-  root "campaigns#index"
   get '/summary', to: 'home#summary'
   get '/checkout', to: 'home#checkout'
   post '/add_to_cart', to: 'home#add_to_cart'
   post '/processing', to: 'home#processing'
+  post '/touchnet_sub', to: 'home#touchnet_sub'
+  get '/remove_donation_cart', to: 'home#remove_donation_cart'
 
   get '/about_us', to: 'about#about_us'
   get '/faqs', to: 'about#faqs'

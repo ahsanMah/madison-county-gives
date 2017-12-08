@@ -23,12 +23,10 @@ Feature: Donation Cart functionality
 			| Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
 	Scenario: Add campaign donation to cart and checkout
-		Given I am on Apples page
-		When I fill in "Donation Amount" with "30"
+		Given I am on the home page
+		When I follow "Apples"
+		When I fill in "Amount" with "30"
 		And I press "Donate"
-		Then I should see "Thank You for your contribution!"
-		Then I should see "Cart (2)"
-		When I click on Cart(2)
 		Then I should be on Summary page
 		Then I should see "Apples"
 		Then I should see "Bananas"
