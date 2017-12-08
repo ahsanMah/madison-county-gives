@@ -13,6 +13,7 @@ class AdminController < ApplicationController
     org.is_approved = true
     if org.save
       flash[:notice] = "Organization has been successfully approved!"
+      NotificationMailer.organization_approved_email(org).deliver_now
     else
       flash[:error] = "Oops! We failed to approve this organization. " + org.errors.full_messages.join(". ")
     end
