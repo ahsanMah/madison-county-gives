@@ -47,6 +47,7 @@ class HomeController < ApplicationController
      elsif params[:pmt_amt]
      end
      flash[:info] = "Your donation has been successfully added to the cart located in the upper right hand corner."
+     byebug
      redirect_to campaign_path(params[:id_to_cart]) and return
   end
 
@@ -66,6 +67,7 @@ class HomeController < ApplicationController
         }
         c.payments << Payment.create(payment_attributes)
       end
+      session[:cart] = nil
       flash[:notice] = "Thank you for your generous contribution!"
     end
   end
@@ -85,6 +87,7 @@ class HomeController < ApplicationController
       }
       c.payments << Payment.create(payment_attributes)
     end
+    session[:cart] = nil
     flash[:notice] = "Thank you for your generous contribution!"
   end
 
