@@ -11,4 +11,12 @@ class Organization < ApplicationRecord
 
   validates :name, :presence => true
 
+  def getTotalDonations
+		total = 0
+		self.campaigns.where("is_active= ?", true).each do |camp|
+			total = total + camp.payments.sum("amount")
+		end
+			total
+	end
+
 end

@@ -8,7 +8,7 @@
       %th.header 
       -@names_val.each do |id, name_amt|
         %tr
-          %td.val= link_to "#{name_amt[0]}", campaigns_path(id.to_i)
+          %td.val= link_to "#{name_amt[0]}", campaign_path(id.to_i)
           %td.val #{number_to_currency(name_amt[1].to_i)}
           %td.val= link_to octicon('trashcan'),remove_donation_cart_path(:donation_id => id)
         -t = t + name_amt[1].to_i

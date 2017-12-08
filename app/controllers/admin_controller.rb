@@ -8,6 +8,7 @@ class AdminController < ApplicationController
     @campaign_changes = CampaignChange.all
     @active_campaigns = Campaign.where("is_active = ?", true)
     @status_update = StatusUpdate.new
+    @approved_organizations = Organization.where("is_approved = ?", true).includes(:campaigns)
   end
 
   def organization_approval

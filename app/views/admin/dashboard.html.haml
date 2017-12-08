@@ -101,7 +101,21 @@
 
       %h4.my-4#org-overview= octicon("settings") + "  Organization Overview"
       %hr
-      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
+      - if @approved_organizations.count > 0
+        %table{:class => "table"}
+          %thead
+            %tr
+              %th{:scope=>"col"} Name
+              %th{:scope=>"col"} Active Campaigns
+              %th{:scope=>"col"} Total Donations
+              %th{:scope=>"col"} Total Campaigns
+          %tbody
+            - @approved_organizations.each do |org|
+              %tr
+                %td= link_to org.name, organization_path(org.id), :target => "_blank"
+                %td= org.campaigns.where("is_active= ?", true).length
+                %td= number_to_currency(org.getTotalDonations)
+                %td= org.campaigns.length
 
       %h4.my-4#payment-overview= octicon("credit-card") + "  Payment Overview"
       %hr
