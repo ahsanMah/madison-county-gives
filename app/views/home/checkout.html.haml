@@ -1,33 +1,33 @@
 %h3 Billing Information
 =form_tag @touchnet_url, id: "checkout_form", method: "post" do
-  .form-group.row
-    =hidden_field :UPAY_SITE_ID, value = @site_id
-    =hidden_field :AMT, value = @total
-    =hidden_field :cart, value = @encoded_cart
+  =hidden_field_tag :UPAY_SITE_ID, @site_id
+  =hidden_field_tag :AMT, @total
+  =hidden_field_tag :cart, @encoded_cart
+  =hidden_field_tag :SUCCESS_LINK, clear_cart_url
   .form-group.row
     =label :BILL_NAME, "Full name", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =text_field :BILL_NAME, nil, :class => "form-control"
+      =text_field_tag :BILL_NAME, nil, :class => "form-control"
 
   .form-group.row
     =label :BILL_EMAIL_ADDRESS, "Email Address", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =text_field :BILL_EMAIL_ADDRESS, nil, :class => "form-control"
+      =text_field_tag :BILL_EMAIL_ADDRESS, nil, :class => "form-control"
 
   .form-group.row
     =label :BILL_STREET1, "Street Address 1", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =text_field :BILL_STREET1, nil, :class => "form-control"
+      =text_field_tag :BILL_STREET1, nil, :class => "form-control"
 
   .form-group.row
     =label :BILL_STREET2, "Street Address 2", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =text_field :BILL_STREET2, nil, :class => "form-control"
+      =text_field_tag :BILL_STREET2, nil, :class => "form-control"
 
   .form-group.row
     =label :BILL_CITY, "City", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =text_field :BILL_CITY, nil, :class => "form-control"
+      =text_field_tag :BILL_CITY, nil, :class => "form-control"
 
   .form-group.row
     =label :BILL_STATE, "State", :class => "col-sm-2 col-form-label"
@@ -37,14 +37,14 @@
   .form-group.row
     =label :BILL_POSTAL_CODE, "Postal Code", :class => "col-sm-2 col-form-label"
     .col-sm-10
-      =number_field :BILL_POSTAL_CODE, nil, :class => "form-control"
+      =number_field_tag :BILL_POSTAL_CODE, nil, :class => "form-control"
 
   .field
     %p Amount: $#{@total}
   .field
     =label :anon, "Anonymous donation?"
     =check_box_tag :anon
-    .text-muted Selecting anonymous means that your name will not appear on our main donate feed. We still need the information above to proceed with payment
+    .text-muted Selecting anonymous means that your name will not appear on our main donate feed. You may also choose to leave any of the fields above blank.
 
   %p
   .field

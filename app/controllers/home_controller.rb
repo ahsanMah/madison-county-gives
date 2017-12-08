@@ -29,6 +29,7 @@ class HomeController < ApplicationController
       @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @site_id = 4
     else
+      # @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @touchnet_url = touchnet_sub_path
       @site_id = 4
     end

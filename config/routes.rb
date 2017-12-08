@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   post '/processing', to: 'home#processing'
   post '/touchnet_sub', to: 'home#touchnet_sub'
   get '/remove_donation_cart', to: 'home#remove_donation_cart'
+  get '/clear_cart', to: "home#clear_cart"
 
   get '/about_us', to: 'about#about_us'
   get '/faqs', to: 'about#faqs'
