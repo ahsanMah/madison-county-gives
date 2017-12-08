@@ -1,0 +1,9 @@
+- if @action == "CREATE"
+  %p= "Congratulations! Your campaign #{@campaign.name} has been approved!"
+  =link_to "Check it out here.", campaign_url(@campaign.id)
+- elsif @action == "UPDATE"
+  %p= "Congratulations! Your request to update the campaign #{@campaign.name} has been approved!"
+  =link_to "Check it out here.", campaign_url(@campaign.id)
+- elsif @action == "DELETE"
+  %p= "Congratulations! Your request to delete the campaign #{@campaign_change.name} has been approved. It has been deleted."
+%p -Madison County Gives

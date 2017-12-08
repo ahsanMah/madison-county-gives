@@ -6,6 +6,10 @@ class AdminController < ApplicationController
   def dashboard
     @unapproved_organizations = Organization.where("is_approved = ?", false)
     @campaign_changes = CampaignChange.all
+    @active_campaigns = Campaign.where("is_active = ?", true)
+    @status_update = StatusUpdate.new
+    @approved_organizations = Organization.where("is_approved = ?", true).includes(:campaigns)
+    @payment = Payment.new
   end
 
   def organization_approval
@@ -13,6 +17,7 @@ class AdminController < ApplicationController
     org.is_approved = true
     if org.save
       flash[:notice] = "Organization has been successfully approved!"
+      NotificationMailer.organization_approved_email(org).deliver_now
     else
       flash[:error] = "Oops! We failed to approve this organization. " + org.errors.full_messages.join(". ")
     end
@@ -26,6 +31,7 @@ class AdminController < ApplicationController
     if action == "DELETE"
       if Campaign.destroy(campaign_id)
         flash[:notice] = "Campaign \"#{campaign_change.name}\" has been removed form the listing."
+        NotificationMailer.campaign_approved_email(nil, campaign_change).deliver_now
         if !campaign_change.destroy
           flash[:error] = "The corresponding delete request failed to get removed. Please manually delete the 'campaign_change', #{campaign_change.name}"
         end
@@ -48,6 +54,7 @@ class AdminController < ApplicationController
 
       if campaign.save
         flash[:notice] = "Campaign has been successfully approved!"
+        NotificationMailer.campaign_approved_email(campaign, campaign_change).deliver_now
         if !campaign_change.destroy
           flash[:error] = "The corresponding campaign request failed to delete. Please manually delete the 'campaign_change', #{campaign_change.name}"
         end
@@ -58,10 +65,36 @@ class AdminController < ApplicationController
     redirect_to admin_path and return
   end
 
+  def create_status
+    status = StatusUpdate.new
+    status.campaign_id = params[:status_update]["campaign_id"]
+    status.date = params[:status_update]["date"]
+    status.text = params[:status_update]["text"]
 
+    if status.save
+      flash[:notice] = "Status posted!"
+    else
+      flash[:error] = "Oops! Something went wrong. Status update not posted."
+    end
+    redirect_to admin_path and return
+  end
 
+  def create_konosioni_payment
+    payment = Payment.new
+    payment.campaign_id = params[:payment]["campaign_id"]
+    payment.time = params[:payment]["time"]
+    payment.amount = params[:payment]["amount"]
+    payment.transaction_id = params[:payment]["transaction_id"]
+    payment.is_anonymous = false
+    payment.is_konosioni = true
 
-
+    if payment.save
+      flash[:notice] = "Konosioni payment successfully saved!"
+    else
+      flash[:error] = "Oops! Something went wrong. This Konosioni payment was not added. "
+    end
+    redirect_to admin_path and return
+  end
 
   private
     def check_is_admin

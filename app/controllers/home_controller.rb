@@ -29,6 +29,7 @@ class HomeController < ApplicationController
       @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @site_id = 4
     else
+      # @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @touchnet_url = touchnet_sub_path
       @site_id = 4
     end
@@ -88,7 +89,7 @@ class HomeController < ApplicationController
       c.payments << Payment.create(payment_attributes)
     end
     flash[:notice] = "Thank you for your generous contribution!"
-    redirect_to root_path and return 
+    redirect_to root_path and return
   end
 
   def remove_donation_cart
@@ -97,7 +98,7 @@ class HomeController < ApplicationController
     redirect_to summary_path and return
   end
 
-  def clear_cart 
+  def clear_cart
     session[:cart] = nil
     redirect_to root_path and return
   end
