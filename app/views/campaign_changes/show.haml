@@ -1,6 +1,6 @@
 -if !@campaign
   =render 'new_campaign_change', campaign: @campaign_change
--else #Render comparison 
+-else #Render comparison
   .row
     .col-lg-6.col-sm-12
       .card.mb-4
@@ -23,7 +23,7 @@
               %h4
                 %strong Unapproved Changes
             %h5.text-center We have requested the admin to delete this campaign
-      -else 
+      -else
         .card.mb-4
           .card-header.text-center
             %h4
@@ -41,5 +41,5 @@
             %p= octicon('calendar') + "  Start date: " + @campaign_change.start_date
 
 .row
-  =link_to 'Back to all campaigns', campaigns_path, :class => "btn btn-light mb-4"
+  =link_to 'Back to all campaigns', organization_path(@campaign_change.organization.id), :class => "btn btn-light mb-4"
   %br

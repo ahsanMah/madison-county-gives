@@ -27,6 +27,7 @@ class AdminController < ApplicationController
     if action == "DELETE"
       if Campaign.destroy(campaign_id)
         flash[:notice] = "Campaign \"#{campaign_change.name}\" has been removed form the listing."
+        NotificationMailer.campaign_approved_email(nil, campaign_change).deliver_now
         if !campaign_change.destroy
           flash[:error] = "The corresponding delete request failed to get removed. Please manually delete the 'campaign_change', #{campaign_change.name}"
         end
@@ -49,6 +50,7 @@ class AdminController < ApplicationController
 
       if campaign.save
         flash[:notice] = "Campaign has been successfully approved!"
+        NotificationMailer.campaign_approved_email(campaign, campaign_change).deliver_now
         if !campaign_change.destroy
           flash[:error] = "The corresponding campaign request failed to delete. Please manually delete the 'campaign_change', #{campaign_change.name}"
         end
