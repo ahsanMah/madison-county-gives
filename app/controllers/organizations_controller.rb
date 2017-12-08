@@ -13,8 +13,9 @@ class OrganizationsController < ApplicationController
 	def show
 		@organization = Organization.find(params[:id])
 		@belongs_to_current_user = (user_signed_in?) && (!current_user.organization.nil?) && (@organization.id == current_user.organization.id)
-		# unapproved organization is only visible to its user
-		if !(@organization.is_approved?) && !(@belongs_to_current_user)
+		is_admin = (user_signed_in?) && (current_user.is_admin)
+		# unapproved organization is only visible to its user and the admin
+		if !(@organization.is_approved?) && !(@belongs_to_current_user) && !is_admin
 			 redirect_to organizations_path and return
 		end
 		@short_responses = get_all_short_responses

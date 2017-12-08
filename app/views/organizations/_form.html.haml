@@ -9,9 +9,9 @@
     =f.text_area :description, :placeholder => "Description", :class => "form-control"
 
 .form-group.row
-  =f.label :primary_contact, "Primary Contact", :class => "col-sm-2 col-form-label"
+  =f.label :primary_contact, "Primary Contact Person", :class => "col-sm-2 col-form-label"
   .col-sm-10
-    =f.text_field :primary_contact, :placeholder => "Primary Contact", :class => "form-control"
+    =f.text_field :primary_contact, :placeholder => "Primary Contact Person", :class => "form-control"
 
 .form-group.row
   =f.label :address, "Address", :class => "col-sm-2 col-form-label"
@@ -27,7 +27,7 @@
   =f.label :image, "Image", :class => "col-sm-2 col-form-label"
   .col-sm-10
     =f.file_field :image, accept: "image/png,image/gif,image/jpeg", :class => "form-control-file"
-    .text-muted We recommend uploading a picture with aspect ratio close to 4:3 and of high resolution.
+    .text-muted We recommend uploading a picture with aspect ratio close to 3:2 and of high resolution (greater than or equal to 750 pixels x 500 pixels).
 
 -@short_responses.each do |response|
   .form-group

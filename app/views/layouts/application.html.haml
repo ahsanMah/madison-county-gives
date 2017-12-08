@@ -39,6 +39,7 @@
                 =link_to octicon("person", :class => "white-icon") + "  Unknown Organization", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
                   =link_to octicon("organization") + "  My Organization", new_organization_path, :class => "dropdown-item"
+                  =link_to octicon("briefcase") + "  My Account", edit_user_registration_path, :class => "dropdown-item"
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
             - else
@@ -49,7 +50,7 @@
                 =link_to octicon("person", :class => "white-icon") + "  #{current_user.organization.name}", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
                   =link_to octicon("organization") + "  My Organization", organization_path(current_user.organization), :class => "dropdown-item"
-                  =link_to octicon("pencil") + "  Edit My Profile", edit_organization_path(current_user.organization), :class => "dropdown-item"
+                  =link_to octicon("briefcase") + "  My Account", edit_user_registration_path, :class => "dropdown-item"
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
           - else
@@ -62,6 +63,40 @@
               =embedded_svg("cart.svg", :class => "white-icon", :width => 16, :height => 16) + '  Cart'
               - if (session.has_key? :cart) && session[:cart].length > 0
                 %span.badge.badge-light.align-middle= session[:cart].length
+
+    -# only show slideshow if it's the home page
+    -# enable the commented sections within to enable slideshow of more than one slides
+    - if current_page?(root_url)
+      .carousel.slide.mb-4#carouselHomePage{ "data-ride" => "carousel" }
+        -# %ol.carousel-indicators
+        -#   %li.active{ "data-target" => "#carouselHomePage", "data-slide-to" => "0"}
+        -#   %li{ "data-target" => "#carouselHomePage", "data-slide-to" => "1"}
+        -#   %li{ "data-target" => "#carouselHomePage", "data-slide-to" => "2"}
+        .carousel-inner{ :role => "listbox" }
+          // Slide One
+          .carousel-item.active{ :style => "background-image: url('#{image_path('slideshow1.jpg')}');"}
+            .carousel-caption.d-none.d-md-block.text-left
+              %h3.display-4 Welcome to Madison County Gives!
+              %p Madison County Gives is an online giving site powered by the Konosioni Senior Honor Society at Colgate University.  This crowdfunding site connects not-for-profit organizations that provide services to residents of Madison County with students and community members who want to help through web-based fundraising campaigns.
+              =link_to "View Our Organizations", organizations_path, :class => "btn btn-success btn-lg"
+            .carousel-caption.d-xs-block.d-sm-block.d-md-none
+              %h3 Welcome to Madison County Gives!
+          -# // Slide Two
+          -# .carousel-item{ :style => "background-image: url('#{image_path('slideshow1.jpg')}');"}
+          -#   .carousel-caption.d-none.d-md-block.text-left
+          -#     %h3.display-4 Second Slide
+          -#     %p Content of the second slide
+          -#     =link_to "Call-to-action of the second slide", "#", :class => "btn btn-success btn-lg"
+          -#   .carousel-caption.d-xs-block.d-sm-block.d-md-none
+          -#     %h3 Second Slide
+        -# %a.carousel-control-prev{ :href => "#carouselHomePage", :role => "button", "data-slide" => "prev"}
+        -#   %span.carousel-control-prev-icon{ "aria-hidden" => "true"}
+        -#   %span.sr-only Previous
+        -# %a.carousel-control-next{ :href => "#carouselHomePage", :role => "button", "data-slide" => "next"}
+        -#   %span.carousel-control-next-icon{ "aria-hidden" => "true"}
+        -#   %span.sr-only Next
+
+
 
     %main.container
       %br

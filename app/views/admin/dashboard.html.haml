@@ -1,60 +1,107 @@
-%h1.display-4 Admin Dashboard
-
 .row
-  - @cards.each do |card|
-    .col-lg-3.col-md-6.col-sm-12.card-set{ :style => "width: initial;"}
-      %div{ :class => "card text-white mb-3 bg-#{card[2]}" }
-        .card-body
-          %h2.card-title= card[0]
-          %p.card-text= card[1]
+  .col-md-3
+    .fixed-position
+      %ul.list-group.mb-4
+        %a.list-group-item.list-group-item-action{ :href => "#org-approval" }
+          =octicon("organization") + "  Organization Approval"
+          - if @unapproved_organizations.count > 0
+            %span.badge.badge-danger= @unapproved_organizations.count
+          - else
+            %span.badge.badge-success 0
+        %a.list-group-item.list-group-item-action{ :href => "#camp-approval" }
+          =octicon("file") + "  Campaign Approval"
+          - if @campaign_changes.count > 0
+            %span.badge.badge-danger= @campaign_changes.count
+          - else
+            %span.badge.badge-success 0
+        %a.list-group-item.list-group-item-action{ :href => "#status-updates" }=octicon("megaphone") + "  Status Updates"
+        %a.list-group-item.list-group-item-action{ :href => "#org-overview" }=octicon("settings") + "  Organization Overview"
+        %a.list-group-item.list-group-item-action{ :href => "#payment-overview" }=octicon("credit-card") + "  Payment Overview"
+        %a.list-group-item.list-group-item-action{ :href => "#konosioni" }=octicon("gift") + "  Konosioni Donation"
+      %ul.list-group
+        %a.list-group-item.list-group-item-action{ :href => rails_admin_path, :target => "_blank" }= octicon("database") + "  Database"
 
 
-/ FORM FOR STATUS UPDATE **DOESNT WORK YET**
+  .col-md-9
+    %h1.display-4.mb-4 Admin Dashboard
+    %div
+      %h4#org-approval= octicon("organization") + "  Organization Approval"
+      %hr
+      - if @unapproved_organizations.count > 0
+        %table{:class => "table"}
+          %thead
+            %tr
+              %th{:scope=>"col"} Name
+              %th{:scope=>"col"}
+          %tbody
+            - @unapproved_organizations.each do |org|
+              %tr
+                %td= link_to org.name, organization_path(org.id), :target => "_blank"
+                %td
+                  =link_to "Approve", admin_organization_approval_path(:organization_id => org.id), :class => "btn btn-primary"
+                  =link_to "Feedback", "mailto:#{org.user.email}?body=#{URI(request.url)+organization_path(org.id)}", :class => "btn btn-warning"
+      - else
+        %p There is no organization pending approval at this time.
 
-/ =form_for @status_update, :method => :post do |f|
-/   .form-group.row
-/     =f.label :status_time, "Time", :class => "col-sm-2 col-form-label"
-/     .col-sm-10
-/       =f.datetime_field :status_time, :class => "form_control"
+      %h4#camp-approval= octicon("file") + "  Campaign Approval"
+      %hr
+      - if @campaign_changes.count > 0
+        %table{:class => "table"}
+          %thead
+            %tr
+              %th{:scope=>"col"} Name
+              %th{:scope=>"col"} Start Date
+              %th{:scope=>"col"} Request
+              %th{:scope=>"col"}
+              %th{:scope=>"col"}
+              %th{:scope=>"col"}
+          %tbody
+            - @campaign_changes.each do |campaign_change|
+              %tr
+                %td=link_to campaign_change.name, campaign_change_path(campaign_change.id), :target => "_blank"
+                %td= (!campaign_change.start_date.nil?)? campaign_change.start_date: "Not Specified"
+                %td= campaign_change.action
+                %td=link_to "Approve", admin_campaign_approval_path(:campaign_change_id => campaign_change.id), :class => "btn btn-primary"
+                %td=link_to "Approve & Activate", admin_campaign_approval_path(:campaign_change_id => campaign_change.id,
+                :activate => true), :class => "btn btn-primary"
+                %td= link_to "Feedback", "mailto:#{campaign_change.organization.user.email}?body=#{URI(request.url)+campaign_change_path(campaign_change.id)}", :class => "btn btn-warning"
 
-/   .form-group.row
-/     =f.label :status_text, "Text", :class => "col-sm-2 col-form-label"
-/     .col-sm-10
-/       =f.text_area :status_text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
+      - else
+        %p There is no campaign pending approval at this time.
 
-/   .form-group.row
-/     =f.label :status_campaign, "Campaign", :class => "col=sm-2 col-form-label"
-/     .col-sm-10
-/       =f.select :status_campaign, :class => "form-control"
-/       -@campaigns.each do |campaign|
-/         %option= campaign.title
+      %h4#status-updates= octicon("megaphone") + "  Status Updates"
+      %hr
+      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
+      / FORM FOR STATUS UPDATE **DOESNT WORK YET**
 
-/  =f.submit "Submit", :class => "btn btn-primary"
+      / =form_for @status_update, :method => :post do |f|
+      /   .form-group.row
+      /     =f.label :status_time, "Time", :class => "col-sm-2 col-form-label"
+      /     .col-sm-10
+      /       =f.datetime_field :status_time, :class => "form_control"
 
+      /   .form-group.row
+      /     =f.label :status_text, "Text", :class => "col-sm-2 col-form-label"
+      /     .col-sm-10
+      /       =f.text_area :status_text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
 
-%h3 Things to implement:
-%ul
-  %li Organization Approval
-  %li Campaign Approval
-  %li Status Updates
-  %li Organization/Campaign Overview - including is_featured/is_active toggles
-  %li Payment Overview
-  %li Adding Konosioni Donation
-  %li Short Questions
+      /   .form-group.row
+      /     =f.label :status_campaign, "Campaign", :class => "col=sm-2 col-form-label"
+      /     .col-sm-10
+      /       =f.select :status_campaign, :class => "form-control"
+      /       -@campaigns.each do |campaign|
+      /         %option= campaign.title
 
+      /  =f.submit "Submit", :class => "btn btn-primary"
 
-=link_to "Database", rails_admin_path
+      %h4#org-overview= octicon("settings") + "  Organization Overview"
+      %hr
+      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
 
-%h3 Pending Campaigns and Campaign Changes
-%table{:class => "table"}
-  %thead
-    %tr
-      %th{:scope=>"col"} Name
-      %th{:scope=>"col"} Request
-      %th{:scope=>"col"} Approve
-  %tbody
-  - @campaign_changes.each do |campaign_change|
-    %tr
-      %td=link_to campaign_change.name, campaign_change_path(campaign_change.id), :target => "_blank"
-      %td= campaign_change.action
-      %td=link_to "Approve", admin_campaign_approval_path(:campaign_change_id => campaign_change.id), :class => "btn btn-primary"
+      %h4#payment-overview= octicon("credit-card") + "  Payment Overview"
+      %hr
+      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
+
+      %h4#konosioni= octicon("gift") + "  Konosioni Donation"
+      %hr
+      %p Ex consequat commodo adipisicing exercitation aute excepteur occaecat ullamco duis aliqua id magna ullamco eu. Do aute ipsum ipsum ullamco cillum consectetur ut et aute consectetur labore. Fugiat laborum incididunt tempor eu consequat enim dolore proident. Qui laborum do non excepteur nulla magna eiusmod consectetur in. Aliqua et aliqua officia quis et incididunt voluptate non anim reprehenderit adipisicing dolore ut consequat deserunt mollit dolore. Aliquip nulla enim veniam no
