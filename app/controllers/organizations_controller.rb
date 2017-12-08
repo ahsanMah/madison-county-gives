@@ -92,7 +92,7 @@ private
 
 	def create_short_responses(organization)
 		params["organization"].each do |org_attr|
-			if org_attr.match? /^short_response[\d]+$/
+			if org_attr =~ /^short_response[\d]+$/
 				question_id = org_attr.match(/^short_response([\d]+)$/).captures[0]
 				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => params[:id], :response => params["organization"][org_attr])
 				short_response.save
@@ -102,7 +102,7 @@ private
 
 	def update_short_responses(organization)
 		params["organization"].each do |org_attr|
-			if org_attr.match? /^short_response[\d]+$/
+			if org_attr =~ /^short_response[\d]+$/
 				question_id = org_attr.match(/^short_response([\d]+)$/).captures[0]
 				short_response = ShortResponse.where('short_question_id = ? AND organization_id = ?', question_id, organization.id).distinct.first
 				if short_response.nil?
