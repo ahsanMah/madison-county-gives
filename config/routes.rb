@@ -39,4 +39,5 @@ Rails.application.routes.draw do
 	get '/admin/campaign_approval', to: 'admin#campaign_approval'
   get '/admin/organization_approval', to: 'admin#organization_approval'
   post '/admin/create_status', to: 'admin#create_status'
+  post '/admin/create_konosioni_payment', to: "admin#create_konosioni_payment"
 end

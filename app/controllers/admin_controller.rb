@@ -9,6 +9,7 @@ class AdminController < ApplicationController
     @active_campaigns = Campaign.where("is_active = ?", true)
     @status_update = StatusUpdate.new
     @approved_organizations = Organization.where("is_approved = ?", true).includes(:campaigns)
+    @payment = Payment.new
   end
 
   def organization_approval
@@ -74,6 +75,23 @@ class AdminController < ApplicationController
       flash[:notice] = "Status posted!"
     else
       flash[:error] = "Oops! Something went wrong. Status update not posted."
+    end
+    redirect_to admin_path and return
+  end
+
+  def create_konosioni_payment
+    payment = Payment.new
+    payment.campaign_id = params[:payment]["campaign_id"]
+    payment.time = params[:payment]["time"]
+    payment.amount = params[:payment]["amount"]
+    payment.transaction_id = params[:payment]["transaction_id"]
+    payment.is_anonymous = false
+    payment.is_konosioni = true
+
+    if payment.save
+      flash[:notice] = "Konosioni payment successfully saved!"
+    else
+      flash[:error] = "Oops! Something went wrong. This Konosioni payment was not added. "
     end
     redirect_to admin_path and return
   end

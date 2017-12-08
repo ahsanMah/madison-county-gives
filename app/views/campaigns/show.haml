@@ -40,7 +40,9 @@
           Backers
         .card-body
           - @campaign.payments.each do |p|
-            - if p.is_anonymous
+            - if p.is_konosioni
+              %strong Colgate Konosioni Senior Honor Society
+            - elsif p.is_anonymous
               %strong Anonymous
             - else
               %strong= p.name
