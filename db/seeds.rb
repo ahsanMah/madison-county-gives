@@ -12,6 +12,7 @@ CampaignChange.delete_all
 ShortQuestion.delete_all
 ShortResponse.delete_all
 Payment.delete_all
+StatusUpdate.delete_all
 
 def seed_image(file_name)
   File.open(File.join(Rails.root, "/app/assets/images/seed/#{file_name}"))
@@ -59,3 +60,13 @@ Payment.create(id: 1, campaign_id: 1, amount: 30000, name: "Bill Gates", is_anon
 Payment.create(id: 2, campaign_id: 1, amount: 60000, name: "John Smith", is_anonymous: true)
 Payment.create(id: 3, campaign_id: 2, amount: 20, name: "John Smith", is_anonymous: true)
 Payment.create(id: 4, campaign_id: 3, amount: 2000000, name: "???", is_anonymous: true)
+
+connection = ActiveRecord::Base.connection
+connection.execute("SELECT setval('payments_id_seq', (SELECT MAX(id) FROM payments)+1);")
+connection.execute("SELECT setval('campaigns_id_seq', (SELECT MAX(id) FROM campaigns)+1);")
+connection.execute("SELECT setval('campaign_changes_id_seq', (SELECT MAX(id) FROM campaign_changes)+1);")
+connection.execute("SELECT setval('organizations_id_seq', (SELECT MAX(id) FROM organizations)+1);")
+connection.execute("SELECT setval('short_questions_id_seq', (SELECT MAX(id) FROM short_questions)+1);")
+connection.execute("SELECT setval('short_responses_id_seq', (SELECT MAX(id) FROM short_responses)+1);")
+connection.execute("SELECT setval('status_updates_id_seq', (SELECT MAX(id) FROM status_updates)+1);")
+connection.execute("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users)+1);") 
