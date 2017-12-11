@@ -51,7 +51,7 @@ RSpec.describe CampaignChangesController, type: :controller do
     allow(CampaignChange).to receive(:find).with("1") { change }
 
 		delete :destroy, :params => {:id => 1}
-    expect(flash[:notice]).to eq "Campaign change for \"#{change.name}\" has been removed form the listing"
+    expect(flash[:notice]).to eq "Campaign change for \"#{change.name}\" has been removed from the listing."
 		expect(response).to redirect_to organization_path subject.current_user.organization.id
 	end
 

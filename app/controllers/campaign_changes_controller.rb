@@ -29,9 +29,6 @@ class CampaignChangesController < ApplicationController
           campaign_change[key] = val
         end
       end
-      if campaign_change.action != "CREATE" && !(campaign_change.image.exists?) # the image field doesn't auto-populate
-        campaign_change.image = existing_campaign.image
-      end
     end
 
     #Bypass new form page if action is to delete campaign
@@ -57,16 +54,17 @@ class CampaignChangesController < ApplicationController
       redirect_to edit_campaign_change_path existing_change
     end
 
-
     @campaign = campaign_change
   end
 
   def create
     campaign = CampaignChange.new(create_update_params)
 
-    # if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
-    #   campaign.image = Campaign.find(campaign.campaign_id).image
-    # end
+    # The image field doesn't auto-populate
+    if campaign.campaign_id && !(campaign.image.exists?)
+      campaign.image = Campaign.find(campaign.campaign_id).image
+    end
+
     preamble = "Campaign #{campaign.action == "CREATE" ? "proposal" : "update"} for \"#{campaign.name}\""
 
     if campaign.save
