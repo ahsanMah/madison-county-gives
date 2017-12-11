@@ -39,7 +39,7 @@
                 =link_to octicon("person", :class => "white-icon") + "  Unknown Organization", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
                   =link_to octicon("organization") + "  My Organization", new_organization_path, :class => "dropdown-item"
-                  =link_to octicon("briefcase") + "  My Account", edit_user_registration_path, :class => "dropdown-item"
+                  =link_to octicon("briefcase") + "  Edit Account", edit_user_registration_path, :class => "dropdown-item"
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
             - else
@@ -50,7 +50,8 @@
                 =link_to octicon("person", :class => "white-icon") + "  #{current_user.organization.name}", "#", :class => "nav-link dropdown-toggle", :id => "navbarDropdownUserLink", "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "false"
                 %div{ class: "dropdown-menu dropdown-menu-right", "aria-labelledby": "navbarDropdownUserLink" }
                   =link_to octicon("organization") + "  My Organization", organization_path(current_user.organization), :class => "dropdown-item"
-                  =link_to octicon("briefcase") + "  My Account", edit_user_registration_path, :class => "dropdown-item"
+                  =link_to octicon("briefcase") + "  Edit Account", edit_user_registration_path, :class => "dropdown-item"
+                  =link_to octicon("pencil") + "  Edit Profile", edit_organization_path(current_user.organization.id), :class => "dropdown-item"
                   .dropdown-divider
                   =link_to octicon("sign-out") + '  Logout', destroy_user_session_path, :method => :delete, :class => "dropdown-item"
           - else
