@@ -1,17 +1,17 @@
 .form-group.row
   =f.label :name, "Organization Name", :class => "col-sm-2 col-form-label"
   .col-sm-10
-    =f.text_field :name, :placeholder => "Name", :class => "form-control"
+    =f.text_field :name, :placeholder => "Name", :class => "form-control", :required => true
 
 .form-group.row
   =f.label :description, "Description", :class => "col-sm-2 col-form-label"
   .col-sm-10
-    =f.text_area :description, :placeholder => "Description", :class => "form-control"
+    =f.text_area :description, :placeholder => "Description", :class => "form-control", :required => true
 
 .form-group.row
   =f.label :primary_contact, "Primary Contact Person", :class => "col-sm-2 col-form-label"
   .col-sm-10
-    =f.text_field :primary_contact, :placeholder => "Primary Contact Person", :class => "form-control"
+    =f.text_field :primary_contact, :placeholder => "Primary Contact Person", :class => "form-control", :required => true
 
 .form-group.row
   =f.label :address, "Address", :class => "col-sm-2 col-form-label"
@@ -28,4 +28,4 @@
   .form-group
     -id = "short_response#{response.short_question.id}"
     =f.label id.to_sym, "#{response.short_question.question}"
-    =f.text_area id.to_sym, :value => "#{response.response}", size:"100x5", :class => "form-control"
+    =f.text_area id.to_sym, :value => "#{response.response}", size:"100x5", :class => "form-control", :required => true
