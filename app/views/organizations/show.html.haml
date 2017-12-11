@@ -45,6 +45,7 @@
               %p
                 %strong= response.short_question.question
               %p= response.response
+              
 .row
   %h2.mr-auto Campaigns
   -if @belongs_to_current_user && @organization.is_approved?
