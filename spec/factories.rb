@@ -12,6 +12,7 @@ FactoryBot.define do
   factory :organization do
   	user_id 1
     name "Drown the fish"
+    is_approved true
   end
 
   # factory :payment do
@@ -26,5 +27,5 @@ FactoryBot.define do
   factory :campaign do
     organization_id 1
   end
-
+  
 end
