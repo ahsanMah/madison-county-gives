@@ -79,7 +79,7 @@ class OrganizationsController < ApplicationController
 
 private
 	def create_update_params
-		params.require(:organization).permit(:name, :primary_contact, :address, :email, :description, :image, :is_approved, :campaigns)
+		params.require(:organization).permit(:name, :primary_contact, :address, :description, :image, :is_approved, :campaigns)
 	end
 
 	# in case a short question is removed later by admin, its answer shouldn't be displayed; this method helps deal with this case
