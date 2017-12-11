@@ -25,11 +25,11 @@ User.create!(id: 4, email: "admin@madisoncountygives.com", password: "123456", i
 User.create!(id: 5, email: "test@colgate.edu", password: "123456", is_admin: false)
 User.create!(id: 6, email: "test2@colgate.edu", password: "123456", is_admin: false)
 
-Organization.create!(id: 1, user_id: 1, name: "Gates Foundation", primary_contact: "Bill Gates", address: "1 Microsoft Way", email: "bg8s@colgate.edu", description: "Mosquitos are bugs. We're expert debuggers.", is_approved: true, image: seed_image('gates_foundation.png'))
-Organization.create!(id: 2, user_id: 2, name: "Spaghetti 4 Freddy", primary_contact: "Fred Y.", address: "11 Noodle Lane", email: "pastapls@yahoo.com", description: "Give Freddy the Italian hospitality he doesn't deserve, today", is_approved: true, image: seed_image('spaghetti.jpg'))
-Organization.create!(id: 3, user_id: 3, name: "Youth Education", primary_contact: "Jean Erick", address: "95 Charity Ave.", email: "hello@schooltheyouth.org", description: "Bright minds are bright futures", is_approved: true, image: seed_image('youth_education.jpg'))
-Organization.create!(id: 4, user_id: 5, name: "Test Organization", description: "Test description", is_approved: false, image: seed_image('organization.jpeg'))
-Organization.create!(id: 5, user_id: 6, name: "Test Organization 2", description: "Test description 2", is_approved: false, image: seed_image('organization.jpeg'))
+Organization.create!(id: 1, user_id: 1, name: "Gates Foundation", primary_contact: "Bill Gates", address: "1 Microsoft Way", description: "Mosquitos are bugs. We're expert debuggers.", is_approved: true, image: seed_image('gates_foundation.png'))
+Organization.create!(id: 2, user_id: 2, name: "Spaghetti 4 Freddy", primary_contact: "Fred Y.", address: "11 Noodle Lane", description: "Give Freddy the Italian hospitality he doesn't deserve, today", is_approved: true, image: seed_image('spaghetti.jpg'))
+Organization.create!(id: 3, user_id: 3, name: "Youth Education", primary_contact: "Jean Erick", address: "95 Charity Ave.", description: "Bright minds are bright futures", is_approved: true, image: seed_image('youth_education.jpg'))
+Organization.create!(id: 4, user_id: 5, name: "Test Organization", primary_contact: "John Smith", description: "Test description", is_approved: false, image: seed_image('organization.jpeg'))
+Organization.create!(id: 5, user_id: 6, name: "Test Organization 2", primary_contact: "John Smith", description: "Test description 2", is_approved: false, image: seed_image('organization.jpeg'))
 
 Campaign.create!(id: 1, name: "Malaria Vaccines", organization_id: 1, start_date: Date.new(2017, 11, 13), is_active: true, description: "We are funding a large wave of Malaria vaccines for children in rural Zimbabwe.", goal: 300000, image: seed_image('malaria_vaccine.jpeg'), is_featured: true)
 Campaign.create!(id: 2, name: "Ravioli Meal for 1", organization_id: 2, start_date: Date.new(2017, 10, 13), is_active: true, description: "Olive Garden is closed all next week and I think I'm going to starve.", goal: 20, image: seed_image('ravioli.jpeg'), is_featured: false)
