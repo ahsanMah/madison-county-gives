@@ -135,7 +135,7 @@ class CampaignChangesController < ApplicationController
     campaign_change = CampaignChange.find(params[:id])
     campaign_name = campaign_change.name
     if campaign_change.destroy
-        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed form the listing"
+        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed from the listing"
     else
         flash[:error] = "We were unable to delete \"#{campaign_name}\. " + @campaign_change.errors.full_messages.join(". ")
     end
@@ -155,7 +155,7 @@ class CampaignChangesController < ApplicationController
      end
 
      def organization_approved
-       unless current_user.organization.is_approved?
+       unless current_user.organization.is_approved? || current_user.is_admin
          raise ActionController::RoutingError.new('Not Found')
        end
      end
