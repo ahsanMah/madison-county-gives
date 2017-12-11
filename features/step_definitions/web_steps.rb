@@ -360,6 +360,20 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
   end
 end
 
+When /^(?:|I )click submit for the status update form/ do
+  row = find('.new_status_update') { |el| el.text =~ Regexp.new(title)}
+  within(row) do
+    click_on(button)
+  end
+end
+
+When /^(?:|I )click "([^"]*)" from the "([^"]*)" row$/ do |button, title|
+  row = find('tr') { |el| el.text =~ Regexp.new(title)}
+  within(row)do
+    click_on(button)
+  end
+end
+
 
 # Then /^(?:|I )should see the image "([^"]*)"$/ do |imagename|
 #   expect(page).to have_selector(%(img[@alt="#{imagename.capitalize}"]))

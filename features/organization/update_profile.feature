@@ -27,7 +27,7 @@ Feature: Organization Updating Its Profile
     Scenario: User can edit his/her profile
       Given I am signed in as Red Cross
       When I click on "Red Cross"
-      And I click on "Edit My Profile"
+      And I click "Edit" for "Description"
       Then I should see "Disaster-relief"
       And I should see "What is your goal?"
       And I should see "What?"
@@ -35,14 +35,14 @@ Feature: Organization Updating Its Profile
       When I fill in the following:
         | Organization Name               | Red X                    |
         | How does this benefit people?   | I don't know             |
-      And I press "Submit Change"
+      And I press "Submit"
       Then I should see "Your changes have been submitted."
       And I should see "Red X"
 
     Scenario: Name cannot be blank
       Given I am signed in as Red Cross
       When I click on "Red Cross"
-      And I click on "Edit My Profile"
+      And I click "Edit" for "Description"
       Then I should see "Disaster-relief"
       And I should see "What is your goal?"
       And I should see "What?"
@@ -50,5 +50,5 @@ Feature: Organization Updating Its Profile
       When I fill in the following:
         | Organization Name               |                          |
         | How does this benefit people?   | I don't know             |
-      And I press "Submit Change"
+      And I press "Submit"
       Then I should see "We were unable to update your organization profile. Name can't be blank"
