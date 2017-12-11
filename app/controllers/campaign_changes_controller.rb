@@ -119,7 +119,7 @@ class CampaignChangesController < ApplicationController
      end
 
      def organization_approved
-       unless current_user.organization.is_approved?
+       unless current_user.organization.is_approved? || current_user.is_admin
          raise ActionController::RoutingError.new('Not Found')
        end
      end
