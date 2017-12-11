@@ -12,6 +12,9 @@ FactoryBot.define do
   factory :organization do
   	user_id 1
     name "Drown the fish"
+    is_approved true
+    primary_contact "Mr. Krabs"
+    description "These fish don't deserve to be on our land"
   end
 
   # factory :payment do

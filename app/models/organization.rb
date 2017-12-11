@@ -10,6 +10,9 @@ class Organization < ApplicationRecord
   ["image/jpeg", "image/png", "image/gif"]}, :size => { less_than: 3.megabytes }
 
   validates :name, :presence => true
+  validates :primary_contact, :presence => true
+  validates :description, :presence => true
+
 
   def getTotalDonations
 		total = 0

@@ -10,7 +10,13 @@
         %h3
           =campaign.name
           =content_tag :span, "Unapproved", :class => "badge badge-warning align-top ml-2"
-        %p.mt-4= octicon('calendar') + "  Start date: " + campaign.start_date
         %hr
         %p.card-text= campaign.description
         %hr
+        %p.mt-4= octicon('calendar') + "  Start date: " + campaign.start_date
+        %hr
+        %p= octicon('credit-card') + "  Goal: " + number_to_currency(campaign.goal, precision: 0)
+        - if !current_user.is_admin
+          %hr
+          =link_to octicon("pencil") + "  Edit this pending campaign before it is approved", edit_campaign_change_path(campaign.id), :class => "btn btn-light mt-2"
+          =link_to octicon("trashcan") + "  Delete this pending campaign before it is approved", campaign_change_path(campaign.id), :method => :delete, :class => "btn btn-light mt-2", :data => { confirm: 'Are you certain you want to delete this?' }

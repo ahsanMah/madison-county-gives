@@ -29,9 +29,6 @@ class CampaignChangesController < ApplicationController
           campaign_change[key] = val
         end
       end
-      if campaign_change.action != "CREATE" && !(campaign_change.image.exists?) # the image field doesn't auto-populate
-        campaign_change.image = existing_campaign.image
-      end
     end
 
     #Bypass new form page if action is to delete campaign
@@ -48,7 +45,7 @@ class CampaignChangesController < ApplicationController
       if campaign_change.save
         flash[:notice] = "We have requested the admin to remove \"#{existing_campaign.name}\" from Madison County Gives."
       else
-        flash[:error] = "We were unable to delete the campaign \"#{existing_campaign.name}\". " + campaign_change.errors.full_messages.join(". ")
+        flash[:error] = "We were unable to request the admin to delete the campaign \"#{existing_campaign.name}\". " + campaign_change.errors.full_messages.join(". ")
       end
         redirect_to organization_path(campaign_change.organization_id) and return
     end
@@ -57,16 +54,17 @@ class CampaignChangesController < ApplicationController
       redirect_to edit_campaign_change_path existing_change
     end
 
-
     @campaign = campaign_change
   end
 
   def create
     campaign = CampaignChange.new(create_update_params)
 
-    # if campaign.action == "UPDATE" && !(campaign.image.exists?) # the image field doesn't auto-populate
-    #   campaign.image = Campaign.find(campaign.campaign_id).image
-    # end
+    # The image field doesn't auto-populate
+    if campaign.campaign_id && !(campaign.image.exists?)
+      campaign.image = Campaign.find(campaign.campaign_id).image
+    end
+
     preamble = "Campaign #{campaign.action == "CREATE" ? "proposal" : "update"} for \"#{campaign.name}\""
 
     if campaign.save
@@ -97,47 +95,13 @@ class CampaignChangesController < ApplicationController
     end
   end
 
-  def approve
-    #TODO: CHECK THAT ADMIN IS LOGGED IN
-
-    @pending_campaign = CampaignChange.find(params[:id])
-    campaign_id = @pending_campaign.campaign_id
-    @approved_campaign = campaign_id ? Campaign.find(campaign_id) : Campaign.new()
-
-    if @pending_campaign.action == "DELETE"
-      if campaign_id && @approved_campaign.destroy
-        flash[:notice] = "Campaign \"#{@pending_campaign.name}\ has been removed form the listing."
-      else
-         flash[:error] = "We were unable to delete \"#{@pending_campaign.name}\. " + @approved_campaign.errors.full_messages.join(". ")
-      end
-      redirect_to organization_path(current_user.organization.id) and return
-    end
-
-    #Populating campaign with values from changes
-    @pending_campaign.attributes.each do |key, val|
-        if key.to_s != "id" && @approved_campaign.has_attribute?(key)
-          @approved_campaign[key] = val
-        end
-    end
-
-    if @approved_campaign.save
-      flash[:notice] = "Campaign has been successfully approved!"
-      @pending_campaign.destroy
-      redirect_to campaign_path @approved_campaign and return
-    else
-      flash[:error] = "Oops! We failed to approve this campaign. " + @approved_campaign.errors.full_messages.join(". ")
-      redirect_to campaign_change_path @pending_campaign
-    end
-
-  end
-
   def destroy
     campaign_change = CampaignChange.find(params[:id])
     campaign_name = campaign_change.name
     if campaign_change.destroy
-        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed form the listing"
+        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed from the listing."
     else
-        flash[:error] = "We were unable to delete \"#{campaign_name}\. " + @campaign_change.errors.full_messages.join(". ")
+        flash[:error] = "We were unable to delete \"#{campaign_name}\. " + campaign_change.errors.full_messages.join(". ")
     end
     redirect_to organization_path(current_user.organization.id) and return
   end
@@ -155,7 +119,7 @@ class CampaignChangesController < ApplicationController
      end
 
      def organization_approved
-       unless current_user.organization.is_approved?
+       unless current_user.organization.is_approved? || current_user.is_admin
          raise ActionController::RoutingError.new('Not Found')
        end
      end
