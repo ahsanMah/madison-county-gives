@@ -69,8 +69,6 @@ Feature: Donation Cart functionality
 		And I should see "Thank you for your generous contribution!"
 		When I click on "Cart"
 		Then I should see "Donation Cart"
-	    Then I should see "Total: $0.00"
+	    Then I should see "Your donations will be shown here."
 	    Then I should not see "$30.00"
 	    Then I should not see "Apples"
-
-

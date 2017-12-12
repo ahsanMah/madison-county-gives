@@ -7,7 +7,7 @@ class HomeController < ApplicationController
 
   def summary
     @empty = 1
-    if session[:cart]
+    if session[:cart] && session[:cart].length > 0
       @empty = 0
       carty = session[:cart]
       @names_val = {}
@@ -88,6 +88,7 @@ class HomeController < ApplicationController
       }
       c.payments << Payment.create(payment_attributes)
     end
+    session[:cart] = nil
     flash[:notice] = "Thank you for your generous contribution!"
     redirect_to root_path and return
   end
