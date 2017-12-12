@@ -451,3 +451,8 @@ When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
     click_link(link)
   end
 end
+
+When /^(?:|I )select "([^"]*)" from the .*$/ do |selection|
+  select(selection, :from => "status_update_campaign_id")
+end
+

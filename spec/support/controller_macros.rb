@@ -3,8 +3,10 @@ module ControllerMacros
   ##### Will be ueful in the near future ######
   def login_admin
     before(:each) do
-      @request.env["devise.mapping"] = Devise.mappings[:admin]
-      sign_in FactoryBot.create(:admin)
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      user = create(:user)
+      # user.is_admin = true
+      sign_in user
     end
   end
 
@@ -29,4 +31,23 @@ module ControllerMacros
         allow(change).to receive(:save) {nil}
       end
   end
+
+  def setup_admin_failure_stubs
+
+    before(:each) do
+        orgo = create(:organization)
+        change = CampaignChange.new({:campaign_id=>1, :organization_id => 1,:id => 1, :name => "Hello Admin!"})
+        
+        allow(CampaignChange).to receive(:new) { change }
+        allow(CampaignChange).to receive(:find).with("1") { change }
+        allow(change).to receive(:destroy) {nil}
+        allow(change).to receive(:save) {nil}
+      
+        organization = Organization.new({:id => 1, :name => "Bathe the whales"})
+        allow(Organization).to receive(:find).with("1") { organization }
+        allow(organization).to receive(:save) {nil}
+
+      end
+  end
+
 end
