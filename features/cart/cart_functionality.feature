@@ -45,6 +45,9 @@ Feature: Donation Cart functionality
 		When I click on "Cart"
 	    Then I should see "Donation Cart"
 	    Then I should see "Total: $30.00"
+	    When I click the trashcan icon beside the donation for "Apples"
+	    Then I should see "Your donations will be shown here."
+	    Then I should not see "Apples"
 	    
 
 	Scenario: Cart should be empty upon successful payment
