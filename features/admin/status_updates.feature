@@ -31,5 +31,13 @@ Feature: Admin Posting Status Updates about a Campaign
     Scenario: Admin should be able push a status update to a campaign
       Given I am signed in as admin@example.com
       Then I am on the admin dashboard page
-      When I click submit for the status update form
+      When I select "Apples" from the status update form
+      And I fill the status update form with the following:
+        | Date       | 12/13/17         |
+        | Text       | "Test status"    |
+      And I click submit for the status update form
       Then I should see "Status posted!"
+      Given I am signed out
+      Given I am signed in as Test Organization 1
+      When I click on "Apples"
+      Then I should see "Test status"
