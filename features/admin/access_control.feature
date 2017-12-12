@@ -24,13 +24,14 @@ Feature: Admin Access Control
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-      | id | name    | description  | goal   | organization_id | campaign_id |
-      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
-      | 2  | Bananas | banana party | 80000  | 1               | 2           |
+      | id | name    | description  | goal   | organization_id | campaign_id |  action  |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |  CREATE  |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           |  UPDATE  |
 
   Scenario: Admin can access admin pages
     Given I am signed in as admin@example.com
     Then I am on the admin dashboard page
+    When I click on "Status Updates"
     When I go to the admin database page
     Then I am on the admin database page
 

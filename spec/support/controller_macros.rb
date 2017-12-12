@@ -22,7 +22,7 @@ module ControllerMacros
 
     before(:each) do
         change = CampaignChange.new({:organization_id => 1,:id => 1, :name => "Why hello there"})
-
+        
         allow(CampaignChange).to receive(:new) { change }
         allow(CampaignChange).to receive(:find).with("1") { change }
         allow(change).to receive(:destroy) {nil}

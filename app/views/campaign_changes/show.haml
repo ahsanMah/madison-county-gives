@@ -14,15 +14,20 @@
           %p.card-text= @campaign.description
           %hr
           %p= octicon('calendar') + "  Start date: " + @campaign.start_date
+          %hr
+          %p= octicon('credit-card') + "  Goal: " + number_to_currency(@campaign.goal, precision: 0)
 
     .col-lg-6.col-sm-12
       -if @campaign_change.action == "DELETE"
-        .fixed-position
-          .card.mb-4
-            .card-header.text-center
-              %h4
-                %strong Unapproved Changes
-            %h5.text-center We have requested the admin to delete this campaign
+        .card.mb-4
+          .card-header.text-center
+            %h4
+              %strong Unapproved Changes
+          .card-body
+            %p We have requested the admin to delete this campaign.
+            - if !current_user.is_admin
+              %hr
+              =link_to octicon("trashcan") + "  Recall this deletion request", campaign_change_path(@campaign_change.id), :method => :delete, :class => "btn btn-light mt-2", :data => { confirm: 'Are you certain you want to recall this deletion request?' }
       -else
         .card.mb-4
           .card-header.text-center
@@ -39,6 +44,13 @@
             %p.card-text= @campaign_change.description
             %hr
             %p= octicon('calendar') + "  Start date: " + @campaign_change.start_date
+            %hr
+            %p= octicon('credit-card') + "  Goal: " + number_to_currency(@campaign_change.goal, precision: 0)
+            - if !current_user.is_admin
+              %hr
+              =link_to octicon("pencil") + "  Edit this unapproved change before it is approved", edit_campaign_change_path(@campaign_change.id), :class => "btn btn-light mt-2"
+              =link_to octicon("trashcan") + "  Delete this unapproved change before it is approved", campaign_change_path(@campaign_change.id), :method => :delete, :class => "btn btn-light mt-2", :data => { confirm: 'Are you certain you want to delete this?' }
+
 
 .row
   =link_to 'Back to all campaigns', organization_path(@campaign_change.organization.id), :class => "btn btn-light mb-4"
