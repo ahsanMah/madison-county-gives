@@ -7,6 +7,7 @@ FactoryBot.define do
     email "helpme@sos.com"
     password "password"
     password_confirmation "password"
+    is_admin true    
   end
 
   factory :organization do
