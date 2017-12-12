@@ -26,7 +26,7 @@ RSpec.describe AdminController, type: :controller do
 			change = CampaignChange.new
 			allow(change).to receive(:action) {"DELETE"}
 
-			expect(Campaign).to receive(:find) {Campaign.new}
+			expect(Campaign).to receive(:find).with(1) {Campaign.new}
 			expect(Campaign).to receive(:destroy).with(1){ nil }
 
 			get :campaign_approval, :params => {:campaign_change_id => 1, :test_env => true}
@@ -39,11 +39,25 @@ RSpec.describe AdminController, type: :controller do
 			allow(change).to receive(:action) {"UPDATE"}
 
 			campaign = Campaign.new
-			expect(Campaign).to receive(:find) {campaign}
+			expect(Campaign).to receive(:find).with(1) {campaign}
 			expect(campaign).to receive(:save) { nil }
 
 			get :campaign_approval, :params => {:campaign_change_id => 1, :activate => true}
 			expect(flash[:error]).to match /.*We failed to approve.*/
+			expect(response).to redirect_to admin_path
+		end
+
+		it "should flash failure message if campaign change fails to delete after campaign saves" do
+			change = CampaignChange.new
+			allow(change).to receive(:action) {"UPDATE"}
+			expect(change).to receive(:destroy) {nil}
+
+			campaign = Campaign.new
+			expect(Campaign).to receive(:find) {campaign}
+			expect(campaign).to receive(:save) { true }
+
+			get :campaign_approval, :params => {:campaign_change_id => 1, :test_env => true}
+			expect(flash[:error]).to match /.*Please manually delete.*/
 			expect(response).to redirect_to admin_path
 		end
 
