@@ -45,6 +45,7 @@ Feature: Donation Cart functionality
 		When I click on "Cart"
 	    Then I should see "Donation Cart"
 	    Then I should see "Total: $30.00"
+	    
 
 	Scenario: Cart should be empty upon successful payment
 		Given I am on the home page
