@@ -45,4 +45,4 @@ Feature: Admin Campaign Approval
       Given I am signed in as admin@example.com
       Then I am on the admin dashboard page
       When I click "Approve" from the "Oranges" row
-      Then I should see "Campaign has been successfully approved"
+      Then I should see "has been removed form the listing"
