@@ -25,28 +25,25 @@
   Scenario: Donor wants to remain anonymous
     Given I am on the home page
 	  And I follow "Apples"
-	  When I fill in "Donation Amount" with "30"
-	  And I press "Donate"
-	  Then I should see "Thank You for your contribution!"
-
-
-	  Then I should be on Summary page
-	  Then I should see "Apples"
-	  Then I should see "$30"
-	  When I click on "Checkout"
-	  Then I should be on Checkout page
-    When I fill in "First Name" with "Bob"
-    When I fill in "Last Name" with "Builder"
-    When I fill in "Email" with "bbuilder@colgate.edu"
-    When I fill in "Phone Number" with "123-456-7891"
-    When I check "Anonymous?"
-    When I press "Submit"
-    Then I should be on "TouchNet" page
-    Then I should see "Please select a payment method and enter an amount"
-    When I go to Apples page
-    Then I should not see "Andrew"
-    And I should see "Anonymous"
-    And I should see "$40"
-
-
-
+	  When I fill in "Enter Your Pledge Amount" with "30"
+	  And I press "Back this"
+	  Then I should see "Your donation has been successfully added to the cart located in the upper right hand corner."
+    When I click on "Cart"
+    Then I should see "Donation Cart"
+    Then I should see "$30.00"
+    When I click on "Proceed to Checkout"
+    Then I should see "Billing Information"
+    When I fill in the following:
+      | BILL_NAME               |  Bob Yu            |
+      | BILL_EMAIL_ADDRESS      |  byu@colgate.edu   |
+      | BILL_STREET1            |  13 Oak Drive      |
+      | BILL_CITY               |  Hamilton          |
+      | BILL_POSTAL_CODE        |  13346              |
+    When I check "anon"
+    And I press "Proceed to payment"
+    Then I should be on the home page
+    And I should see "Thank you for your generous contribution!"
+    When I follow "Apples"
+    Then I should see "Anonymous"
+    Then I should see "$30"
+    Then I should not see "Bob Yu"
