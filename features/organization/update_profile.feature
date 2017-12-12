@@ -11,9 +11,9 @@ Feature: Organization Updating Its Profile
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id | user_id  | name               | primary_contact | address           | email         | description         | is_approved  |
-      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Disaster-relief     | true         |
-      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Home for all        | true         |
+      | id | user_id  | name               | primary_contact | address           | description         | is_approved  |
+      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | Disaster-relief     | true         |
+      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | Home for all        | true         |
 
     Given these ShortQuestions:
       | id | question                        |

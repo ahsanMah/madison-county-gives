@@ -11,10 +11,10 @@ Feature: Organization viewing specific campaign
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id  | name                | user_id | is_approved | primary_contact | description |
+      | 1   | Test Organization 1 | 1       | true        | John Smith      | a           |
+      | 2   | Test Organization 2 | 2       | true        | John Smith      | a           |
+      | 3   | Test Organization 3 | 3       | false       | John Smith      | a           |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
