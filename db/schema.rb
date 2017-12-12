@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171208043005) do
+ActiveRecord::Schema.define(version: 20171211005743) do
 
   create_table "campaign_changes", force: :cascade do |t|
     t.integer "campaign_id"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 20171208043005) do
     t.string "name"
     t.string "primary_contact"
     t.string "address"
-    t.string "email"
     t.text "description"
     t.boolean "is_approved"
     t.datetime "created_at", null: false

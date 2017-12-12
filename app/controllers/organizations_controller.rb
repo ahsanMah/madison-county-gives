@@ -45,9 +45,8 @@ class OrganizationsController < ApplicationController
 		organization.is_approved = false
 		organization.user_id = current_user.id
 
-		create_short_responses(organization)
-
 		if organization.save
+			create_short_responses(organization)
 			flash[:notice] = "Your application for #{organization.name} has been submitted. It will be approved shortly."
 			redirect_to organization_path(organization)
 		else
@@ -79,7 +78,7 @@ class OrganizationsController < ApplicationController
 
 private
 	def create_update_params
-		params.require(:organization).permit(:name, :primary_contact, :address, :email, :description, :image, :is_approved, :campaigns)
+		params.require(:organization).permit(:name, :primary_contact, :address, :description, :image, :is_approved, :campaigns)
 	end
 
 	# in case a short question is removed later by admin, its answer shouldn't be displayed; this method helps deal with this case
@@ -94,8 +93,10 @@ private
 		params["organization"].each do |org_attr|
 			if org_attr =~ /^short_response[\d]+$/
 				question_id = org_attr.match(/^short_response([\d]+)$/).captures[0]
-				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => params[:id], :response => params["organization"][org_attr])
-				short_response.save
+				short_response = ShortResponse.new(:short_question_id => question_id, :organization_id => organization.id, :response => params["organization"][org_attr])
+				if !short_response.save
+					flash[:error] = "We were unable to save your answers to the short questions. Please try to update them by editing your profile."
+				end
 			end
 		end
 	end

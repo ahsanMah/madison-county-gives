@@ -37,7 +37,7 @@
             %p
               %strong Email
           .col-lg-10
-            %p= @organization.email
+            %p= @organization.user.email
         %hr
         .row
           .col-lg-12
@@ -45,6 +45,7 @@
               %p
                 %strong= response.short_question.question
               %p= response.response
+              
 .row
   %h2.mr-auto Campaigns
   -if @belongs_to_current_user && @organization.is_approved?
