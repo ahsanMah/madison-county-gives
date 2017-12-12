@@ -35,7 +35,7 @@
               %strong Unapproved Changes
           =image_tag @campaign_change.image.url(:large), :class => "card-img-top img-fluid"
           .card-body
-            -if @belongs_to_current_user
+            -if @belongs_to_current_user && !current_user.is_admin
               .float-right
                 =link_to octicon('pencil') + "  Edit", edit_campaign_change_path(@campaign_change), :class => "btn btn-light btn-sm mt-2"
                 =link_to octicon('trashcan') + "  Delete", campaign_change_path(@campaign_change), :method => :delete, :class => "btn btn-light btn-sm mt-2"
@@ -46,11 +46,6 @@
             %p= octicon('calendar') + "  Start date: " + @campaign_change.start_date
             %hr
             %p= octicon('credit-card') + "  Goal: " + number_to_currency(@campaign_change.goal, precision: 0)
-            - if !current_user.is_admin
-              %hr
-              =link_to octicon("pencil") + "  Edit this unapproved change before it is approved", edit_campaign_change_path(@campaign_change.id), :class => "btn btn-light mt-2"
-              =link_to octicon("trashcan") + "  Delete this unapproved change before it is approved", campaign_change_path(@campaign_change.id), :method => :delete, :class => "btn btn-light mt-2", :data => { confirm: 'Are you certain you want to delete this?' }
-
 
 .row
   =link_to 'Back to all campaigns', organization_path(@campaign_change.organization.id), :class => "btn btn-light mb-4"

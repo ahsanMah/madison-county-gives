@@ -101,9 +101,9 @@ class CampaignChangesController < ApplicationController
     campaign_change = CampaignChange.find(params[:id])
     campaign_name = campaign_change.name
     if campaign_change.destroy
-        flash[:notice] = "Campaign change for \"#{campaign_name}\" has been removed from the listing."
+        flash[:notice] = "Pending campaign change for \"#{campaign_name}\" has been removed from the listing."
     else
-        flash[:error] = "We were unable to delete \"#{campaign_name}\. " + campaign_change.errors.full_messages.join(". ")
+        flash[:error] = "We were unable to delete the pending campaign change \"#{campaign_name}\. " + campaign_change.errors.full_messages.join(". ")
     end
     redirect_to organization_path(current_user.organization.id) and return
   end
