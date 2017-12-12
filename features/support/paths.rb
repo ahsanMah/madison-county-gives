@@ -40,6 +40,15 @@ module NavigationHelpers
     when /^the admin database page$/
       rails_admin_path
 
+    when /^the about us page$/
+      about_us_path
+
+    when /^the FAQs page$/
+      faqs_path
+
+    when /^the contact us page$/
+      contact_us_path
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

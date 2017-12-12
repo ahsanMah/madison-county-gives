@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   resources :organizations, except: :destroy
   resources :campaigns , only: [:index, :show]
   resources :campaign_changes
-  resources :payments
 
   root "campaigns#index"
 

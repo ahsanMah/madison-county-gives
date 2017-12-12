@@ -440,7 +440,8 @@ When /^I click the trashcan icon beside the donation for "([^"]*)"/ do |campaign
 end
 
 When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
-  within("ul.navbar-nav") do
+  ul = page.find("ul.navbar-nav", :text => link)
+  within(ul) do
     click_link(link)
   end
 end
@@ -455,4 +456,3 @@ end
 When /^(?:|I )select "([^"]*)" from the .*$/ do |selection|
   select(selection, :from => "status_update_campaign_id")
 end
-
