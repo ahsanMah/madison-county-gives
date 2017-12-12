@@ -405,6 +405,11 @@ Given /^there is a donation for "([^"]*)" for "([^"]*)"$/ do # helper function t
   pending
 end
 
+When /^I click the trashcan icon beside the donation for "([^"]*)"/ do |campaign|
+  tr = page.find("tr", :text => campaign)
+  tr.find("a", :class => "delete-item-cart").click
+end
+
 When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
   within("ul.navbar-nav") do
     click_link(link)
