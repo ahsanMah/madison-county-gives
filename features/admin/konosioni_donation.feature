@@ -28,6 +28,10 @@ Feature: Admin Adding Konosioni Donation
       | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |  CREATE  | 2017-09-09  |
       | 2  | Bananas | banana party | 80000  | 1               | 2           |  UPDATE  | 2017-09-09  |
 
-    Given I am signed in as admin@example.com
-
-  Scenario:
+    Scenario: Admin should be able submit a donation
+      Given I am signed in as admin@example.com
+      Then I am on the admin dashboard page
+      When I fill the donation form with the following:
+        | Amount          | 80  |
+      And I click submit for the donation form
+      Then I should see "Konosioni payment successfully saved!"

@@ -165,6 +165,20 @@ When /^(?:|I )fill in the following:$/ do |fields|
   end
 end
 
+When /^(?:|I )fill the status update form with the following:$/ do |fields|
+  within('form#new_status_update') do
+    fields.rows_hash.each do |name, value|
+      fill_in(name, :with => value)
+    end
+  end
+end
+
+When /^(?:|I )fill the donation form with the following:$/ do |fields|
+  fields.rows_hash.each do |name, value|
+    find('form[id="new_payment"]').fill_in(name, :with => value)
+  end
+end
+
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
   select(value, :from => field)
 end
@@ -360,6 +374,21 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
   end
 end
 
+When /^(?:|I )click submit for the status update form/ do
+  find('input[id="status update submit button"]').click
+end
+
+When /^(?:|I )click submit for the donation form/ do
+  find('input[id="donation submit button"]').click
+end
+
+When /^(?:|I )click "([^"]*)" from the "([^"]*)" row$/ do |button, title|
+  row = find('tr') { |el| el.text =~ Regexp.new(title)}
+  within(row)do
+    click_on(button)
+  end
+end
+
 
 # Then /^(?:|I )should see the image "([^"]*)"$/ do |imagename|
 #   expect(page).to have_selector(%(img[@alt="#{imagename.capitalize}"]))
@@ -422,3 +451,8 @@ When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
     click_link(link)
   end
 end
+
+When /^(?:|I )select "([^"]*)" from the .*$/ do |selection|
+  select(selection, :from => "status_update_campaign_id")
+end
+
