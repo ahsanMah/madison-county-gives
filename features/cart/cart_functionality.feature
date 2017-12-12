@@ -10,11 +10,10 @@ Feature: Donation Cart functionality
       | 2  | user2@example.com  | 123456    |
       | 3  | user3@example.com  | 123456    |
 
-    Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+     Given these Organizations:
+      | id | user_id  | name               | primary_contact | address           | description         | is_approved  |
+      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | Disaster-relief     | true         |
+      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | Home for all        | true         |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -63,7 +62,7 @@ Feature: Donation Cart functionality
 		  | BILL_EMAIL_ADDRESS      |  byu@colgate.edu   |
 		  | BILL_STREET1            |  13 Oak Drive      |
 		  | BILL_CITY               |  Hamilton          |
-		  | BILL_POSTAL_CODE        |  13346              |
+		  | BILL_POSTAL_CODE        |  13346             |
 		When I check "anon"
 		And I press "Proceed to payment"
 		Then I should be on the home page
