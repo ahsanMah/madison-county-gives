@@ -89,7 +89,7 @@
           =f.label :text, "Text", :class => "col-sm-2 col-form-label"
           .col-sm-10
             =f.text_area :text, size: "100x3", :placeholder => "Enter your status update here", :class => "form-control"
-        =f.submit "Submit", :class => "btn btn-primary"
+        =f.submit "Submit", :class => "btn btn-primary", :id => "status update submit button"
 
       %h4.mt-4#org-overview= octicon("settings") + "  Organization Overview"
       %hr
@@ -132,6 +132,6 @@
         .form-group.row
           =f.label :name, "Transaction ID", :class => "col-sm-2 col-form-label"
           .col-sm-10
-            =f.text_field :transaction_id, :required => true, :class => "form-control"
+            =f.text_field :transaction_id, :class => "form-control"
             .text-muted any reference number you might use to keep track of this payment (optional)
-        =f.submit "Submit", :class => "btn btn-primary"
+        =f.submit "Submit", :class => "btn btn-primary", :id => "donation submit button"

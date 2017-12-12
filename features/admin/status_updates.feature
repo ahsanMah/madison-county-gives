@@ -27,3 +27,9 @@ Feature: Admin Posting Status Updates about a Campaign
       | id | name    | description  | goal   | organization_id | campaign_id |  action  | start_date  |
       | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |  CREATE  | 2017-09-09  |
       | 2  | Bananas | banana party | 80000  | 1               | 2           |  UPDATE  | 2017-09-09  |
+
+    Scenario: Admin should be able push a status update to a campaign
+      Given I am signed in as admin@example.com
+      Then I am on the admin dashboard page
+      When I click submit for the status update form
+      Then I should see "Status posted!"
