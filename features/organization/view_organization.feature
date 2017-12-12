@@ -15,10 +15,10 @@ Feature: Organization Viewing an Organization
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved | description |
-      | 1   | Test Organization 1 | 1       | true        | test123     |
-      | 2   | Test Organization 2 | 2       | true        | test456     |
-      | 3   | Test Organization 3 | 3       | false       | test789     |
+      | id  | name                | user_id | is_approved | description | primary_contact |
+      | 1   | Test Organization 1 | 1       | true        | test123     | John Smith      |
+      | 2   | Test Organization 2 | 2       | true        | test456     | John Smith      |
+      | 3   | Test Organization 3 | 3       | false       | test789     | John Smith      |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -30,7 +30,7 @@ Feature: Organization Viewing an Organization
       | id | name       | description      | goal   | start_date  | campaign_id  | action  | organization_id  |
       | 1  | Pineapple  | pineapple farm   | 10000  | 2017-11-09  |              | CREATE  | 1                |
       | 2  | Bananas    | new banana farm  | 80000  | 2017-01-10  | 2            | UPDATE  | 1                |
-      | 3  | Apples     |                  |        |             | 1            | DELETE  | 1                |
+      | 3  | Apples     | hello            | 10     | 2017-01-10  | 1            | DELETE  | 1                |
       | 4  | Oranges    | new orange farm  | 50000  | 2017-08-17  | 3            | UPDATE  | 2                |
 
 

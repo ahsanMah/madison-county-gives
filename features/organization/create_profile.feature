@@ -17,9 +17,9 @@ Feature: Organization Creating Its Profile and Requesting Approval
       | 2  | How does this benefit people?   |
 
     Given these Organizations:
-      | id | user_id  | name               | primary_contact | address           | email         | description         | is_approved  |
-      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | rc@gmail.com  | Disaster-relief     | true         |
-      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | we@yahoo.com  | Home for all        | true         |
+      | id | user_id  | name               | primary_contact | address           | description         | is_approved  |
+      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | Disaster-relief     | true         |
+      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | Home for all        | true         |
 
     Scenario: User directed to organization registration if having not already done so
       Given I am on the login page
@@ -52,7 +52,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -69,7 +68,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
       When I fill in the following:
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -87,7 +85,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -99,7 +96,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |

@@ -12,10 +12,10 @@ Feature: Admin Organization Approval
       | 4  | admin@example.com  | 123456    | true     |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id  | name                | user_id | is_approved | primary_contact | description |
+      | 1   | Test Organization 1 | 1       | true        | John Smith      | a           |
+      | 2   | Test Organization 2 | 2       | true        | John Smith      | a           |
+      | 3   | Test Organization 3 | 3       | false       | John Smith      | a           |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -24,9 +24,9 @@ Feature: Admin Organization Approval
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-      | id | name    | description  | goal   | organization_id | campaign_id |  action  |
-      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |  CREATE  |
-      | 2  | Bananas | banana party | 80000  | 1               | 2           |  UPDATE  |
+      | id | name    | description  | goal   | organization_id | campaign_id |  action  | start_date  |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |  CREATE  | 2017-09-09  |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           |  UPDATE  | 2017-09-09  |
 
     Scenario: Admin should be able to approve an organization
       Given I am signed in as admin@example.com

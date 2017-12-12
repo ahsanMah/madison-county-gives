@@ -173,6 +173,12 @@ When /^(?:|I )fill the status update form with the following:$/ do |fields|
   end
 end
 
+When /^(?:|I )fill the donation form with the following:$/ do |fields|
+  fields.rows_hash.each do |name, value|
+    find('form[id="new_payment"]').fill_in(name, :with => value)
+  end
+end
+
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
   select(value, :from => field)
 end
@@ -369,7 +375,11 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
 end
 
 When /^(?:|I )click submit for the status update form/ do
-  click_button '#status update submit button'
+  find('input[id="status update submit button"]').click
+end
+
+When /^(?:|I )click submit for the donation form/ do
+  find('input[id="donation submit button"]').click
 end
 
 When /^(?:|I )click "([^"]*)" from the "([^"]*)" row$/ do |button, title|
@@ -431,7 +441,8 @@ When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
 end
 
 When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
-  within("li.nav-item.dropdown.active") do
+  li = page.find("li.nav-item.dropdown.active", text: link)
+  within(li) do
     click_link(link)
   end
 end

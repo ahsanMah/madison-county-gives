@@ -10,7 +10,7 @@
         %tr
           %td.val= link_to "#{name_amt[0]}", campaign_path(id.to_i)
           %td.val #{number_to_currency(name_amt[1].to_i)}
-          %td.val= link_to octicon('trashcan'),remove_donation_cart_path(:donation_id => id), :class => "delete_item_cart"
+          %td.val= link_to octicon('trashcan'), remove_donation_cart_path(:donation_id => id), :class => "delete_item_cart"
         -t = t + name_amt[1].to_i
   %strong.float-right Total: #{number_to_currency(t)}
   %br
@@ -19,6 +19,3 @@
 -else
   %h3 Your donations will be shown here.
   =link_to 'Back to Main Page', root_path, :class => "btn btn-light mb-4"
-
-
-    

@@ -11,10 +11,10 @@ Feature: Donor Viewing an Organization
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id  | name                | user_id | is_approved | primary_contact | description |
+      | 1   | Test Organization 1 | 1       | true        | John Smith      | a           |
+      | 2   | Test Organization 2 | 2       | true        | John Smith      | a           |
+      | 3   | Test Organization 3 | 3       | false       | John Smith      | a           |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -23,9 +23,9 @@ Feature: Donor Viewing an Organization
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-      | id | name    | description  | goal   | organization_id | campaign_id |
-      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
-      | 2  | Bananas | banana party | 80000  | 1               | 2           |
+      | id | name    | description  | goal   | organization_id | campaign_id | start_date  |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         | 2017-09-09  |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           | 2017-09-09  |
 
     Given I am signed out
 
@@ -34,5 +34,5 @@ Feature: Donor Viewing an Organization
     Then I should see "Test Organization 1"
     Then I should see "Apples"
     Then I should see "Bananas"
-    Then the campaign table rows should not contain "Edit"
-    Then the campaign table rows should not contain "Delete"
+    Then the campaign cards should not contain "Edit"
+    Then the campaign cards should not contain "Delete"

@@ -11,10 +11,9 @@
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id | user_id  | name               | primary_contact | address           | description         | is_approved  |
+      | 1  | 1        | Red Cross          | Susan Jean      | 13 Madison Ave.   | Disaster-relief     | true         |
+      | 2  | 2        | Refugee Foundation | Neriq Mann      | 46 Raviolli Drive | Home for all        | true         |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
