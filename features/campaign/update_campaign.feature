@@ -11,10 +11,10 @@ Feature: Organization updating campaigns
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id  | name                | user_id | is_approved | primary_contact | description |
+      | 1   | Test Organization 1 | 1       | true        | John Smith      | a           |
+      | 2   | Test Organization 2 | 2       | true        | John Smith      | a           |
+      | 3   | Test Organization 3 | 3       | false       | John Smith      | a           |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -23,9 +23,9 @@ Feature: Organization updating campaigns
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-    | id | name    | description  | goal   | organization_id | campaign_id | action |
-    | 1  | Coconuts| coconut farm | 70000  | 1               | nil         | CREATE |
-    | 2  | Bananas | banana party | 80000  | 1               | 2           | UPDATE |
+    | id | name    | description  | goal   | organization_id | campaign_id | action | start_date  |
+    | 1  | Coconuts| coconut farm | 70000  | 1               | nil         | CREATE | 2017-09-09  |
+    | 2  | Bananas | banana party | 80000  | 1               | 2           | UPDATE | 2017-09-09  |
 
     Given I am signed in as Test Organization 1
 
@@ -33,18 +33,18 @@ Feature: Organization updating campaigns
     Given I am on Test Organization 1's page
     When I click on my campaign "Apples"
     Then I should see "apple farm"
-    And I should see "Funding Goal: $50,000"
+    And I should see "$50,000"
     And I should see the image "default"
-    When I click on "Edit campaign details"
+    When I click on "Edit"
     And I fill in "Description" with "apple and pear farm"
     And I fill in "Funding Goal" with "60000"
     And I attach the file "applefarm.jpg" to "Image"
-    And I press "Submit Proposal"
+    And I press "Submit"
     Then I should see 'successfully submitted for approval!'
     And I should see that the campaign "Apples" has a goal of "$50,000"
     When I click "Pending Change" for "Apples"
     Then I should see 'apple and pear farm'
-    And I should see "Funding Goal: $60,000"
+    And I should see "$60,000"
 
   Scenario: Update a running campaign from the organization's profile page
     Given I am on Test Organization 1's page
@@ -52,7 +52,7 @@ Feature: Organization updating campaigns
     When I click "Edit" for "Apples"
     And I fill in "Description" with "apple and pear farm"
     And I attach the file "applefarm.jpg" to "Image"
-    And I press "Submit Proposal"
+    And I press "Submit"
     Then I should see 'successfully submitted for approval!'
     And I should see that the campaign "Apples" has a goal of "$50,000"
     When I click "Pending Change" for "Apples"
@@ -65,7 +65,7 @@ Feature: Organization updating campaigns
     When I click "Edit" for "Coconuts"
     And I fill in "Description" with "coconut party"
     And I attach the file "coconutfarm.jpg" to "Image"
-    And I press "Submit Update"
+    And I press "Submit"
     Then I should see 'successfully submitted for approval!'
     When I click on "Coconuts"
     Then I should see 'coconut party'
@@ -76,9 +76,9 @@ Feature: Organization updating campaigns
     Then I should see "Bananas"
     When I click "Edit" for "Bananas"
     And I fill in "Funding Goal" with "90000"
-    And I press "Submit Update"
+    And I press "Submit"
     Then I should see 'successfully submitted for approval!'
     Then I should see "Bananas"
     And I should see that the campaign "Bananas" has a goal of "$80,000"
     When I click "Pending Change" for "Bananas"
-    And I should see "Funding Goal: $90,000"
+    And I should see "$90,000"

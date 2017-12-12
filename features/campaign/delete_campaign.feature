@@ -11,10 +11,10 @@ Feature: Organization Deleting Campaign
       | 3  | user3@example.com  | 123456    |
 
     Given these Organizations:
-      | id  | name                | user_id | is_approved |
-      | 1   | Test Organization 1 | 1       | true        |
-      | 2   | Test Organization 2 | 2       | true        |
-      | 3   | Test Organization 3 | 3       | false       |
+      | id  | name                | user_id | is_approved | primary_contact | description |
+      | 1   | Test Organization 1 | 1       | true        | John Smith      | a           |
+      | 2   | Test Organization 2 | 2       | true        | John Smith      | a           |
+      | 3   | Test Organization 3 | 3       | false       | John Smith      | a           |
 
     Given these Campaigns:
       | id | name    | description  | goal   | start_date  | organization_id | is_active | is_featured |
@@ -23,9 +23,9 @@ Feature: Organization Deleting Campaign
       | 3  | Oranges | orange farm  | 50000  | 2017-08-17  | 2               | true      | true        |
 
     Given these CampaignChanges:
-      | id | name    | description  | goal   | organization_id | campaign_id |
-      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         |
-      | 2  | Bananas | banana party | 80000  | 1               | 2           |
+      | id | name    | description  | goal   | organization_id | campaign_id | start_date  |
+      | 1  | Coconuts| coconut farm | 70000  | 1               | nil         | 2017-09-09  |
+      | 2  | Bananas | banana party | 80000  | 1               | 2           | 2017-09-09  |
 
     Given I am signed in as Test Organization 1
 
@@ -35,6 +35,6 @@ Feature: Organization Deleting Campaign
     And I click on "My Organization"
     Then I should see "Apples"
     When I click on my campaign, "Apples"
-    Then I should see "Funding Goal: $50,000"
-    When I follow "Delete campaign"
+    Then I should see "$50,000"
+    When I follow "Delete"
     Then I should see 'We have requested the admin to remove'

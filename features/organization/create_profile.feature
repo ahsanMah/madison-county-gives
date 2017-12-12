@@ -52,7 +52,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -69,7 +68,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
       When I fill in the following:
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -87,7 +85,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |
@@ -99,7 +96,6 @@ Feature: Organization Creating Its Profile and Requesting Approval
         | Organization Name               | Cool Schoolz             |
         | Primary Contact                 | Mary Canta               |
         | Address                         | 48 Easton St.            |
-        | Email                           | school@hamilton.edu      |
         | Description                     | Schooling for kids       |
         | What is your goal?              | I don't know.            |
         | How does this benefit people?   | What?                    |

@@ -412,7 +412,8 @@ When /^(?:|I )click on "([^"]*)" in the nav bar$/ do |link|
 end
 
 When /^(?:|I )click on my organization "([^"]*)" in the nav bar$/ do |link|
-  within("li.nav-item.dropdown.active") do
+  li = page.find("li.nav-item.dropdown.active", text: link)
+  within(li) do
     click_link(link)
   end
 end
