@@ -25,11 +25,10 @@ class HomeController < ApplicationController
     carty.each do |id, amt|
       @total = @total + amt.to_i
     end
-    if Rails.env.production? # to make transition from dev to production seamless
+    if Rails.env.production?
       @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
       @site_id = 4
-    else
-      # @touchnet_url = "https://test.secure.touchnet.net:8443/C20587test_upay/web/index.jsp"
+    else # For development and test, use a substitute method to complete TouchNet functionalities
       @touchnet_url = touchnet_sub_path
       @site_id = 4
     end
