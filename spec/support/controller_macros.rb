@@ -35,7 +35,8 @@ module ControllerMacros
   def setup_admin_failure_stubs
 
     before(:each) do
-        change = CampaignChange.new({:organization_id => 1,:id => 1, :name => "Why hello there"})
+        orgo = create(:organization)
+        change = CampaignChange.new({:campaign_id=>1, :organization_id => 1,:id => 1, :name => "Hello Admin!"})
         
         allow(CampaignChange).to receive(:new) { change }
         allow(CampaignChange).to receive(:find).with("1") { change }
@@ -45,6 +46,7 @@ module ControllerMacros
         organization = Organization.new({:id => 1, :name => "Bathe the whales"})
         allow(Organization).to receive(:find).with("1") { organization }
         allow(organization).to receive(:save) {nil}
+
       end
   end
 
