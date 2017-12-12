@@ -165,6 +165,14 @@ When /^(?:|I )fill in the following:$/ do |fields|
   end
 end
 
+When /^(?:|I )fill the status update form with the following:$/ do |fields|
+  within('form#new_status_update') do
+    fields.rows_hash.each do |name, value|
+      fill_in(name, :with => value)
+    end
+  end
+end
+
 When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
   select(value, :from => field)
 end
@@ -361,10 +369,7 @@ When /^(?:|I )click "([^"]*)" for "([^"]*)"$/ do |button, title|
 end
 
 When /^(?:|I )click submit for the status update form/ do
-  row = find('.new_status_update') { |el| el.text =~ Regexp.new(title)}
-  within(row) do
-    click_on(button)
-  end
+  click_button '#status update submit button'
 end
 
 When /^(?:|I )click "([^"]*)" from the "([^"]*)" row$/ do |button, title|
